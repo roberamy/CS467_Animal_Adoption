@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "55fa9f3d-d5b9-4880-bb68-53a4907a709e",
+		"name": "App for Animal Adoption",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create_Pet_#1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7d79aea-205d-4630-9820-fef199c07a77",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Colt\",\r\n    \"type\": \"Dog\",\r\n    \"breed\": \"Australian Cattle Dog\",\r\n    \"disposition\": \"Mild Tempered\",\r\n    \"availability\": \"Now\",\r\n    \"status\": \"Recently Brought to Shelter\",\r\n    \"description\": \"Black and Tan, 45lbs\",\r\n    \"location\": \"Albuqurque, NM\",\r\n    \"gender\": \"Male\"   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/pets",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create_Pet_#2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ef53908-ad52-4952-ba71-7137013b7914",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Trigger\",\r\n    \"type\": \"Dog\",\r\n    \"breed\": \"Australian Cattle Dog\",\r\n    \"disposition\": \"Mild Tempered\",\r\n    \"availability\": \"Now\",\r\n    \"status\": \"Recently Brought to Shelter\",\r\n    \"description\": \"Black and Tan, 45lbs\",\r\n    \"location\": \"Albuqurque, NM\",\r\n    \"gender\": \"Male\"   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/pets",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read_Pets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d343399d-b54c-447f-9a6f-82ce9bdde775",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const responseJson = pm.response.json();\r",
+							"pm.environment.set(\"pet_id\", responseJson['pets'][0]['id']);\r",
+							"\r",
+							"const responseJson2 = pm.response.json();\r",
+							"pm.environment.set(\"pet_id_2\", responseJson2['pets'][1]['id']);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/pets",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read_Pet",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/pets/{{pet_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"pets",
+						"{{pet_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update_Pet_Put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "30d16430-2ec9-4187-b4da-fc2131dcf2be",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Trigger\",\r\n    \"type\": \"Dog\",\r\n    \"breed\": \"Australian Cattle Dog\",\r\n    \"disposition\": \"Hot Tempered\",\r\n    \"availability\": \"Now\",\r\n    \"status\": \"Recently Brought to Shelter\",\r\n    \"description\": \"White, 45lbs\",\r\n    \"location\": \"Albuqurque, NM\",\r\n    \"gender\": \"Male\"   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/pets/{{pet_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"pets",
+						"{{pet_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update_Pet_Patch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "25ec28cf-78ac-4b22-9d38-d7aadf424955",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Trigger\",\r\n    \"type\": \"Dog\",\r\n    \"breed\": \"Australian Cattle Dog\",\r\n    \"disposition\": \"Hot Tempered\",\r\n    \"availability\": \"Now\",\r\n    \"status\": \"Recently Brought to Shelter\",\r\n    \"description\": \"White, 45lbs\",\r\n    \"location\": \"Albuqurque, NM\",\r\n    \"gender\": \"Male\"   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/pets/{{pet_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"pets",
+						"{{pet_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete_Pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a5aeef56-ba03-44a8-aa14-21e97261aeec",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/pets/{{pet_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"pets",
+						"{{pet_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
