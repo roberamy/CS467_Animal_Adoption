@@ -1,0 +1,106 @@
+<!--
+
+-->
+{% extends "nav.html" %}
+{% block title %}
+    My Next Pet - Profiles
+{% endblock %}
+{% block header %}
+<div>
+    <header class="masthead bg-primary text-white text-center" style="font-size: 12px;height:50px" overflow="auto">
+        <div class="container">
+            <h1 style="font-size: 30px;">Administer Pet Profiles</h1>
+        </div>
+    </header>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="masthead bg-primary text-white text-center" style="font-size: 12px;" overflow="auto">
+    <div class="container-fluid" overflow="auto">
+        <div class="card" id="TableSorterCard">
+            <div class="card-header py-3">
+                <div class="row table-topper align-items-center">
+                    <div class="col-12 col-sm-5 col-md-6 text-left" style="margin: 0px;padding: 5px 15px;">
+                        <a class="btn btn-primary" role="button" href="/add_profile"><i class="fa fa-plus"></i>&nbsp;Add Profile</a>
+                    </div>
+                    <div class="col-12 col-sm-7 col-md-6 text-right" style="margin: 0px;padding: 5px 15px;">
+                        <p class="text-primary m-0 font-weight-bold">ADD FILTERS HERE...?</p><a class="btn btn-primary" role="button">Filter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive" style="font-size:14px">
+                        <table class="table table-striped table tablesorter" id="ipi-table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center">Created</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Type</th>
+                                    <th class="text-center">Breed</th>
+                                    <th class="text-center">Age</th>
+                                    <th class="text-center">Genger</th>
+                                    <th class="text-center" style="min-width: 100px">Disposition</th>
+                                    <th class="text-center" style="min-width: 100px">Status</th>
+                                    <th class="text-center" style="min-width: 150px">Description</th>
+                                    <th class="text-center">Location</th>
+                                    <th class="text-center">Available</th>
+                                    <th class="text-center">Adoption Date</th>
+                                    <th class="text-center">Adopted By</th>
+                                    <th class="text-center filter-false sorter-false" style="min-width:100px"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr>
+                                    <td>01/15/2020</td>
+                                    <td>Sunshine</td>
+                                    <td>Cat</td>
+                                    <td>Siamese Mix</td>
+                                    <td>Young</td>
+                                    <td>Female</td>
+                                    <td>Good with other animals; Good with children;</td>
+                                    <td>Seal-point siamese kitten looking for a forever home.</td>
+                                    <td>Stray kitten found in park. Named Sunshine for her sunny disposition.&nbsp; Loves attention and snuggling with other animals or human companions.</td>
+                                    <td>Seattle, WA</td>
+                                    <td>Available</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-center">
+                                        <a class="btn btn-success" role="button" style="background: rgb(30,26,193);margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;" href="/update_profile"><i class="fas fa-pencil-alt" style="font-size: 11px;"></i>
+                                        </a>
+                                        <a class="btn btn-danger" role="button" style="margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;"><i class="fas fa-trash" style="font-size: 11px;"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr id="pet_profile">
+                                    <td>06/23/2019</td>
+                                    <td>Pumpkin</td>
+                                    <td>Cat</td>
+                                    <td>Shorthair</td>
+                                    <td>Adult</td>
+                                    <td>Male</td>
+                                    <td>Single pet household</td>
+                                    <td>Grumpy adult looking for single pet household.</td>
+                                    <td>Pumpkin's owner was unable to care for him. A chill guy, he's enjoys a few scratches now and again, but cuddling is not his thing.&nbsp;</td>
+                                    <td>Portland, OR</td>
+                                    <td>Adopted</td>
+                                    <td>09/01/2019</td>
+                                    <td>Joseph Smith</td>
+                                    <td class="text-center" style="font-size: 11px;padding: 2px;padding-left: 2px;padding-bottom: 2px;padding-top: 2px;padding-right: 2px;">
+                                        <a class="btn btn-success" role="button" style="background: rgb(30,26,193);margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;" href="/update_profile"><i class="fas fa-pencil-alt" style="font-size: 11px;" ></i>
+                                        </a>
+                                        <a class="btn btn-danger" role="button" style="margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;" href=""><i class="fas fa-trash" style="font-size: 11px;"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
