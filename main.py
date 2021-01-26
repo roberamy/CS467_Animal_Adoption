@@ -25,5 +25,12 @@ def add_profile():
 def update_profile():
     return render_template('update_profile.html')
 
+# Jasper Added
+@app.route("/sign_up", methods=["GET"])
+def sign_up():
+    return render_template('sign_up.html') 
+
+# 
+
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=True)
