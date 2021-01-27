@@ -26,9 +26,33 @@ def update_profile():
     return render_template('update_profile.html')
 
 # Jasper Added
+@app.route("/adopt_cat", methods=["GET"])
+def adopt_cat():
+    return render_template('adopt_cat.html') 
+
+@app.route("/adopt_dog", methods=["GET"])
+def adopt_dog():
+    return render_template('adopt_dog.html') 
+
+@app.route("/adopt_other_pets", methods=["GET"])
+def adopt_other_pets():
+    return render_template('adopt_other_pets.html') 
+
+@app.route("/log_in", methods=["GET"])
+def log_in():
+    return render_template('log_in.html') 
+
+@app.route("/news_list", methods=["GET"])
+def news_list():
+    return render_template('news_list.html')
+
+@app.route("/service_page", methods=["GET"])
+def service_page():
+    return render_template('service_page.html')
+
 @app.route("/sign_up", methods=["GET"])
 def sign_up():
-    return render_template('sign_up.html') 
+    return render_template('sign_up.html')
 
 # 
 
