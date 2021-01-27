@@ -62,7 +62,7 @@ def service_page():
 
 @app.route("/sign_up", methods=["GET"])
 def sign_up():
-    return render_template('sign_up.html')
+    return render_template('sign_up_j.html')
 
 # 
 
