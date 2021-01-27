@@ -8,9 +8,13 @@ from flask import Flask, render_template, request, Response
 
 app = Flask(__name__)
 
-
+# manual type to admin index until integration 
 @app.route("/", methods=["GET"])
 def root():
+    return render_template('index_j.html')
+
+@app.route("/admin", methods=["GET"])
+def root_admin():
     return render_template('index.html')
 
 @app.route("/admin_profiles", methods=["GET"])
@@ -26,6 +30,8 @@ def update_profile():
     return render_template('update_profile.html')
 
 # Jasper Added
+
+
 @app.route("/adopt_cat", methods=["GET"])
 def adopt_cat():
     return render_template('adopt_cat.html') 
