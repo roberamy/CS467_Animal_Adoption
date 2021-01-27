@@ -1,0 +1,36 @@
+
+<!--
+
+-->
+{% extends "nav.html" %}
+
+
+{% block header %}
+    {% block title %}
+        Login Results (OAuth | GCP)
+    {% endblock %}
+    {% block html_head %}
+        <!-- Add CSS custom to this tempate here... -->
+    {% endblock %}
+    <!-- Add additional custom headers here... -->
+    <header class="text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
+        <div class="container">
+            <h1 style="font-size: 30px;">Login Results</h1>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+<div style="padding-left:15px; padding right:15px;">
+    <p>User Info</p>
+    <p>Your Unique ID: {{sub}}</p>
+    <p>Your Email: {{email}}</p>
+    <p>Your JWT Token: {{jwt}}</p>
+    <p>Admin: {{isAdmin}}</p>
+</div>
+{% endblock %}
+
+{% block script %}
+    <!-- Add Javascript custom to this tempate here... -->
+{% endblock %}
+

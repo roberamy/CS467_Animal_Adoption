@@ -2,21 +2,26 @@
 
 -->
 {% extends "nav.html" %}
-{% block title %}
-    My Next Pet - Profiles
-{% endblock %}
+
 {% block header %}
-<div>
-    <header class="masthead bg-primary text-white text-center" style="font-size: 12px;height:50px" overflow="auto">
-        <div class="container">
-            <h1 style="font-size: 30px;">Update Pet Profile</h1>
-        </div>
-    </header>
-</div>
+    {% block title %}
+        Update Pet Profile
+    {% endblock %}
+    {% block html_head %}
+        <!-- Add CSS custom to this tempate here... -->
+    {% endblock %}
+    <!-- Add additional custom headers here... -->
+    <div>
+        <header class=" bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
+            <div class="container">
+                <h1 style="font-size: 30px;">Update Pet Profile</h1>
+            </div>
+        </header>
+    </div>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid" overflow="auto" style="padding-top: 14px;padding-bottom: 14px;">
+<div class="bg-primary container-fluid" overflow="auto" style="padding-top: 14px;padding-bottom: 14px;">
     <div class="card" id="TableSorterCard">
         <div class="row">
             <div class="col-12">
@@ -85,7 +90,7 @@
                                             <option value="Adopted">Adopted</option>
                                             <option value="Available">Available</option>
                                             <option value="Pending">Pending</option>
-                                            <option value="13">Not Available</option>
+                                            <option value="Not Available">Not Available</option>
                                         </select>
                                     </div>
                                 </div>
@@ -121,11 +126,15 @@
                             </div>
                     </div>
                     <div class="form-group justify-content-center d-flex">
-                        <div id="submit-btn" style="padding-top:15px;">
+                        <div id="udpate-profile-submit-btn" style="padding-top:15px; padding-right:25px;">
                             <div class="form-row">
-                                <button class="btn btn-primary btn-light m-0 rounded-pill px-4" type="button" style="min-width: 500px;" action method="POST" target="hidden_iframe">Submit</button>
+                                <button class="btn btn-primary btn-dark m-0 rounded-pill px-4" type="button" style="min-width: 150px;" action method="POST" target="hidden_iframe">Submit</button>
                             </div>
                         </div>
+                        <div id="update-profile-cancel-btn" style="padding-top:15px;">
+                            <div class="form-row" >
+                                <button class="btn btn-danger btn-dark m-0 rounded-pill px-4" type="button" style="min-width: 150px;" onclick="window.location.href='/admin_profiles';">Cancel</button>
+                            </div>
                     </div>
                 </form>
             </div>
@@ -137,4 +146,10 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+    <!-- Add Javascript custom to this tempate here... -->
+    <!-- Bootstrap Studio Script Files -->
+    <script src="../static/js/Application-Form.js"></script>
 {% endblock %}

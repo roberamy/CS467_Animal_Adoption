@@ -2,20 +2,31 @@
 
 -->
 {% extends "nav.html" %}
-{% block title %}
-    My Next Pet - Profiles
-{% endblock %}
+
 {% block header %}
-<div>
-    <header class="masthead bg-primary text-white text-center" style="font-size: 12px;height:50px" overflow="auto">
-        <div class="container">
-            <h1 style="font-size: 30px;">Administer Pet Profiles</h1>
-        </div>
-    </header>
-</div>
+    {% block title %}
+        Pet Profile Admin
+    {% endblock %}
+    {% block html_head %}
+    <!-- Add CSS custom to this tempate here... -->
+        <!-- Bootstrap Studio CSS Files -->
+        <link rel="stylesheet" href="../static/css/Table-with-search--sort-filters.css">
+        <!-- Bootstrap Studio Links -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/css/theme.bootstrap_4.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    {% endblock %}
+    <!-- Add additional custom headers here... -->
+    <div>
+        <header class=" bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
+            <div class="container">
+                <h1 style="font-size: 30px;">Administer Pet Profiles</h1>
+            </div>
+        </header>
+    </div>
 {% endblock %}
 
 {% block content %}
+<!-- Add page content here... -->
 <div class="masthead bg-primary text-white text-center" style="font-size: 12px;" overflow="auto">
     <div class="container-fluid" overflow="auto">
         <div class="card" id="TableSorterCard">
@@ -104,3 +115,12 @@
     </div>
 </div>
 {% endblock %}
+{% block script %}
+    <!-- Add Javascript custom to this tempate here... -->
+    <!-- Bootstrap Studio Script Files -->
+    <script src="../static/js/Table-with-search--sort-filters.js"></script>
+    <!-- Bootstrap Studio Script Links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-filter.min.js"></script>
+{% endblock %}
+
