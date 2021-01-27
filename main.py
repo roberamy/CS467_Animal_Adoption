@@ -46,7 +46,7 @@ def adopt_other_pets():
 
 @app.route("/log_in", methods=["GET"])
 def log_in():
-    return render_template('log_in.html') 
+    return render_template('log_in_j.html') 
 
 @app.route("/news_list", methods=["GET"])
 def news_list():
