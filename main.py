@@ -46,6 +46,10 @@ def log_in():
 def news_list():
     return render_template('news_list.html')
 
+@app.route("/news_post", methods=["GET"])
+def news_post():
+    return render_template('news_post.html')
+
 @app.route("/service_page", methods=["GET"])
 def service_page():
     return render_template('service_page.html')
