@@ -56,6 +56,10 @@ def news_list():
 def news_post():
     return render_template('news_post.html')
 
+@app.route("/pet_page", methods=["GET"])
+def pet_page():
+    return render_template('pet_page.html')
+
 @app.route("/service_page", methods=["GET"])
 def service_page():
     return render_template('service_page.html')
