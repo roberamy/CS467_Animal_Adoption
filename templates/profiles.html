@@ -4,21 +4,20 @@
 -->
 {% extends "nav.html" %}
 
+
 {% block header %}
     {% block title %}
-        Rescue Paws Home
+        Available Pets
     {% endblock %}
     {% block html_head %}
         <!-- Add CSS custom to this tempate here... -->
     {% endblock %}
     <!-- Add additional custom headers here... -->
-    <div>
-        <header class="text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
-            <div class="container">
-                <h1 style="font-size: 30px;">Pets Available for Adoption</h1>
-            </div>
-        </header>
-    </div>
+    <header class="text-center" style="padding-top:120px;font-size: 14px;height:175px" overflow="auto">
+        <div class="container">
+            <h1 style="font-size: 30px;">Pets Available for Adoption</h1>
+        </div>
+    </header>
 {% endblock %}
 
 {% block content %}
@@ -31,4 +30,5 @@
 {% block script %}
     <!-- Add Javascript custom to this tempate here... -->
 {% endblock %}
+
 
