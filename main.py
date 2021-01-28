@@ -31,7 +31,6 @@ def update_profile():
 
 # Jasper Added
 
-
 @app.route("/adopt_cat", methods=["GET"])
 def adopt_cat():
     return render_template('adopt_cat.html') 
