@@ -1,8 +1,39 @@
-{% extends "base_parent.html" %}
-{% block title %} Rescue Paws Pet Page {% endblock %}
+{% extends "nav.html" %}
 
-    {% block content %}
-    <main class="page product-page">
+{% block header %}
+    {% block title %} Rescue Paws Pet Profile {% endblock %}
+    {% block html_head %}
+        <!-- Add CSS custom to this tempate here... -->
+        <!-- J add -->
+        <link rel="stylesheet" href="static/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+        <link rel="stylesheet" href="static/css/styles.min.css">
+    {% endblock %}
+    <!-- Add additional custom headers here... -->
+
+    <div>
+        <header class="text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
+            <div class="container">
+                <h1 style="font-size: 30px;">Pets Available for Adoption</h1>
+            </div>
+        </header>
+    </div>
+{% endblock %}     <!-- Endblock for header -->
+
+{% block content %}
+    <!-- Add page content here... -->
+
+    <!-- <div>
+        <p>Content TBD...</p>
+    </div> -->
+
+    <!-- J add -->
+
+    <!-- <main class="page product-page"> -->
         <section class="clean-block clean-product dark">
             <div class="container">
                 <div class="block-heading">
@@ -113,5 +144,11 @@
                 </div>
             </div>
         </section>
-    </main>
+    <!-- </main> -->
+  
+
     {% endblock %}
+
+{% block script %}
+    <!-- Add Javascript custom to this tempate here... -->
+{% endblock %}
