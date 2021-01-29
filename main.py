@@ -102,13 +102,13 @@ def news():
 # def adopt_other_pets():
 #     return render_template('adopt_other_pets.html') 
 
-@app.route("/log_in", methods=["GET"])
-def log_in():
-    return render_template('log_in_j.html') 
+# @app.route("/log_in", methods=["GET"])
+# def log_in():
+#     return render_template('log_in_j.html') 
 
-@app.route("/news_list", methods=["GET"])
-def news_list():
-    return render_template('news_list.html')
+# @app.route("/news_list", methods=["GET"])
+# def news_list():
+#     return render_template('news_list.html')
 
 @app.route("/news_post", methods=["GET"])
 def news_post():
@@ -118,9 +118,9 @@ def news_post():
 def pet_page():
     return render_template('pet_page.html')
 
-@app.route("/service_page", methods=["GET"])
-def service_page():
-    return render_template('service_page.html')
+# @app.route("/service_page", methods=["GET"])
+# def service_page():
+#     return render_template('service_page.html')
 
 # @app.route("/sign_up", methods=["GET"])
 # def sign_up():
