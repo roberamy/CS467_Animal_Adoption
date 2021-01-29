@@ -91,11 +91,17 @@ def news():
 
 @app.route("/news_post", methods=["GET"])
 def news_post():
-    return render_template('news_post.html')
+    if 'sub' not in session:
+        return "Page Not Found."
+    else:
+        return render_template('news_post.html')
 
 @app.route("/pet_page", methods=["GET"])
 def pet_page():
-    return render_template('pet_page.html')
+    if 'sub' not in session:
+        return "Page Not Found."
+    else:
+        return render_template('pet_page.html')
 
 
 # 
