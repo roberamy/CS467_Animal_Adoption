@@ -23,7 +23,8 @@ https://developers.google.com/identity/sign-in/web/sign-in
     {% endblock %}
 </head>
     <body>
-        <main>
+        <!-- original main tag -->
+        <!-- <main> -->
             <div class="navbar" style="margin: 0px 0px 0px 0px;">
                 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-secondary text-uppercase" id="mainNav" style="padding-right: 0px;padding-left: 0px;">
                     <div class="container" style="max-width:1750px;padding:0px; margin-left:15px; margin-right:15px;margin-bottom:0px;">
@@ -75,9 +76,14 @@ https://developers.google.com/identity/sign-in/web/sign-in
             </div>
             <div id="header">{% block header %}{% endblock %}</div>
 
-            <div id="content">{% block content %}<!-- Page Content -->{% endblock %}</div>
+        <!-- J add main start here -->
+        <main class="page landing-page"> 
+        
+            <!-- Page Content -->
+            <div id="content">{% block content %}{% endblock %}</div>
 
-        </main>
+        </main> 
+
         <div class="copyright py-4 text-center text-white">
             <div class="container"><small>Copyright ©&nbsp;2021 Rescue Paws</small></div>
         </div>
