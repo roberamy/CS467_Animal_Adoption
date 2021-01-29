@@ -26,11 +26,11 @@ from datetime import datetime
 bp = Blueprint('OAuth', __name__)
 client = datastore.Client()
 
-CLIENT_ID = r'939115278036-he2m51te7ohrp1m9r457nos1dbnh5u2o.apps.googleusercontent.com'
-CLIENT_SECRET = r'LQQ_RyrsV-eA1uiuux0RrI7J'
-SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/userinfo.profile']
-REDIRECT_URI = 'https://datingappforanimaladoption.wl.r.appspot.com/authorization'
+# CLIENT_ID = r'939115278036-he2m51te7ohrp1m9r457nos1dbnh5u2o.apps.googleusercontent.com'
+# CLIENT_SECRET = r'LQQ_RyrsV-eA1uiuux0RrI7J'
+# SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
+#     'https://www.googleapis.com/auth/userinfo.profile']
+# REDIRECT_URI = 'https://datingappforanimaladoption.wl.r.appspot.com/authorization'
 
 # TESTING LOCALLY w/my GAE app setup (Amy)
 #CLIENT_ID = r'962694165859-mvk5ndmuto54p713jl623611ifamlugu.apps.googleusercontent.com'
@@ -39,6 +39,14 @@ REDIRECT_URI = 'https://datingappforanimaladoption.wl.r.appspot.com/authorizatio
 #    'https://www.googleapis.com/auth/userinfo.profile']
 #REDIRECT_URI = 'https://roberamy-animal-app.wl.r.appspot.com/authorization'
 #REDIRECT_URI = 'http://localhost:8080/authorization'
+
+# TESTING LOCALLY w/my GAE app setup (Jasper)
+CLIENT_ID = r'20872689223-stjkrofc8280dtpnghpinqfif2dt7sqg.apps.googleusercontent.com'
+CLIENT_SECRET = r'LUKL4Udr-T3Pki4lhUgZP32J'
+SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
+   'https://www.googleapis.com/auth/userinfo.profile']
+REDIRECT_URI = 'https://wongjasp-animal-app.wl.r.appspot.com/authorization'
+REDIRECT_URI = 'http://localhost:8080/authorization'
 
 OAUTH = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URI, scope=SCOPES)
     

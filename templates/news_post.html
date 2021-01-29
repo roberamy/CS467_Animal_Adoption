@@ -1,46 +1,79 @@
-{% extends "base_parent.html" %}
-{% block title %} Rescue Paws Post {% endblock %}
+{% extends "nav.html" %}
 
-    {% block content %}
-    <main class="page blog-post">
-        <section class="clean-block clean-post dark">
+{% block header %}
+    {% block title %} Rescue Paws News Post {% endblock %}
+    {% block html_head %}
+        <!-- Add CSS custom to this tempate here... -->
+        <!-- J add -->
+        <link rel="stylesheet" href="static/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+        <link rel="stylesheet" href="static/css/styles.min.css">
+    {% endblock %}
+    <!-- Add additional custom headers here... -->
+
+    <div>
+        <header class="text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
             <div class="container">
-                <div class="block-content">
-                    <div class="post-image" style="background-image:url(&quot;static/img/scenery/image3.jpg&quot;);"></div>
-                    <div class="post-body">
-                        <h3>Lorem Ipsum dolor</h3>
-                        <div class="post-info"><span>By John Smith</span><span>Jan 27, 2018</span></div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <figure class="figure"><img class="rounded img-fluid figure-img" src="static/img/scenery/image6.jpg" alt="A generic square placeholder image with rounded corners in a figure.">
-                            <figcaption class="figure-caption">Lorem ipsum dolor</figcaption>
-                        </figure>
-                        <h4>Lorem Ipsum</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <figure class="figure"><img class="rounded img-fluid figure-img" src="static/img/scenery/image4.jpg" alt="A generic square placeholder image with rounded corners in a figure.">
-                                    <figcaption class="figure-caption">Lorem Ipsum dolor</figcaption>
-                                </figure>
-                            </div>
-                            <div class="col">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.&nbsp;</p>
-                            </div>
+                <h1 style="font-size: 30px;">News XX/XX/XXXX</h1>
+            </div>
+        </header>
+    </div>
+{% endblock %}     <!-- Endblock for header -->
+
+{% block content %}
+    <!-- Add page content here... -->
+
+    <!-- <div>
+        <p>Content TBD...</p>
+    </div> -->
+
+    <!-- J add -->
+    <section class="clean-block clean-post dark">
+        <div class="container">
+            <div class="block-content">
+                <div class="post-image" style="background-image:url(&quot;static/img/scenery/image3.jpg&quot;);"></div>
+                <div class="post-body">
+                    <h3>Lorem Ipsum dolor</h3>
+                    <div class="post-info"><span>By John Smith</span><span>Jan 27, 2018</span></div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <figure class="figure"><img class="rounded img-fluid figure-img" src="static/img/scenery/image6.jpg" alt="A generic square placeholder image with rounded corners in a figure.">
+                        <figcaption class="figure-caption">Lorem ipsum dolor</figcaption>
+                    </figure>
+                    <h4>Lorem Ipsum</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <figure class="figure"><img class="rounded img-fluid figure-img" src="static/img/scenery/image4.jpg" alt="A generic square placeholder image with rounded corners in a figure.">
+                                <figcaption class="figure-caption">Lorem Ipsum dolor</figcaption>
+                            </figure>
                         </div>
-                        <h4>Lorem Ipsum dolor</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <div class="row">
-                            <div class="col">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                            <div class="col-md-6">
-                                <figure class="figure"><img class="rounded img-fluid figure-img" src="static/img/scenery/image5.jpg" alt="A generic square placeholder image with rounded corners in a figure.">
-                                    <figcaption class="figure-caption">Lorem Ipsum dolor</figcaption>
-                                </figure>
-                            </div>
+                        <div class="col">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.&nbsp;</p>
+                        </div>
+                    </div>
+                    <h4>Lorem Ipsum dolor</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <div class="row">
+                        <div class="col">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <figure class="figure"><img class="rounded img-fluid figure-img" src="static/img/scenery/image5.jpg" alt="A generic square placeholder image with rounded corners in a figure.">
+                                <figcaption class="figure-caption">Lorem Ipsum dolor</figcaption>
+                            </figure>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-    {% endblock %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+    <!-- Add Javascript custom to this tempate here... -->
+{% endblock %}
+
