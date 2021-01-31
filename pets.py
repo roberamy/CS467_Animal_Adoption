@@ -8,7 +8,7 @@
 #                                                                                                             #
 ###############################################################################################################
 
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, redirect, render_template, session
 from google.cloud import datastore
 from requests_oauthlib import OAuth2Session
 import json
@@ -72,9 +72,9 @@ def create_pet():
     
     if request.method == 'POST':        
         # Request header ('content-type') must be JSON
-        if not _validateContentType(request):
-            responseBody = {"Error": "'content-type' sent must be JSON"}
-            return (json.dumps(responseBody), 406)
+        #if not _validateContentType(request):
+            #responseBody = {"Error": "'content-type' sent must be JSON"}
+            #return (json.dumps(responseBody), 406)
         
         # Check for properly formatted json in request body
         try:
@@ -144,9 +144,9 @@ def read_pets():
     
     if request.method == 'GET':  
         # Request header ('accept') must be application/json
-        if not _validateAcceptType(request):
-            responseBody = {"Error": "'accept' sent must be application/json"}
-            return (json.dumps(responseBody), 406)
+        #if not _validateAcceptType(request):
+            #responseBody = {"Error": "'accept' sent must be application/json"}
+            #return (json.dumps(responseBody), 406)
             
         JWT = None
         sub = None
@@ -208,9 +208,9 @@ def get_pet(pet_id):
     
     if request.method == 'GET':  
         # Request header ('accept') must be application/json
-        if not _validateAcceptType(request):
-            responseBody = {"Error": "'accept' sent must be application/json"}
-            return (json.dumps(responseBody), 406)
+        #if not _validateAcceptType(request):
+            #responseBody = {"Error": "'accept' sent must be application/json"}
+            #return (json.dumps(responseBody), 406)
             
         JWT = None
         sub = None
@@ -399,9 +399,9 @@ def delete_pet(pet_id):
     if request.method == 'DELETE':
         
         # Request header ('accept') must be application/json
-        if not _validateAcceptType(request):
-            responseBody = {"Error": "'accept' sent must be application/json"}
-            return (json.dumps(responseBody), 406)
+        #if not _validateAcceptType(request):
+            #responseBody = {"Error": "'accept' sent must be application/json"}
+            #return (json.dumps(responseBody), 406)
             
         try:
             # Get JWT from Authorization header

@@ -26,11 +26,11 @@ from datetime import datetime
 bp = Blueprint('OAuth', __name__)
 client = datastore.Client()
 
-# CLIENT_ID = r'939115278036-he2m51te7ohrp1m9r457nos1dbnh5u2o.apps.googleusercontent.com'
-# CLIENT_SECRET = r'LQQ_RyrsV-eA1uiuux0RrI7J'
-# SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
-#     'https://www.googleapis.com/auth/userinfo.profile']
-# REDIRECT_URI = 'https://datingappforanimaladoption.wl.r.appspot.com/authorization'
+CLIENT_ID = r'939115278036-he2m51te7ohrp1m9r457nos1dbnh5u2o.apps.googleusercontent.com'
+CLIENT_SECRET = r'LQQ_RyrsV-eA1uiuux0RrI7J'
+SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile']
+REDIRECT_URI = 'https://datingappforanimaladoption.wl.r.appspot.com/authorization'
 
 # TESTING LOCALLY w/my GAE app setup (Amy)
 #CLIENT_ID = r'962694165859-mvk5ndmuto54p713jl623611ifamlugu.apps.googleusercontent.com'
@@ -41,12 +41,12 @@ client = datastore.Client()
 #REDIRECT_URI = 'http://localhost:8080/authorization'
 
 # TESTING LOCALLY w/my GAE app setup (Jasper)
-CLIENT_ID = r'20872689223-stjkrofc8280dtpnghpinqfif2dt7sqg.apps.googleusercontent.com'
-CLIENT_SECRET = r'LUKL4Udr-T3Pki4lhUgZP32J'
-SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
-   'https://www.googleapis.com/auth/userinfo.profile']
-REDIRECT_URI = 'https://wongjasp-animal-app.wl.r.appspot.com/authorization'
-REDIRECT_URI = 'http://localhost:8080/authorization'
+# CLIENT_ID = r'20872689223-stjkrofc8280dtpnghpinqfif2dt7sqg.apps.googleusercontent.com'
+# CLIENT_SECRET = r'LUKL4Udr-T3Pki4lhUgZP32J'
+# SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
+#    'https://www.googleapis.com/auth/userinfo.profile']
+#  REDIRECT_URI = 'https://wongjasp-animal-app.wl.r.appspot.com/authorization'
+#  REDIRECT_URI = 'http://localhost:8080/authorization'
 
 OAUTH = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URI, scope=SCOPES)
     
@@ -93,8 +93,6 @@ def callback():
     session['usr_email'] = id_info['email']
     session['sub'] = id_info['sub']
 
-    #return "Your JWT is: %s" % token['id_token']
-    #return "Your email is: %s" % id_info #['email']
     return redirect('/results')
 
 ###############################################################################################################   
@@ -102,7 +100,7 @@ def callback():
 @bp.route('/results', methods=['GET'])
 def results():
     if 'sub' not in session:
-        return render_template('results.html')
+        return render_template('index.html')
         
     email = session['usr_email']
     jwt = session['id_token']
@@ -110,34 +108,30 @@ def results():
 
     # query all users in database
     query = client.query(kind=constants.users)
-    results = list(query.fetch())
+    users = list(query.fetch())
     
     # Check if user has account
-    for r in results:
+    for user in users:
         try:
             # User already exists
-            if r['uniqueID'] == sub:
-                session['isAdmin'] = r['isAdmin']
-                return render_template('results.html', sub=sub, email=email, jwt=jwt, isAdmin=session['isAdmin'])
+            if user['uniqueID'] == sub:
+                session['isAdmin'] = user['isAdmin']
+                return render_template('index.html')
+                #return render_template('results.html', sub=sub, email=email, jwt=jwt, isAdmin=session['isAdmin'])
         except:
             pass
     
-    # Record account creation date
+    # User doesn't exist, store user and record account creation date
     now = datetime.now()
-    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")   
-
-    # Store user in database
+    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")  
     new_user = datastore.entity.Entity(key=client.key(constants.users))
     new_user.update({"uniqueID": sub, "email": email, "isAdmin": False, "creation_date": dt_string, "last_modified": None})
     client.put(new_user)
-    return render_template('results.html', sub=sub, email=email, jwt=jwt, isAdmin=False)
+    
+    return render_template('index.html')
+    #return render_template('results.html', sub=sub, email=email, jwt=jwt, isAdmin=False)
     
 ############################################################################################################### 
                    
-@bp.route('/logout', methods=['GET'])
-def logout():
-    session.clear()
-    return redirect('/')
 
-###############################################################################################################
 
