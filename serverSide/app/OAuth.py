@@ -1,8 +1,8 @@
 ###############################################################################################################
 #                                                                                                             #          
-# Author: Gregory A. Bauer, Jasper Wong, Amy Robertson                                                                                    #
+# Author: Gregory A. Bauer, Jasper Wong, Amy Robertson                                                        #
 # Email: bauergr@oregonstate.edu                                                                              #
-# Course: CS467_400_W2021                                                                                    #
+# Course: CS467_400_W2021                                                                                     #
 # Sources: https://developers.google.com/identity/protocols/oauth2/web-server#httprest,                       #
 #   https://stackoverflow.com/questions/17057191/redirect-while-passing-arguments,                            #
 #   https://flask.palletsprojects.com/en/1.1.x/quickstart/,                                                   #
@@ -32,28 +32,30 @@ SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/userinfo.profile']
 REDIRECT_URI = 'https://datingappforanimaladoption.wl.r.appspot.com/authorization'
 
+# TESTING LOCALLY w/my GAE app setup (Amy)
+#CLIENT_ID = r'962694165859-mvk5ndmuto54p713jl623611ifamlugu.apps.googleusercontent.com'
+#CLIENT_SECRET = r'JgEZabSFKK2vDXWC9AeUty6D'
+#SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
+#    'https://www.googleapis.com/auth/userinfo.profile']
+#REDIRECT_URI = 'https://roberamy-animal-app.wl.r.appspot.com/authorization'
+#REDIRECT_URI = 'http://localhost:8080/authorization'
+
+# TESTING LOCALLY w/my GAE app setup (Jasper)
+# CLIENT_ID = r'20872689223-stjkrofc8280dtpnghpinqfif2dt7sqg.apps.googleusercontent.com'
+# CLIENT_SECRET = r'LUKL4Udr-T3Pki4lhUgZP32J'
+# SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
+#    'https://www.googleapis.com/auth/userinfo.profile']
+#  REDIRECT_URI = 'https://wongjasp-animal-app.wl.r.appspot.com/authorization'
+#  REDIRECT_URI = 'http://localhost:8080/authorization'
+
 OAUTH = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URI, scope=SCOPES)
-
-###############################################################################################################
-
-@bp.route('/home', methods=['GET'])
-def mainPage():
-    
-    return render_template('index.html')
     
 ###############################################################################################################
 
-@bp.route('/admin', methods=['GET'])
-def adminPage():
+#@bp.route('/user', methods=['GET'])
+#def userPage():
     
-    return render_template('admin.html')
-    
-###############################################################################################################
-
-@bp.route('/user', methods=['GET'])
-def userPage():
-    
-    return render_template('user.html')
+#    return render_template('user.html')
     
 ###############################################################################################################
     
@@ -91,42 +93,45 @@ def callback():
     session['usr_email'] = id_info['email']
     session['sub'] = id_info['sub']
 
-    #return "Your JWT is: %s" % token['id_token']
-    #return "Your email is: %s" % id_info #['email']
     return redirect('/results')
 
 ###############################################################################################################   
 
 @bp.route('/results', methods=['GET'])
 def results():
-    
+    if 'sub' not in session:
+        return render_template('index.html')
+        
     email = session['usr_email']
     jwt = session['id_token']
     sub = session['sub']
-    
+
     # query all users in database
     query = client.query(kind=constants.users)
-    results = list(query.fetch())
+    users = list(query.fetch())
     
     # Check if user has account
-    for r in results:
+    for user in users:
         try:
             # User already exists
-            if r['uniqueID'] == sub:
-                return render_template('results.html', email=email, jwt=jwt)
+            if user['uniqueID'] == sub:
+                session['isAdmin'] = user['isAdmin']
+                return render_template('index.html')
+                #return render_template('results.html', sub=sub, email=email, jwt=jwt, isAdmin=session['isAdmin'])
         except:
             pass
     
-    # Record account creation date
+    # User doesn't exist, store user and record account creation date
     now = datetime.now()
-    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")   
-
-    # Store user in database
+    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")  
     new_user = datastore.entity.Entity(key=client.key(constants.users))
-    new_user.update({"uniqueID": sub, "email": email, "boats": None, "creation_date": dt_string, "last_modified": None})
-    client.put(new_user)        
+    new_user.update({"uniqueID": sub, "email": email, "isAdmin": False, "creation_date": dt_string, "last_modified": None})
+    client.put(new_user)
     
-    return render_template('results.html', sub=sub, email=email, jwt=jwt)
+    return render_template('index.html')
+    #return render_template('results.html', sub=sub, email=email, jwt=jwt, isAdmin=False)
     
 ############################################################################################################### 
                    
+
+
