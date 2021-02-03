@@ -4,7 +4,7 @@
 # Email: bauergr@oregonstate.edu                                                                              #
 # Course: CS467_400_W2021                                                                                     #
 #                                                                                                             #
-# Description: Routes for admin page                                                                          #
+# Description: Routes for news page                                                                           #
 #                                                                                                             #
 # Note:                                                                                                       #
 #                                                                                                             #
@@ -21,25 +21,39 @@ from google.auth import jwt
 from google.auth.transport import requests
 from datetime import datetime
 
-bp = Blueprint('users', __name__)
+bp = Blueprint('news', __name__)
 client = datastore.Client()
 
+CLIENT_ID = r'939115278036-he2m51te7ohrp1m9r457nos1dbnh5u2o.apps.googleusercontent.com'
+CLIENT_SECRET = r'LQQ_RyrsV-eA1uiuux0RrI7J'
+SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile']
+REDIRECT_URI = 'https://datingappforanimaladoption.wl.r.appspot.com/authorization'
+
 ###############################################################################################################
 
-@bp.route('/users', methods=['GET'])
-def getUsers():
-       
-    # Get all users from the datastore
-    query = client.query(kind=constants.users)
-    results = list(query.fetch())
-    
-    # Store users for return 
-    responseBody = []
-    for r in results:
-        r["self"] = 'https://bauergr-final.wl.r.appspot.com/boats/' + str(r.key.id)
-        responseBody.append(r)
-             
-    return (json.dumps(responseBody), 200)
-    
-    
+@bp.route('/news', methods=["GET"])
+def news():
+    if 'sub' not in session:
+        return "sub not in session."
+    else:
+        return render_template('news.html')
+        
 ###############################################################################################################
+
+@bp.route("/news_post", methods=["GET"])
+def news_post():
+    if 'sub' not in session:
+        return "sub not in session."
+    else:
+        return render_template('news_post.html')
+        
+###############################################################################################################
+
+@bp.route("/pet_page", methods=["GET"])
+def pet_page():
+    if 'sub' not in session:
+        return "sub not in session."
+    else:
+        return render_template('pet_page.html')
+
