@@ -14,6 +14,7 @@
         <!-- Bootstrap Studio Links -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/css/theme.bootstrap_4.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+            
     {% endblock %}
     <!-- Add additional custom headers here... -->
     <div>
@@ -52,9 +53,9 @@
                                     <th class="text-center">Breed</th>
                                     <th class="text-center">Age</th>
                                     <th class="text-center">Genger</th>
-                                    <th class="text-center" style="min-width: 100px">Disposition</th>
-                                    <th class="text-center" style="min-width: 100px">Status</th>
-                                    <th class="text-center" style="min-width: 150px">Description</th>
+                                    <th class="text-center" style="min-width: 150px">Disposition</th>
+                                    <th class="text-center" style="min-width: 150px">Status</th>
+                                    <th class="text-center" style="min-width: 250px">Description</th>
                                     <th class="text-center">Location</th>
                                     <th class="text-center">Available</th>
                                     <th class="text-center">Adoption Date</th>
@@ -63,52 +64,37 @@
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                                <tr>
-                                    <td>01/15/2020</td>
-                                    <td>Sunshine</td>
-                                    <td>Cat</td>
-                                    <td>Siamese Mix</td>
-                                    <td>Young</td>
-                                    <td>Female</td>
-                                    <td>Good with other animals; Good with children;</td>
-                                    <td>Seal-point siamese kitten looking for a forever home.</td>
-                                    <td>Stray kitten found in park. Named Sunshine for her sunny disposition.&nbsp; Loves attention and snuggling with other animals or human companions.</td>
-                                    <td>Seattle, WA</td>
-                                    <td>Available</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <a class="btn btn-success" role="button" style="background: rgb(30,26,193);margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;" href="/update_profile"><i class="fas fa-pencil-alt" style="font-size: 11px;"></i>
+                                {% for profile in profiles %}
+                                <tr style="font-size:11px;">
+                                    <td>{{profile.date_created}}</td>
+                                    <td>{{profile.name}}</td>
+                                    <td>{{profile.type}}</td>
+                                    <td>{{profile.breed}}</td>
+                                    <td>{{profile.age}}</td>
+                                    <td>{{profile.gender}}</td>
+                                    <td>{{profile.disposition}}</td>
+                                    <td>{{profile.status}}</td>
+                                    <td>{{profile.description}}</td>
+                                    <td>{{profile.location}}</td>
+                                    <td>{{profile.availability}}</td>
+                                    <td>{{profile.adoption_date}}</td>
+                                    <td>{{profile.adopted_by}}</td>
+                                    <td class="text-center" padding:2px; padding-left:2px; padding-bottom:2px; padding-top:2px; padding-right:2px;">
+                                        <a class="btn btn-success" role="button" style="background:rgb(30,26,193); border:rgb(30,26,193); margin:2px; font-size:11px; height:30px; width:30px; padding-left:10px; padding-top:7px;" href="/view/{{profile.id}}">
+                                            <i class="fas fa-pencil-alt"></i>
                                         </a>
-                                        <a class="btn btn-danger" role="button" style="margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;"><i class="fas fa-trash" style="font-size: 11px;"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr id="pet_profile">
-                                    <td>06/23/2019</td>
-                                    <td>Pumpkin</td>
-                                    <td>Cat</td>
-                                    <td>Shorthair</td>
-                                    <td>Adult</td>
-                                    <td>Male</td>
-                                    <td>Single pet household</td>
-                                    <td>Grumpy adult looking for single pet household.</td>
-                                    <td>Pumpkin's owner was unable to care for him. A chill guy, he's enjoys a few scratches now and again, but cuddling is not his thing.&nbsp;</td>
-                                    <td>Portland, OR</td>
-                                    <td>Adopted</td>
-                                    <td>09/01/2019</td>
-                                    <td>Joseph Smith</td>
-                                    <td class="text-center" style="font-size: 11px;padding: 2px;padding-left: 2px;padding-bottom: 2px;padding-top: 2px;padding-right: 2px;">
-                                        <a class="btn btn-success" role="button" style="background: rgb(30,26,193);margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;" href="/update_profile"><i class="fas fa-pencil-alt" style="font-size: 11px;" ></i>
-                                        </a>
-                                        <a class="btn btn-danger" role="button" style="margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;" href=""><i class="fas fa-trash" style="font-size: 11px;"></i>
+                                        <a class="btn btn-danger" role="button" style="margin:2px; font-size:11px; height:30px; width:30px; padding-left:8px; padding-top:5px;" href="/delete/{{profile.id}}">
+                                            <i class="fas fa-trash" >
+                                            </i>
                                         </a>
                                     </td>
                                 </tr>
+                                {% endfor %}
                                 <tr></tr>
                             </tbody>
                         </table>
                     </div>
+                    
                 </div>
             </div>
         </div>
