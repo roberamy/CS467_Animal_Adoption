@@ -20,7 +20,7 @@ import news
 
 # This disables the requirement to use HTTPS so that you can test locally.
 import os 
-#os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
 app.register_blueprint(OAuth.bp)

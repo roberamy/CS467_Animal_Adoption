@@ -40,11 +40,7 @@ client = datastore.Client()
 #REDIRECT_URI = 'https://roberamy-animal-app.wl.r.appspot.com/authorization'
 #REDIRECT_URI = 'http://localhost:8080/authorization'
 
-# # This disables the requirement to use HTTPS so that you can test locally.
-import os 
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-
-# TESTING LOCALLY w/my GAE app setup (Jasper)
+# # TESTING LOCALLY w/my GAE app setup (Jasper)
 CLIENT_ID = r'20872689223-stjkrofc8280dtpnghpinqfif2dt7sqg.apps.googleusercontent.com'
 CLIENT_SECRET = r'LUKL4Udr-T3Pki4lhUgZP32J'
 SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
