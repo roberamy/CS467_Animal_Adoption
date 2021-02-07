@@ -19,14 +19,14 @@ from google.auth import jwt
 from google.auth.transport import requests
 from datetime import datetime
 
-from OAuth import printSession
-
 client = datastore.Client()
 
 bp = Blueprint('pets', __name__)
 
+CLIENT_ID = r'939115278036-he2m51te7ohrp1m9r457nos1dbnh5u2o.apps.googleusercontent.com'
+CLIENT_SECRET = r'LQQ_RyrsV-eA1uiuux0RrI7J'
+
 # Helper function to validate pet attributes
-# TODO: need to figure out how to continue on next line
 def _validateRequiredAttributes(content):
     # Required attributes are there
     if ("name" in content) and ("type" in content) and ("breed" in content) and ("disposition" in content) and ("availability" in content) and ("status" in content) and ("description" in content) and ("location" in content) and ("gender" in content):
@@ -36,7 +36,6 @@ def _validateRequiredAttributes(content):
         return False
 
 # Helper function to validate pet attributes' data types
-# TODO: need to figure out how to continue on next line
 def _validateDataTypes(content):
     # Data types are as expected
     if isinstance(content['name'], str) and isinstance(content['type'], str) and isinstance(content['breed'], str) and isinstance(content['disposition'], str) and isinstance(content['availability'], str) and isinstance(content['status'], str) and isinstance(content['location'], str) and isinstance(content['gender'], str):
@@ -71,9 +70,9 @@ def create_pet():
     
     if request.method == 'POST':        
         # Request header ('content-type') must be JSON
-        if not _validateContentType(request):
-            responseBody = {"Error": "'content-type' sent must be JSON"}
-            return (json.dumps(responseBody), 406)
+        #if not _validateContentType(request):
+            #responseBody = {"Error": "'content-type' sent must be JSON"}
+            #return (json.dumps(responseBody), 406)
         
         # Check for properly formatted json in request body
         try:
@@ -109,19 +108,11 @@ def create_pet():
             # Create new Entity in the datastore using constants file
             new_pet = datastore.entity.Entity(key=client.key(constants.pets))
             # Update datastore
-            new_pet.update({"name": content["name"],
-                            "type": content["type"],
-                            "breed": content["breed"],
-                            "disposition": content["disposition"],
-                            "availability": content["availability"],
-                            "status": content["status"],
-                            "description": content["description"],
-                            "adoption_date": None,
-                            "date_created": dt_string,
-                            "location": content["location"],
-                            "adopted": False,
-                            "adopted_by": None,
-                            "owner": sub})
+            new_pet.update({"name": content["name"], "type": content["type"], "breed": content["breed"], \
+                "disposition": content["disposition"], "availability": content["availability"], \
+                "status": content["status"], "description": content["description"], "adoption_date": None, \
+                "date_created": dt_string, "location": content["location"], "adopted": False, "adopted_by": None, \
+                "owner": sub})
             client.put(new_pet)
             
             # Contruct response
@@ -151,77 +142,9 @@ def read_pets():
     
     if request.method == 'GET':  
         # Request header ('accept') must be application/json
-        if not _validateAcceptType(request):
-            responseBody = {"Error": "'accept' sent must be application/json"}
-            return (json.dumps(responseBody), 406)
-            
-        JWT = None
-        sub = None
-        # Get JWT from Authorization header
-        try:
-            JWT = request.headers.get('Authorization')
-            #JWT = JWT[7:]
-        except:
-            responseBody = {"Error": "Missing JWT"}
-            return (json.dumps(responseBody), 401)
-            
-        try:
-            # Grab 'sub' ID from JWT verification
-            req = requests.Request()
-            # Raises: exceptions.GoogleAuthError – If the issuer is invalid.
-            id_info = id_token.verify_oauth2_token(JWT, req, constants.CLIENT_ID)
-            sub = id_info['sub']
-            if sub != request.headers.get('Sub'):
-                responseBody = {"Error": "Invalid JWT"}
-                return (json.dumps(responseBody), 401)
-        except:
-            responseBody = {"Error": "Invalid JWT"}
-            return (json.dumps(responseBody), 401)
-                
-        # Get all pets from the datastore owned by user
-        query = client.query(kind=constants.pets)
-        #query.add_filter("owner", "=", sub)
-        results = list(query.fetch())
-        
-        # Set the number of files per page of pagination
-        #b_limit = int(request.args.get('limit', '5'))
-        ## Set the offset to begin next page of pagination
-        #b_offset = int(request.args.get('offset', '0'))
-        ## Iterator object to pages with limit and offset applied
-        #b_iterator = query.fetch(limit= b_limit, offset=b_offset)
-        #pages = b_iterator.pages
-        #results = list(next(pages))
-        ## If next page exists
-        #if b_iterator.next_page_token:
-        #    next_offset = b_offset + b_limit
-        #    next_url = request.base_url + "?limit=" + str(b_limit) + "&offset=" + str(next_offset)
-        #else:
-        #    next_url = None
-                
-        # Add extra attributes to response
-        for r in results:
-            r['id'] = r.key.id
-            r['self'] = constants.url + '/pets/' + str(r.key.id)
-        
-        #output = {"pets": results}
-        #if next_url:
-        #    output["next"] = next_url
-        
-        return (json.dumps(results), 200)
-    else:
-        responseBody = {"Error": "Method not allowed!"}
-        return (json.dumps(responseBody), 405)
-           
-############################################################################################################### 
-
-@bp.route('/pets/<pet_id>', methods=['GET'])
-def get_pet(pet_id):
-    
-    if request.method == 'GET':  
-        # Request header ('accept') must be application/json
-        if not _validateAcceptType(request):
-            responseBody = {"Error": "'accept' sent must be application/json"}
-            return (json.dumps(responseBody), 406)
+        #if not _validateAcceptType(request):
+            #responseBody = {"Error": "'accept' sent must be application/json"}
+            #return (json.dumps(responseBody), 406)
             
         JWT = None
         sub = None
@@ -237,11 +160,72 @@ def get_pet(pet_id):
             # Grab 'sub' ID from JWT verification
             req = requests.Request()
             # Raises: exceptions.GoogleAuthError – If the issuer is invalid.
-            id_info = id_token.verify_oauth2_token(JWT, req, constants.CLIENT_ID)
+            id_info = id_token.verify_oauth2_token(JWT, req, CLIENT_ID)
             sub = id_info['sub']
-            if sub != request.headers.get('Sub'):
-                responseBody = {"Error": "Invalid JWT"}
-                return (json.dumps(responseBody), 401)
+        except:
+            responseBody = {"Error": "Invalid JWT"}
+            return (json.dumps(responseBody), 401)
+                
+        # Get all pets from the datastore owned by user
+        query = client.query(kind=constants.pets)
+        #query.add_filter("owner", "=", sub)
+        
+        # Set the number of files per page of pagination
+        b_limit = int(request.args.get('limit', '5'))
+        # Set the offset to begin next page of pagination
+        b_offset = int(request.args.get('offset', '0'))
+        # Iterator object to pages with limit and offset applied
+        b_iterator = query.fetch(limit= b_limit, offset=b_offset)
+        pages = b_iterator.pages
+        results = list(next(pages))
+        # If next page exists
+        if b_iterator.next_page_token:
+            next_offset = b_offset + b_limit
+            next_url = request.base_url + "?limit=" + str(b_limit) + "&offset=" + str(next_offset)
+        else:
+            next_url = None
+                
+        # Add extra attributes to response
+        for r in results:
+            r['id'] = r.key.id
+            r['self'] = 'https://datingappforanimaladoption.wl.r.appspot.com/pets/' + str(r.key.id)
+        
+        output = {"pets": results} 
+        if next_url:
+            output["next"] = next_url    
+        
+        return (json.dumps(output), 200)
+    else:
+        responseBody = {"Error": "Method not allowed!"}
+        return (json.dumps(responseBody), 405)
+           
+############################################################################################################### 
+
+@bp.route('/pets/<pet_id>', methods=['GET'])
+def get_pet(pet_id):
+    
+    if request.method == 'GET':  
+        # Request header ('accept') must be application/json
+        #if not _validateAcceptType(request):
+            #responseBody = {"Error": "'accept' sent must be application/json"}
+            #return (json.dumps(responseBody), 406)
+            
+        JWT = None
+        sub = None
+        # Get JWT from Authorization header
+        try:
+            JWT = request.headers.get('Authorization')
+            JWT = JWT[7:]
+        except:
+            responseBody = {"Error": "Missing JWT"}
+            return (json.dumps(responseBody), 401)
+            
+        try:
+            # Grab 'sub' ID from JWT verification
+            req = requests.Request()
+            # Raises: exceptions.GoogleAuthError – If the issuer is invalid.
+            id_info = id_token.verify_oauth2_token(JWT, req, CLIENT_ID)
+            sub = id_info['sub']
         except:
             responseBody = {"Error": "Invalid JWT"}
             return (json.dumps(responseBody), 401)
@@ -254,7 +238,7 @@ def get_pet(pet_id):
         # If results returned from datastore
         if pet is not None:
             pet['id'] = pet_id
-            pet['self'] = constants.url + '/pets/' + str(pet_id)
+            pet['self'] = 'https://datingappforanimaladoption.wl.r.appspot.com/pets/' + str(pet_id)
             return (json.dumps(pet), 200)
         else:
             responseBody = { "Error": "No pet with this pet_id exists" }
@@ -413,9 +397,9 @@ def delete_pet(pet_id):
     if request.method == 'DELETE':
         
         # Request header ('accept') must be application/json
-        if not _validateAcceptType(request):
-            responseBody = {"Error": "'accept' sent must be application/json"}
-            return (json.dumps(responseBody), 406)
+        #if not _validateAcceptType(request):
+            #responseBody = {"Error": "'accept' sent must be application/json"}
+            #return (json.dumps(responseBody), 406)
             
         try:
             # Get JWT from Authorization header
@@ -468,12 +452,4 @@ def delete_pet(pet_id):
         return (json.dumps(responseBody), 405)
         
 
-###############################################################################################################
-        
-@bp.route('/profiles', methods=["GET"])
-def view_profile():
-    printSession('***** ADOPT *****')
-    if 'sub' not in session:
-        return "sub not in session."
-    else:
-        return render_template('profiles.html')
+                
