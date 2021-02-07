@@ -2,6 +2,7 @@
 References:
 https://stackoverflow.com/questions/62853822/how-to-display-a-different-navbar-when-the-user-is-logged-into-the-site
 https://developers.google.com/identity/sign-in/web/sign-in
+https://stackoverflow.com/questions/16131988/making-an-image-act-like-a-button
 -->
 
 <!DOCTYPE html>
@@ -25,52 +26,56 @@ https://developers.google.com/identity/sign-in/web/sign-in
     <body>
         <!-- original main tag -->
         <!-- <main> -->
-            <div class="navbar" style="margin: 0px 0px 0px 0px;">
-                <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-secondary text-uppercase" id="mainNav" style="padding-right: 0px;padding-left: 0px;">
-                    <div class="container" style="max-width:1750px;padding:0px; margin-left:15px; margin-right:15px;margin-bottom:0px;">
-                        <a class="navbar-brand js-scroll-trigger" href="/" style="height: 50px;margin: 0px 0px 0px 0px;">&nbsp;<img id="brand-logo" src="../static/img/paw_white.png" style="width:45px">&nbsp;Rescue Paws</a>
-                        {% if session.id_token %}
-                        <button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fa fa-bars"></i>
-                        </button>
+        <div class="navbar" style="margin: 0px 0px 0px 0px;">
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-secondary text-uppercase" id="mainNav" style="padding-right: 0px;padding-left: 0px;">
+                <div class="container" style="max-width:1750px;padding:0px; margin-left:15px; margin-right:15px;margin-bottom:0px;">
+                    <a class="navbar-brand js-scroll-trigger" href="/" style="height: 50px;margin: 0px 0px 0px 0px;">&nbsp;<img id="brand-logo" src="../static/img/paw_white.png" style="width:45px">&nbsp;Rescue Paws</a>
+                    <button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    {% if session.id_token %}
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                        <ul class="nav navbar-nav ml-auto" style="margin: 0px; padding-top:12px;">
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" style="padding-top:4px" href="/profiles">Adopt</a>
+                            </li>
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/news">News</a>
+                            </li>
+                            <li class="nav-item dropdown" aria-expanded="false" style="vertical-align:baseline">
+                                <a class="dropdown-toggle nav-link py-3 px-0 px-lg-3 rounded" data-toggle="dropdown" aria-expanded="false" href="#" style="text-align: left; vertical-align:baseline">My Info</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Favorites</a>
+                                    <a class="dropdown-item" href="#">Applications</a>
+                                </div>
+                            </li>
+                            {% if session.isAdmin %}
+                            <li class="nav-item dropdown" aria-expanded="false" style="vertical-align:baseline">
+                                <a class="dropdown-toggle nav-link py-3 px-0 px-lg-3 rounded" data-toggle="dropdown" aria-expanded="false" href="#" style="text-align: left; vertical-align:baseline">Admin</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/admin_profiles">Profiles</a>
+                                    <a class="dropdown-item" href="#">Applications</a>
+                                </div>
+                            </li>
+                            {% endif %}
+                            <li class="nav-item mx-0 mx-lg-1" style="margin: 7px;font-size: 14px;">
+                                <button class="btn btn-primary" onclick="window.location.href='/logout';"type="button"><strong>LOGOUT</strong></button>
+                            </li>
+                        </ul>
+                        {% else %}
                         <div class="collapse navbar-collapse" id="navbarResponsive">
-                            <ul class="nav navbar-nav ml-auto" style="margin: 0px; padding-top:12px;">
-                                <li class="nav-item mx-0 mx-lg-1">
-                                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" style="padding-top:4px" href="/profiles">Adopt</a>
-                                </li>
-                                <li class="nav-item mx-0 mx-lg-1">
-                                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/news">News</a>
-                                </li>
-                                <li class="nav-item dropdown" aria-expanded="false" style="vertical-align:baseline">
-                                    <a class="dropdown-toggle nav-link py-3 px-0 px-lg-3 rounded" data-toggle="dropdown" aria-expanded="false" href="#" style="text-align: left; vertical-align:baseline">My Info</a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item rounded js-scroll-trigger" href="#">Favorites</a>
-                                        <a class="dropdown-item" href="/user/applications">Applications</a>
-                                    </div>
-                                </li>
-                                {% if session.isAdmin %}
-                                <li class="nav-item dropdown" aria-expanded="false" style="vertical-align:baseline">
-                                    <a class="dropdown-toggle nav-link py-3 px-0 px-lg-3 rounded" data-toggle="dropdown" aria-expanded="false" href="#" style="text-align: left; vertical-align:baseline">Admin</a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="/admin_profiles">Profiles</a>
-                                        <a class="dropdown-item" href="/applications">Applications</a>
-                                    </div>
-                                </li>
-                                {% endif %}
-                                <li class="nav-item mx-0 mx-lg-1" style="margin: 7px;font-size: 14px;">
-                                    <button class="btn btn-primary" onclick="window.location.href='/logout';"type="button"><strong>LOGOUT</strong></button>
+                            <ul class="nav navbar-nav ml-auto" style="margin: 0px;">
+                                <li class="nav-item mx-0 mx-lg-1"style="padding-top:4px">
+                                    <input class="nav navbar-nav" onclick="window.location.href='/index';" type="image" name="googleLogin"  id="googleLogin"src="static/img/btn_google_signin_dark_pressed_web.png"/>
                                 </li>
                             </ul>
                         </div>
-                        {% else %}
-                        <div id="googleLogin">
-                            <a type="button" href="/index"><img id="login-google-logo" src="static/img/btn_google_signin_dark_pressed_web.png"></a>
-                        </div>
                         {% endif %}
                     </div>
-                </nav>
-            </div>
-            <div id="header">{% block header %}{% endblock %}</div>
+                </div>
+            </nav>
+        </div>
+        <div id="header">{% block header %}{% endblock %}</div>
 
         <!-- J add main start here -->
         <main class="page landing-page"> 
