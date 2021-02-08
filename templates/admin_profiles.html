@@ -4,26 +4,27 @@
 {% extends "nav.html" %}
 
 {% block header %}
-    {% block title %}
-        Pet Profile Admin
-    {% endblock %}
-    {% block html_head %}
-    <!-- Add CSS custom to this tempate here... -->
-        <!-- Bootstrap Studio CSS Files -->
-        <link rel="stylesheet" href="../static/css/Table-with-search--sort-filters.css">
-        <!-- Bootstrap Studio Links -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/css/theme.bootstrap_4.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
-            
-    {% endblock %}
-    <!-- Add additional custom headers here... -->
-    <div>
-        <header class=" bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
-            <div class="container">
-                <h1 style="font-size: 30px;">Administer Pet Profiles</h1>
-            </div>
-        </header>
-    </div>
+{% block title %}
+Pet Profile Admin
+{% endblock %}
+{% block html_head %}
+<!-- Add CSS custom to this tempate here... -->
+<!-- Bootstrap Studio CSS Files -->
+<link rel="stylesheet" href="../static/css/Table-with-search--sort-filters.css">
+<!-- Bootstrap Studio Links -->
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/css/theme.bootstrap_4.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+{% endblock %}
+<!-- Add additional custom headers here... -->
+<div>
+    <header class=" bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px"
+        overflow="auto">
+        <div class="container">
+            <h1 style="font-size: 30px;">Administer Pet Profiles</h1>
+        </div>
+    </header>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -34,10 +35,12 @@
             <div class="card-header py-3">
                 <div class="row table-topper align-items-center">
                     <div class="col-12 col-sm-5 col-md-6 text-left" style="margin: 0px;padding: 5px 15px;">
-                        <a class="btn btn-primary" role="button" href="/add_profile"><i class="fa fa-plus"></i>&nbsp;Add Profile</a>
+                        <a class="btn btn-primary" role="button" href="/add_profile"><i class="fa fa-plus"></i>&nbsp;Add
+                            Profile</a>
                     </div>
                     <div class="col-12 col-sm-7 col-md-6 text-right" style="margin: 0px;padding: 5px 15px;">
-                        <p class="text-primary m-0 font-weight-bold">ADD FILTERS HERE...?</p><a class="btn btn-primary" role="button">Filter</a>
+                        <p class="text-primary m-0 font-weight-bold">ADD FILTERS HERE...?</p><a class="btn btn-primary"
+                            role="button">Filter</a>
                     </div>
                 </div>
             </div>
@@ -52,10 +55,10 @@
                                     <th class="text-center">Type</th>
                                     <th class="text-center">Breed</th>
                                     <th class="text-center">Age</th>
-                                    <th class="text-center">Genger</th>
-                                    <th class="text-center" style="min-width: 150px">Disposition</th>
-                                    <th class="text-center" style="min-width: 150px">Status</th>
-                                    <th class="text-center" style="min-width: 250px">Description</th>
+                                    <th class="text-center">Gender</th>
+                                    <th class="text-center" style="min-width: 100px">Disposition</th>
+                                    <th class="text-center" style="min-width: 100px">Status</th>
+                                    <th class="text-center" style="min-width: 150px">Description</th>
                                     <th class="text-center">Location</th>
                                     <th class="text-center">Available</th>
                                     <th class="text-center">Adoption Date</th>
@@ -64,28 +67,30 @@
                                 </tr>
                             </thead>
                             <tbody class="text-center">
-                                {% for profile in profiles %}
-                                <tr style="font-size:11px;">
-                                    <td>{{profile.date_created}}</td>
-                                    <td>{{profile.name}}</td>
-                                    <td>{{profile.type}}</td>
-                                    <td>{{profile.breed}}</td>
-                                    <td>{{profile.age}}</td>
-                                    <td>{{profile.gender}}</td>
-                                    <td>{{profile.disposition}}</td>
-                                    <td>{{profile.status}}</td>
-                                    <td>{{profile.description}}</td>
-                                    <td>{{profile.location}}</td>
-                                    <td>{{profile.availability}}</td>
-                                    <td>{{profile.adoption_date}}</td>
-                                    <td>{{profile.adopted_by}}</td>
-                                    <td class="text-center" padding:2px; padding-left:2px; padding-bottom:2px; padding-top:2px; padding-right:2px;">
-                                        <a class="btn btn-success" role="button" style="background:rgb(30,26,193); border:rgb(30,26,193); margin:2px; font-size:11px; height:30px; width:30px; padding-left:10px; padding-top:7px;" href="/view/{{profile.id}}">
-                                            <i class="fas fa-pencil-alt"></i>
+                                {% for pet in pets%}
+                                <tr>
+                                    <td>{{pet.created_at}}</td>
+                                    <td>{{pet.name}}</td>
+                                    <td>{{pet.type}}</td>
+                                    <td>{{pet.breed}}</td>
+                                    <td>{{pet.age}}</td>
+                                    <td>{{pet.gender}}</td>
+                                    <td>{{pet.properties}}</td>
+                                    <td>{{pet.status}}</td>
+                                    <td>{{pet.description}}</td>
+                                    <td>{{ pet.location }}</td>
+                                    <td>{{ pet.availability }}</td>
+                                    <td>{{ pet.adoption_date }}</td>
+                                    <td>{{ pet.adopted_by }}</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-success" role="button"
+                                            style="background: rgb(30,26,193);margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;"
+                                            href="/update_profile/{{pet.key.id}}"><i class="fas fa-pencil-alt"
+                                                style="font-size: 11px;"></i>
                                         </a>
-                                        <a class="btn btn-danger" role="button" style="margin:2px; font-size:11px; height:30px; width:30px; padding-left:8px; padding-top:5px;" href="/delete/{{profile.id}}">
-                                            <i class="fas fa-trash" >
-                                            </i>
+                                        <a class="btn btn-danger deleteBtn" data-key="{{pet.key.id}}" role="button"
+                                            style="margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;"><i
+                                                class="fas fa-trash" style="font-size: 11px;"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -94,7 +99,6 @@
                             </tbody>
                         </table>
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -102,11 +106,45 @@
 </div>
 {% endblock %}
 {% block script %}
-    <!-- Add Javascript custom to this tempate here... -->
-    <!-- Bootstrap Studio Script Files -->
-    <script src="../static/js/Table-with-search--sort-filters.js"></script>
-    <!-- Bootstrap Studio Script Links -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-filter.min.js"></script>
+<!-- Add Javascript custom to this tempate here... -->
+<!-- Bootstrap Studio Script Files -->
+<script src="../static/js/Table-with-search--sort-filters.js"></script>
+<!-- Bootstrap Studio Script Links -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-filter.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.deleteBtn', function () {
+            var key = $(this).data('key');
+            swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                animation: false,
+                customClass: 'animated tada',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: '/delete_profile',
+                        type: 'POST',
+                        data: {
+                            "key": key,
+                        },
+                        success: function (result) {
+                            res = JSON.parse(result);
+                            if (res.success == true) {
+                                toastr.success(res.message);
+                                window.location.reload();
+                            } else {
+                                toastr.error(res.message);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
-
