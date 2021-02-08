@@ -48,10 +48,16 @@ def view_profile():
             # Get all pets from the datastore owned by user
             query = client.query(kind=constants.pets)
             profiles = list(query.fetch())
+
+            profile_img = []
             for r in profiles:
                 r['id'] = r.key.id
                 r['self'] = constants.url + '/pets/' + str(r.key.id)
                 # fake url, file name needs to be from dogs assets file and remove numbers
-                r['url_name'] = "static/img/dogs/" + str(r['name']) + "/" + str(r['name']) + "-01.jpg"
-                return render_template('profiles.html', profiles=profiles)
+                r['img'] = str(r['name']) + "/" + str(r['name']) + "-01.jpg"
+                profile_img.append(r['img'])
+                print(r)
+                print(r['img'])
+                print(profile_img)
+                return render_template('profiles.html', profiles=profiles, profile_img=profile_img)
         return render_template('Real response message')
