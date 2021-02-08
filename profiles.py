@@ -51,5 +51,7 @@ def view_profile():
             for r in profiles:
                 r['id'] = r.key.id
                 r['self'] = constants.url + '/pets/' + str(r.key.id)
-            return render_template('profiles.html', profiles=profiles)
+                # fake url, file name needs to be from dogs assets file and remove numbers
+                r['url_name'] = "static/img/dogs/" + str(r['name']) + "/" + str(r['name']) + "-01.jpg"
+                return render_template('profiles.html', profiles=profiles)
         return render_template('Real response message')
