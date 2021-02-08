@@ -64,10 +64,11 @@ def update_profile():
         return render_template('update_profile.html')
 
 ###############################################################################################################
-        
-@bp.route('/profiles', methods=["GET"])
-def view_profile():
-    if 'sub' not in session:
-        return "sub not in session."
-    else:
-        return render_template('profiles.html')
+# # J, temp comment because to get card page to open I'll need to comment profiles route. Will rename pet profiles
+# # later and leave profiles for admin. Current adopt href is /profiles.        
+# @bp.route('/profiles', methods=["GET"])
+# def view_profile():
+#     if 'sub' not in session:
+#         return "sub not in session."
+#     else:
+#         return render_template('profiles.html')

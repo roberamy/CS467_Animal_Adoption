@@ -34,7 +34,7 @@ from OAuth import printSession
 def view_profile():
     # printSession('***** ADOPT *****')
     if 'sub' not in session:
-        return "Error: \'sub\' not in session."
+        return "Error: \'sub\' not in session!!!"
     else:
         # Direct requests to GAE database
         if request.method == 'GET':
@@ -53,7 +53,7 @@ def view_profile():
             for r in profiles:
                 r['id'] = r.key.id
                 r['self'] = constants.url + '/pets/' + str(r.key.id)
-                # fake url, file name needs to be from dogs assets file and remove numbers
+                # temp url, file name needs to be from dogs assets file and remove numbers
                 r['img'] = str(r['name']) + "/" + str(r['name']) + "-01.jpeg"
                 profile_img.append(r['img'])
                 print(r)
