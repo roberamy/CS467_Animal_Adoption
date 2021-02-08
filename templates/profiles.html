@@ -80,10 +80,37 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Start of profile cards row -->
                     <div class="col-md-9">
                         <div class="products">
                             <div class="row no-gutters">
-                                <div class="col-12 col-md-6 col-lg-4">
+                                <!-- Start of card -->
+                                <!-- fix css class names from template, specifically price and product-name -->
+                                <!-- photo static for now -->
+                                {% for profile in profiles %}
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="clean-product-item">
+                                            <!-- How to dynamic link pic, current static -->
+                                            <!-- <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/1-Sugar/Sugar-02.jpeg"></a></div> -->
+                                            <!-- <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src= "{{ url_for('static', filename='/'.join(['img',profile.type, profile.name]))}}"></a></div> -->
+                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src= "{{ url_for('static', filename='img/dogs/' + profile.img )}}"></a></div>
+                                            <div class="product-name"><a href="pet_page">{{profile.name}}</a></div>
+                                            <!-- <p>{{profile.img}}</p> -->
+                                            <div class="about">
+                                                <!-- CSS needs debug for text-align: left should be center-->
+                                                <div class="product-name">{{ profile.age }}</div>
+                                                <div class="product-name">{{ profile.breed }}</div>
+                                            </div>
+                                            <div class="about">
+                                                <!-- CSS needs debug for text-align: left should be center-->
+                                                <div class="product-name">{{ profile.location }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+                                <!-- <div class="col-12 col-md-6 col-lg-4">
                                     <div class="clean-product-item">
                                         <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/1-Sugar/Sugar-02.jpeg"></a></div>
                                         <div class="product-name"><a href="pet_page">Sugar</a></div>
@@ -94,104 +121,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="clean-product-item">
-                                        <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/2-Tigger/Tigger-01.jpeg"></a></div>
-                                        <div class="product-name"><a href="#">Tigger</a></div>
-                                        <div class="about">
-                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
-                                            <div class="price">
-                                                <h3>$100</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="clean-product-item">
-                                        <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/3-Little%20Drummer%20Boy/Little%20Drummer%20Boy-01.jpg"></a></div>
-                                        <div class="product-name"><a href="#">Little Drummer Boy</a></div>
-                                        <div class="about">
-                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
-                                            <div class="price">
-                                                <h3>$100</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="clean-product-item">
-                                        <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/4-Penny/Penny-01.jpeg"></a></div>
-                                        <div class="product-name"><a href="#">Penny</a></div>
-                                        <div class="about">
-                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
-                                            <div class="price">
-                                                <h3>$100</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="clean-product-item">
-                                        <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/5-Aliana/Aliana-01.jpeg"></a></div>
-                                        <div class="product-name"><a href="#">Aliana</a></div>
-                                        <div class="about">
-                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
-                                            <div class="price">
-                                                <h3>$100</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="clean-product-item">
-                                        <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/6-Mango/Mango-01.jpeg"></a></div>
-                                        <div class="product-name"><a href="#">Mango</a></div>
-                                        <div class="about">
-                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
-                                            <div class="price">
-                                                <h3>$100</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="clean-product-item">
-                                        <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/7-Number%207/Number-7-01.jpg"></a></div>
-                                        <div class="product-name"><a href="#">Number Seven</a></div>
-                                        <div class="about">
-                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
-                                            <div class="price">
-                                                <h3>$100</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="clean-product-item">
-                                        <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/8-Duece/Duece-02.jpeg"></a></div>
-                                        <div class="product-name"><a href="#">Duece</a></div>
-                                        <div class="about">
-                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
-                                            <div class="price">
-                                                <h3>$100</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="clean-product-item">
-                                        <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/9-Bo/Bo-01.jpeg"></a><a href="#"></a></div>
-                                        <div class="product-name"><a href="#">Bo</a></div>
-                                        <div class="about">
-                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
-                                            <div class="price">
-                                                <h3>$100</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div> -->
+                                
                             </div>
+                            <!-- End of product cards -->
                             <nav>
                                 <ul class="pagination">
                                     <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
