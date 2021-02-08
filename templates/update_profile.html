@@ -1,5 +1,8 @@
 <!--
-
+Referenced
+https://stackoverflow.com/questions/9025722/getting-results-from-database-into-textarea/9025777
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
+https://stackoverflow.com/questions/29451208/set-default-value-for-select-html-element-in-jinja-template
 -->
 {% extends "nav.html" %}
 
@@ -8,13 +11,20 @@
         Update Pet Profile
     {% endblock %}
     {% block html_head %}
-        <!-- Add CSS custom to this template here... -->
+        <!-- Add CSS custom to this tempate here... -->
+    <style>
+        .my-label {
+            padding-top: 8px;
+            padding-left: 8px;
+            padding-right:25px;
+        }
+    </style>
     {% endblock %}
     <!-- Add additional custom headers here... -->
     <div>
         <header class=" bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
             <div class="container">
-                <h1 style="font-size: 30px;">Update Pet Profile</h1>
+                <h1 style="font-size: 30px;">{{profile.name}}'s Profile</h1>
             </div>
         </header>
     </div>
@@ -27,28 +37,32 @@
             <div class="col-12">
                 <section style="padding-top: 30px;">
                     <div class="container">
-                        <form id="application-form">
+                        <form id="application-form" method="POST" action="/update/{{profile.id}}">
                             <div class="form-group">
                                 <div class="form-row">
-                                    <div class="col"><input class="form-control" type="text" required="" name="" placeholder="Name">
+                                    <div class="col">
+                                        <input class="form-control" type="text" required name="name" id="name" placeholder="Name" value='{{profile.name}}'>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col">
-                                        <select required class="form-control">
+                                        <select required class="form-control" value="Dog" name="type" id="type">
                                             <option value="" disabled selected>Type</option>
-                                            <option value="Cat">Cat</option>
-                                            <option value="Dog">Dog</option>
-                                            <option value="Other">Other</option>
-                                        </select></div>
+                                            <option value="Cat" {{'selected' if profile.type == "Cat"}}>Cat</option>
+                                            <option value="Dog" {{'selected' if profile.type == "Dog"}}>Dog</option>
+                                            <option value="Other" {{'selected' if profile.type == "Other"}}>Other</option>
+                                        </select>
+                                    </div>
                                     <div class="col">
-                                        <select required class="form-control">
-                                            <option value="" disabled selected>Breed</option>
-                                            <option value="American Shorthair">American Shorthair</option>
-                                            <option value="German Shepherd">German Shepherd</option>
-                                            <option value="Golden Retriever">Golden Retriever</option>
+                                        <select required class="form-control" selected="'{{profile.breed}}'" name="breed" id="breed">
+                                            <option value="" disableds selected>Breed</option>
+                                            <option value="American Shorthair" {{'selected' if profile.breed == "American Shorthair"}}>American Shorthair</option>
+                                            <option value="German Shepherd" {{'selected' if profile.breed == "German Shepherd"}}>German Shepherd</option>
+                                            <option value="Golden Retriever" {{'selected' if profile.breed == "Golden Retriever"}}>Golden Retriever</option>
+                                            <option value="Siamese Mix" {{'selected' if profile.breed == "Siamese Mix"}}>Siamese Mix</option>
+                                            <option value="Siberian Husky" {{'selected' if profile.breed == "Siberian Husky"}}>Siberian Husky</option>
                                         </select>
                                     </div>
                                 </div>
@@ -56,67 +70,92 @@
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col">
-                                        <select id="age" required class="form-control">
+                                        <select required class="form-control" name="age" id="age">
                                             <option value="" disabled selected>Age</option>
-                                            <option value="Adult">Adult</option>
-                                            <option value="Baby">Baby</option>
-                                            <option value="Senior">Senior</option>
-                                            <option value="Young">Young</option>
+                                            <option value="Adult" {{'selected' if profile.age=="Adult"}}>Adult</option>
+                                            <option value="Baby" {{'selected' if profile.age=="Baby"}}>Baby</option>
+                                            <option value="Senior" {{'selected' if profile.age=="Senior"}}>Senior</option>
+                                            <option value="Young" {{'selected' if profile.age=="Young"}}>Young</option>
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <select id="gender" required class="form-control">
-                                            <option value=""disabled selected>Gender</option>
-                                            <option value="Female">Female</option>
-                                            <option value="13">Male</option>
+                                        <select required class="form-control" name="gender" id="gender" >
+                                            <option value="" disabled selected>Gender</option>
+                                            <option value="Female" {{'selected' if profile.gender=="Female"}}>Female</option>
+                                            <option value="Male" {{'selected' if profile.gender=="Male"}}>Male</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input id="status" required class="form-control" type="text" placeholder="Status (news/PR blurb)">
+                                <input id="status" name="status" required class="form-control" type="text" value='{{profile.status}}' placeholder="Status (news/PR blurb)">
                             </div>
                             <div class="form-group">
-                                <textarea id="description" required class="form-control" placeholder="Description"></textarea>
+                                <textarea id="description" name="description" required class="form-control" value={{profile.description}} placeholder="Description">{{profile.description}} </textarea>
                             </div>
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col">
-                                        <input id="locations" required class="form-control" type="text" placeholder="Location (ex: Los Angeles, CA)">
+                                        <input id="location" name="location" required class="form-control" type="text" value='{{profile.location}}' placeholder="Location (ex: Los Angeles, CA)">
                                     </div>
                                     <div class="col">
-                                        <select id="availability" required class="form-control">
+                                        <select id="availability" name="availability" required class="form-control" selected>
                                             <option value="" disabled selected>Availability</option>
-                                            <option value="Adopted">Adopted</option>
-                                            <option value="Available">Available</option>
-                                            <option value="Pending">Pending</option>
-                                            <option value="Not Available">Not Available</option>
+                                            <option value="Adopted" {{'selected' if profile.availability == "Adopted"}}>Adopted</option>
+                                            <option value="Available" {{'selected' if profile.availability == "Available"}}>Available</option>
+                                            <option value="Pending" {{'selected' if profile.availability == "Pending"}}>Pending</option>
+                                            <option value="Not Available" {{'selected' if profile.availability == "Not Available"}}>Not Available</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group" id="disposition">
+                            <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="formCheck-1">
+                                    <input class="form-check-input" type="checkbox" name="goodAnimals" id="goodAnimals">
                                         <label class="form-check-label" for="formCheck-1">Good with other animals.<br></label>
                                 </div>
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2">
-                                    <label class="form-check-label" for="formCheck-2" style="width: 100%;">Good with children.<br></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="goodChildren" id="goodChildren">
+                                        <label class="form-check-label" for="formCheck-2" style="width: 100%;">Good with children.<br></label>
                                 </div>
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3">
-                                    <label class="form-check-label" for="formCheck-3">Animal must be leashed at all times.<br></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="leashed" id="leashed">
+                                        <label class="form-check-label" for="formCheck-3">Animal must be leashed at all times.<br></label>
                                 </div>
-                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4">
-                                    <label class="form-check-label" for="formCheck-4">Suitable for apartments.<br></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="apartments" id="apartments">
+                                        <label class="form-check-label" for="formCheck-4">Suitable for apartments.<br></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="singlePet" id="singlePet">
+                                        <label class="form-check-label" for="formCheck-4">Single pet household only.<br></label>
                                 </div>
                             </div>
+                            <div class="form-group" id="adoptionDetails" name="adoptionDetails">
+                                <span class="my-label">Adoption Details:</span>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input id="adoption_date" name="adoption_date" class="form-control" style="padding-right:8px;" type="text" {{'required' if profile.availability == "Adopted"}} value='{{profile.adoption_date}}' placeholder="(mm/dd/yyyy)">
+                                    </div>
+                                    <div class="col">
+                                        <select id="adopted_by" name="adopted_by" class="form-control" {{'required' if profile.availability == "Adopted"}}>
+                                            <option value="" {{'disabled' if profile.availability == "Adopted"}} selected>Adopted By</option>
+                                            <option value="Joseph Smith" {{'selected' if profile.adopted_by == "Joseph Smith"}}>Joseph Smith</option>
+                                            <option value="John Doe" {{'selected' if profile.adopted_by == "John Doe"}}>John Doe</option>
+                                            <option value="Penny Lane" {{'selected' if profile.adopted_by == "Penny Lane"}}>Penny Lane</option>
+                                            <option value="Rachel Green" {{'selected' if profile.adopted_by == "Rachel Green"}}>Rachel Green</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--
                             <div class="file">
                                 <p class="font-italic text-dark text-center">Choose a profile image. The image uploaded will be rendered below.</p>
-                                <!-- Upload image input-->
+                                <!-- Upload image input--
                                 <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm ">
                                     <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
                                 </div>
-                                <!-- Uploaded image area-->
+                                <!-- Uploaded image area--
                                 <div class="image-area mt-4 text-dark">
                                     <img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"  width=200>
                                 </div>
@@ -124,24 +163,27 @@
                                     <input id="urllink" name="url" type="url" class="form-control" readonly/>
                                 </div>
                             </div>
+                            -->
                     </div>
                     <div class="form-group justify-content-center d-flex">
                         <div id="udpate-profile-submit-btn" style="padding-top:15px; padding-right:25px;">
                             <div class="form-row">
-                                <button class="btn btn-primary btn-dark m-0 rounded-pill px-4" type="button" style="min-width: 150px;" action method="POST" target="hidden_iframe">Submit</button>
+                                <button class="btn btn-primary btn-dark m-0 rounded-pill px-4" type="submit" style="min-width: 150px;" target="hidden_iframe">Update</button>
                             </div>
                         </div>
                         <div id="update-profile-cancel-btn" style="padding-top:15px;">
                             <div class="form-row" >
-                                <button class="btn btn-danger btn-dark m-0 rounded-pill px-4" type="button" style="min-width: 150px;" onclick="window.location.href='/admin_profiles';">Cancel</button>
+                                <button class="btn btn-danger btn-dark m-0 rounded-pill px-4" type="button" style="min-width: 150px;" onclick="window.location.href='/admin';">Cancel</button>
                             </div>
                     </div>
                 </form>
             </div>
+            <!--
             <div class="col">
                 <h3 id="fail" class="text-center text-danger d-none"><br>Form not Submitted&nbsp;<a href="contact.html">Try Again</a><br><br></h3>
                 <h3 id="success-1" class="text-center text-success d-none"><br>Form Submitted Successfully&nbsp;<a href="contact.html">Send Another Response</a><br><br></h3>
             </div>
+            -->
             </section>
         </div>
     </div>
@@ -150,7 +192,17 @@
 
 {% block script %}
     <!-- Add Javascript custom to this tempate here... -->
+    <script>
+        $(document).ready(function(){
+            $('#availability').on('change', function() {
+              if (this.value == 'Adopted'){
+                $("#adoption_date").show();
+              }
+              else{
+                $("#kidsText").hide();
+              }
+            });
+        });
+    </script>
     <!-- Bootstrap Studio Script Files -->
-    <!--<script type="text/Javascript" src="../static/js/jquery.min.js"></script> GAB added this; otherwised jQuery functions fail-->
-    <script type="text/Javascript" src="../static/js/Application-Form.js"></script>
 {% endblock %}
