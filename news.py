@@ -20,20 +20,16 @@ from google.auth import crypt
 from google.auth import jwt
 from google.auth.transport import requests
 from datetime import datetime
+from OAuth import printSession
 
 bp = Blueprint('news', __name__)
 client = datastore.Client()
-
-CLIENT_ID = r'939115278036-he2m51te7ohrp1m9r457nos1dbnh5u2o.apps.googleusercontent.com'
-CLIENT_SECRET = r'LQQ_RyrsV-eA1uiuux0RrI7J'
-SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/userinfo.profile']
-REDIRECT_URI = 'https://datingappforanimaladoption.wl.r.appspot.com/authorization'
 
 ###############################################################################################################
 
 @bp.route('/news', methods=["GET"])
 def news():
+    printSession('***** NEWS *****')
     if 'sub' not in session:
         return "sub not in session."
     else:
@@ -41,8 +37,9 @@ def news():
         
 ###############################################################################################################
 
-@bp.route("/news_post", methods=["GET"])
+@bp.route('/news_post', methods=["GET"])
 def news_post():
+    printSession('***** NEWS POST *****')
     if 'sub' not in session:
         return "sub not in session."
     else:
@@ -50,7 +47,7 @@ def news_post():
         
 ###############################################################################################################
 
-@bp.route("/pet_page", methods=["GET"])
+@bp.route('/pet_page', methods=["GET"])
 def pet_page():
     if 'sub' not in session:
         return "sub not in session."
