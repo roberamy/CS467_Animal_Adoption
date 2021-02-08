@@ -86,7 +86,12 @@
                             <div class="row no-gutters">
                                 <!-- Start of card -->
 
-
+                                {% for profile in profiles %}
+                                    <p>{{profile.name}} </p>
+                                    <!-- {% for pet_profile in profile%}
+                                        <p>{{pet_profile.name}} </p>
+                                    {% endfor %} -->
+                                {% endfor %}
 
 
                                 <div class="col-12 col-md-6 col-lg-4">
