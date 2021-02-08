@@ -85,12 +85,20 @@
                         <div class="products">
                             <div class="row no-gutters">
                                 <!-- Start of card -->
-
+                                <!-- fix css class names from template, specifically price and product-name -->
                                 {% for profile in profiles %}
-                                    <p>{{profile.name}} </p>
-                                    <!-- {% for pet_profile in profile%}
-                                        <p>{{pet_profile.name}} </p>
-                                    {% endfor %} -->
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="clean-product-item">
+                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/1-Sugar/Sugar-02.jpeg"></a></div>
+                                            <div class="product-name"><a href="pet_page">{{profile.name}}</a></div>
+                                            <div class="about">
+                                                <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
+                                                <div class="price">
+                                                    <h3>$100</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 {% endfor %}
 
 
