@@ -1,0 +1,116 @@
+<!--
+
+-->
+{% extends "nav.html" %}
+
+{% block header %}
+    {% block title %}
+        Pet Profile Admin
+    {% endblock %}
+    {% block html_head %}
+    <!-- Add CSS custom to this tempate here... -->
+        <!-- Bootstrap Studio CSS Files -->
+        <link rel="stylesheet" href="../static/css/Table-with-search--sort-filters.css">
+        <!-- Bootstrap Studio Links -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/css/theme.bootstrap_4.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    {% endblock %}
+    <!-- Add additional custom headers here... -->
+    <div>
+        <header class=" bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
+            <div class="container">
+                <h1 style="font-size: 30px;">Pet Applications</h1>
+            </div>
+        </header>
+    </div>
+{% endblock %}
+
+{% block content %}
+<!-- Add page content here... -->
+<div class="masthead bg-primary text-white text-center" style="font-size: 12px;" overflow="auto">
+    <div class="container-fluid" overflow="auto">
+        <div class="card" id="TableSorterCard">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive" style="font-size:12px">
+                        <table class="table table-striped table tablesorter" id="ipi-table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center">Submitted</th>
+                                    <th class="text-center">Pet Name</th>
+                                    <th class="text-center">Applicant</th>
+                                    <th class="text-center">Home Type</th>
+                                    <th class="text-center">Rent Own</th>
+                                    <th class="text-center" style="min-width:150px">Address</th>
+                                    <th class="text-center">Kids</th>
+                                    <th class="text-center">Kid Text</th>
+                                    <th class="text-center">Other Pets</th>
+                                    <th class="text-center">Other Pets Text</th>
+                                    <th class="text-center"style="min-width:150px">Why Adopt?</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Date Updated</th>
+                                    <th class="text-center filter-false sorter-false" style="min-width:150px"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-left">
+                                <tr>
+                                    <td>01/26/2020</td>
+                                    <td>Sunshine</td>
+                                    <td>John Smith</td>
+                                    <td>House</td>
+                                    <td>Own</td>
+                                    <td>123 Sesame Street<br>Portland, OR 97214</td>
+                                    <td>Yes</td>
+                                    <td>Young Kids</td>
+                                    <td>No</td>
+                                    <td></td>
+                                    <td>Kids are old enough to have pets.</td>
+                                    <td>New</td>
+                                    <td>
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="btn btn-success" role="button" style="font-size:11px; height:30px; padding-top:5px; margin:2px; color=white;">Pet</a>
+                                        <a class="btn btn-success" role="button" style="background: rgb(30,26,193);border-color: rgb(30,26,193);margin:2px; font-size:11px; height:30px; width:30px; padding-left:8px; padding-top:5px;" href="#">&#10004;</a>
+                                        <a class="btn btn-danger" role="button" style="margin:2px; font-size:11px; height:30px; width:30px; padding-left:9px; padding-top:5px;" href="#">&#x2718;</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01/15/2020</td>
+                                    <td>Bun Bun</td>
+                                    <td>Rachel Green</td>
+                                    <td>Apartment</td>
+                                    <td>Rent</td>
+                                    <td>564 Windy Winds Lane<br>Bellevue, WA 98004</td>
+                                    <td>No</td>
+                                    <td></td>
+                                    <td>Yes</td>
+                                    <td>1 dog, 2 cats</td>
+                                    <td>Love animals! The more the merrier!</td>
+                                    <td>Approved</td>
+                                    <td>01/20/2020</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-success" role="button" style="font-size:11px; height:30px; padding-top:5px; margin:2px; color=white;">Pet</a>
+                                        <a class="btn btn-success" role="button" style="background: rgb(30,26,193);border-color: rgb(30,26,193);margin:2px; font-size:11px; height:30px; width:30px; padding-left:8px; padding-top:5px;" href="#">&#10004;</a>
+                                        <a class="btn btn-danger" role="button" style="margin:2px; font-size:11px; height:30px; width:30px; padding-left:9px; padding-top:5px;" href="#">&#x2718;</a>
+                                    </td>
+                                </tr>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    <!-- Add Javascript custom to this tempate here... -->
+    <!-- Bootstrap Studio Script Files -->
+    <script src="../static/js/Table-with-search--sort-filters.js"></script>
+    <!-- Bootstrap Studio Script Links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-filter.min.js"></script>
+{% endblock %}
+

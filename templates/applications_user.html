@@ -1,0 +1,80 @@
+<!--
+
+-->
+{% extends "nav.html" %}
+
+{% block header %}
+    {% block title %}
+        Pet Profile Admin
+    {% endblock %}
+    {% block html_head %}
+    <!-- Add CSS custom to this tempate here... -->
+        <!-- Bootstrap Studio CSS Files -->
+        <link rel="stylesheet" href="../static/css/Table-with-search--sort-filters.css">
+        <!-- Bootstrap Studio Links -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/css/theme.bootstrap_4.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    {% endblock %}
+    <!-- Add additional custom headers here... -->
+    <div>
+        <header class=" bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
+            <div class="container">
+                <h1 style="font-size: 30px;">My Adoption Applications</h1>
+            </div>
+        </header>
+    </div>
+{% endblock %}
+
+{% block content %}
+<!-- Add page content here... -->
+<div class="masthead bg-primary text-white text-center" style="font-size: 12px;" overflow="auto">
+    <div class="container-fluid" overflow="auto">
+        <div class="card" id="TableSorterCard">
+            <div class="card-header py-3">
+                <div class="row table-topper align-items-center">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive" style="font-size:14px">
+                        <table class="table table-striped table tablesorter">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center">Submitted</th>
+                                    <th class="text-center">Pet Name</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Date Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr>
+                                    <td>01/26/2020</td>
+                                    <td>Sunshine</td>
+                                    <td>New</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>01/15/2020</td>
+                                    <td>Bun Bun</td>
+                                    <td>Approved</td>
+                                    <td>01/20/2020</td>
+                                </tr>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    <!-- Add Javascript custom to this tempate here... -->
+    <!-- Bootstrap Studio Script Files -->
+    <script src="../static/js/Table-with-search--sort-filters.js"></script>
+    <!-- Bootstrap Studio Script Links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-filter.min.js"></script>
+{% endblock %}
+

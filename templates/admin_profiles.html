@@ -34,39 +34,37 @@ Pet Profile Admin
         <div class="card" id="TableSorterCard">
             <div class="card-header py-3">
                 <div class="row table-topper align-items-center">
-                    <div class="col-12 col-sm-5 col-md-6 text-left" style="margin: 0px;padding: 5px 15px;">
+                    <div class="col-12 col-sm-5 col-md-6 text-left" style="margin: 0px;padding: 5px 5px;">
                         <a class="btn btn-primary" role="button" href="/add_profile"><i class="fa fa-plus"></i>&nbsp;Add
                             Profile</a>
-                    </div>
-                    <div class="col-12 col-sm-7 col-md-6 text-right" style="margin: 0px;padding: 5px 15px;">
-                        <p class="text-primary m-0 font-weight-bold">ADD FILTERS HERE...?</p><a class="btn btn-primary"
-                            role="button">Filter</a>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="table-responsive" style="font-size:14px">
+                    <div class="table-responsive" style="font-size:12px">
                         <table class="table table-striped table tablesorter" id="ipi-table">
                             <thead class="thead-dark">
                                 <tr>
                                     <th class="text-center">Created</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">Type</th>
-                                    <th class="text-center">Breed</th>
+                                    <th class="text-center" style="min-width: 100px">Breed</th>
                                     <th class="text-center">Age</th>
                                     <th class="text-center">Gender</th>
-                                    <th class="text-center" style="min-width: 100px">Disposition</th>
-                                    <th class="text-center" style="min-width: 100px">Status</th>
-                                    <th class="text-center" style="min-width: 150px">Description</th>
-                                    <th class="text-center">Location</th>
+                                    <th class="text-center" style="min-width: 200px">Disposition</th>
+                                    <th class="text-center" style="min-width: 200px">Status</th>
+                                    <th class="text-center" style="min-width: 300px">Description</th>
+                                    <th class="text-center" style="min-width: 150px">Location</th>
                                     <th class="text-center">Available</th>
+                                    <th class="text-center">Photo</th>
                                     <th class="text-center">Adoption Date</th>
                                     <th class="text-center">Adopted By</th>
+                                    <th class="text-center">Picked Up</th>
                                     <th class="text-center filter-false sorter-false" style="min-width:100px"></th>
                                 </tr>
                             </thead>
-                            <tbody class="text-center">
+                            <tbody class="text-left">
                                 {% for pet in pets%}
                                 <tr>
                                     <td>{{pet.created_at}}</td>
@@ -78,18 +76,20 @@ Pet Profile Admin
                                     <td>{{pet.properties}}</td>
                                     <td>{{pet.status}}</td>
                                     <td>{{pet.description}}</td>
-                                    <td>{{ pet.location }}</td>
-                                    <td>{{ pet.availability }}</td>
-                                    <td>{{ pet.adoption_date }}</td>
-                                    <td>{{ pet.adopted_by }}</td>
+                                    <td>{{pet.location}}</td>
+                                    <td>{{pet.availability}}</td>
+                                    <td>{% if pet and pet.key.id and pet.profile_image_name %}&#10004;{% endif %}</td>
+                                    <td>{{pet.adoption_date}}</td>
+                                    <td>{{pet.adopted_by}}</td>
+                                    <td>{% if pet and pet.key.id and pet.isAdopted %}&#10004;{% endif %}</td>
                                     <td class="text-center">
                                         <a class="btn btn-success" role="button"
-                                            style="background: rgb(30,26,193);margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;"
+                                            style="background:rgb(30,26,193); border:rgb(30,26,193); margin:2px; font-size:11px; height:30px; width:30px; padding-left:10px; padding-top: 7px;"
                                             href="/update_profile/{{pet.key.id}}"><i class="fas fa-pencil-alt"
                                                 style="font-size: 11px;"></i>
                                         </a>
                                         <a class="btn btn-danger deleteBtn" data-key="{{pet.key.id}}" role="button"
-                                            style="margin: 2px;font-size: 11px;height: 30px;width: 30px;padding-left: 8px;padding-top: 5px;"><i
+                                            style="margin:2px; font-size:11px; height:30px; width:30px; padding-left:8px; padding-top:5px;"><i
                                                 class="fas fa-trash" style="font-size: 11px;"></i>
                                         </a>
                                     </td>

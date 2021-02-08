@@ -18,7 +18,13 @@
     <div>
         <header class="bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
             <div class="container">
-                <h1 style="font-size: 30px;">Add or Edit Profile</h1>
+                <h1 style="font-size: 30px;">
+                    {% if pet and pet.key.id %}
+                        Update {{pet.name}}'s Profile
+                    {% else %}
+                        Add Pet Profile
+                    {% endif %}
+                </h1>
             </div>
         </header>
     </div>
@@ -119,6 +125,30 @@
                                     <label class="form-check-label" for="formCheck-4">Suitable for apartments.<br></label>
                                 </div>
                             </div>
+                            {% if pet and pet.key.id %}
+                            <div class="form-group" id="adoptionDetails" name="adoptionDetails">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <span class="my-label">Adoption Details:</span>
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <input id="adoption_date" name="adoption_date" class="form-control" style="padding-right:8px;" type="text" {{'required' if pet.availability == "Adopted"}} value='{{pet.adoption_date}}' placeholder="Date (mm/dd/yyyy)">
+                                    </div>
+                                    <div class="col">
+                                        <input id="adoption_date" name="adoption_date" class="form-control" style="padding-right:8px;" type="text" {{'required' if pet.availability == "Adopted"}} value='{{pet.adoption_by}}' placeholder="Adopter (ex: John Smith)"
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="singlePet" id="singlePet">
+                                                <label class="form-check-label" for="formCheck-4">Picked Up<br></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
                             <div class="file">
                                 <p class="font-italic text-dark text-center">Choose a profile image. The image uploaded will be rendered below.</p>
                                 <!-- Upload image input-->

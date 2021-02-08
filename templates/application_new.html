@@ -1,0 +1,227 @@
+<!--
+Referenced
+https://www.webdeveloper.com/d/85706-show-input-box-only-if-some-value-from-drop-down-menu-is-selected/5
+https://www.studentstutorial.com/jquery/select-box-input-box-show
+https://www.w3schools.com/jsref/prop_style_display.asp
+https://stackoverflow.com/questions/21584752/want-to-show-hide-div-based-on-dropdown-box-selection
+-->
+{% extends "nav.html" %}
+
+{% block header %}
+    {% block title %}
+        New Pet Profile
+    {% endblock %}
+    {% block html_head %}
+        <!-- Add CSS custom to this tempate here... -->
+    {% endblock %}
+    <!-- Add additional custom headers here... -->
+    <div>
+        <header class="bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
+            <div class="container">
+                <h1 style="font-size: 30px;">Adoption Application</h1>
+            </div>
+        </header>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="bg-primary container-fluid" overflow="auto" style="padding-top: 14px;padding-bottom: 14px;">
+    <div class="card" id="TableSorterCard">
+        <div class="row">
+            <div class="col-12">
+                <section style="padding-top: 30px;">
+                    <div class="container">
+                        <form id="application-form">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div id="applicant_name" class="col"><input class="form-control" type="text" required="" name="" placeholder="Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-row">
+                                            <div id="street_address" class="col"><input class="form-control" type="text" required="" name="" placeholder="Street Address">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="max-width:150px;" class="col">
+                                        <select id="state" required class="form-control">
+                                            <option value=""disabled selected>Home Type</option>
+                                            <option value="AK">Apartment</option>
+                                            <option value="AL">House</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-row">
+                                            <div id="city" class="col"><input class="form-control" type="text" required="" name="" placeholder="City">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="max-width:150px;" class="col">
+                                        <select id="state" required class="form-control">
+                                            <option value=""disabled selected>State</option>
+                                            <option value="AK">AK</option>
+                                            <option value="AL">AL</option>
+                                            <option value="AR">AR</option>
+                                            <option value="AS">AS</option>
+                                            <option value="AZ">AZ</option>
+                                            <option value="CA">CA</option>
+                                            <option value="CO">CO</option>
+                                            <option value="CT">CT</option>
+                                            <option value="DC">DC</option>
+                                            <option value="DE">DE</option>
+                                            <option value="FL">FL</option>
+                                            <option value="GA">GA</option>
+                                            <option value="GU">GU</option>
+                                            <option value="HI">HI</option>
+                                            <option value="IA">IA</option>
+                                            <option value="ID">ID</option>
+                                            <option value="IL">IL</option>
+                                            <option value="IN">IN</option>
+                                            <option value="KS">KS</option>
+                                            <option value="KY">KY</option>
+                                            <option value="LA">LA</option>
+                                            <option value="MA">MA</option>
+                                            <option value="MD">MD</option>
+                                            <option value="ME">ME</option>
+                                            <option value="MI">MI</option>
+                                            <option value="MN">MN</option>
+                                            <option value="MO">MO</option>
+                                            <option value="MP">MP</option>
+                                            <option value="MS">MS</option>
+                                            <option value="MT">MT</option>
+                                            <option value="NC">NC</option>
+                                            <option value="ND">ND</option>
+                                            <option value="NE">NE</option>
+                                            <option value="NH">NH</option>
+                                            <option value="NJ">NJ</option>
+                                            <option value="NM">NM</option>
+                                            <option value="NV">NV</option>
+                                            <option value="NY">NY</option>
+                                            <option value="OH">OH</option>
+                                            <option value="OK">OK</option>
+                                            <option value="OR">OR</option>
+                                            <option value="PA">PA</option>
+                                            <option value="PR">PR</option>
+                                            <option value="RI">RI</option>
+                                            <option value="SC">SC</option>
+                                            <option value="SD">SD</option>
+                                            <option value="TN">TN</option>
+                                            <option value="TX">TX</option>
+                                            <option value="UT">UT</option>
+                                            <option value="VA">VA</option>
+                                            <option value="VI">VI</option>
+                                            <option value="VT">VT</option>
+                                            <option value="WA">WA</option>
+                                            <option value="WI">WI</option>
+                                            <option value="WV">WV</option>
+                                            <option value="WY">WY</option>
+                                        </select>
+                                    </div>
+                                    <div style="max-width:150px;" class="col">
+                                        <div class="form-row">
+                                            <div id="zip_code" pattern="[0-9]*" class="col"><input class="form-control" type="text" required="" name="" placeholder="Zip Code">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input id="status" type="email" id="email" required class="form-control" placeholder="Email">
+                            </div>
+                            
+                        
+                            <div class="form-group">Are there any children in the home?</br>
+                                <select required class="form-control" id="kids" name="kids" onchange="kidSelect()">
+                                    <option value="None"></option>
+                                     <option value="No">No</option>
+                                     <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div id="kidsText" style="display: none;">
+                                    Please indicate age(s) of the children in the home: </br><textarea name="otherField" id="kids_ages" required class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">Are there any other pets in the home?</br>
+                                <select required class="form-control" id="pets" name="pets" onchange="kidSelect()">
+                                    <option value="None"></option>
+                                     <option value="No">No</option>
+                                     <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div id="petsText" style="display: none;">
+                                    Please indicate types(s) and age(s) of the other pets in the home: </br><textarea name="otherField" id="kids_ages" required class="form-control"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                Why do you want to adopt a new pet? </br>
+                                <textarea id="description" required class="form-control" placeholder=""></textarea>
+                            </div>
+                        </div>
+                    
+                    
+                    <div class="form-group justify-content-center d-flex">
+                        <div id="new-profile-submit-btn" style="padding-top:15px; padding-right:25px;">
+                            <div class="form-row" >
+                                <button class="btn btn-primary btn-dark m-0 rounded-pill px-4" type="button" style="min-width: 150px;" action method="POST" target="hidden_iframe">Submit</button>
+                            </div>
+                        </div>
+                        <div id="new-profile-cancel-btn" style="padding-top:15px;">
+                            <div class="form-row" >
+                                <button class="btn btn-danger btn-dark m-0 rounded-pill px-4" type="button" style="min-width: 150px;" onclick="window.location.href='/applications';">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col">
+                <h3 id="fail" class="text-center text-danger d-none"><br>Form not Submitted&nbsp;<a href="contact.html">Try Again</a><br><br></h3>
+                <h3 id="success-1" class="text-center text-success d-none"><br>Form Submitted Successfully&nbsp;<a href="contact.html">Send Another Response</a><br><br></h3>
+            </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <!-- Add Javascript custom to this tempate here... -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#kids').on('change', function() {
+              if (this.value == 'Yes'){
+                $("#kidsText").show();
+              }
+              else{
+                $("#kidsText").hide();
+              }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#pets').on('change', function() {
+              if (this.value == 'Yes'){
+                $("#petsText").show();
+              }
+              else{
+                $("#petsText").hide();
+              }
+            });
+        });
+    </script>
+    <!-- Bootstrap Studio Script Files -->
+    <script src="../static/js/Application-Form.js"></script>
+{% endblock %}

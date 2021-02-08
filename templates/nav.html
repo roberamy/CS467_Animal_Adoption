@@ -47,7 +47,7 @@ https://developers.google.com/identity/sign-in/web/sign-in
                                     <a class="dropdown-toggle nav-link py-3 px-0 px-lg-3 rounded" data-toggle="dropdown" aria-expanded="false" href="#" style="text-align: left; vertical-align:baseline">My Info</a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="#">Favorites</a>
-                                        <a class="dropdown-item" href="#">Applications</a>
+                                        <a class="dropdown-item" href="/my_applications">Applications</a>
                                     </div>
                                 </li>
                                 {% if session.isAdmin %}
@@ -55,7 +55,8 @@ https://developers.google.com/identity/sign-in/web/sign-in
                                     <a class="dropdown-toggle nav-link py-3 px-0 px-lg-3 rounded" data-toggle="dropdown" aria-expanded="false" href="#" style="text-align: left; vertical-align:baseline">Admin</a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="/admin_profiles">Profiles</a>
-                                        <a class="dropdown-item" href="#">Applications</a>
+                                        <a class="dropdown-item" href="/admin_applications">Applications</a>
+                                        <a class="dropdown-item" href="#">Blog Posts</a>
                                     </div>
                                 </li>
                                 {% endif %}
@@ -65,9 +66,9 @@ https://developers.google.com/identity/sign-in/web/sign-in
                             </ul>
                             {% else %}
                             <div class="collapse navbar-collapse" id="navbarResponsive">
-                                <ul class="nav navbar-nav ml-auto" style="margin: 0px; padding-top:12px;">
+                                <ul class="nav navbar-nav ml-auto" style="margin: 0px;">
                                     <li class="nav-item mx-0 mx-lg-1"style="padding-top:4px">
-                                        <a type="button" href="/index">&nbsp;<img id="login-google-logo" src="static/img/btn_google_signin_dark_pressed_web.png" >&nbsp;</a>
+                                        <input class="nav navbar-nav" onclick="window.location.href='/index';" type="image" name="googleLogin"  id="googleLogin"src="static/img/btn_google_signin_dark_pressed_web.png"/>
                                     </li>
                                 </ul>
                             </div>

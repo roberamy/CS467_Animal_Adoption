@@ -1,14 +1,14 @@
 ###############################################################################################################
-#                                                                                                             #          
-# Author: Gregory A. Bauer, Jasper Wong, Amy Robertson                                                        #
-# Email: bauergr@oregonstate.edu                                                                              #
-# Course: CS467_400_W2021                                                                                     #
-#                                                                                                             #
-# Description: Launches web application by serving up landing page                                            #
-#                                                                                                             #
-# Note: Main should be clear of excessive routes. All other routes have been modularized and placed in        #
-# separate python modules.                                                                                    #
-#                                                                                                             #
+#
+# Author: Gregory A. Bauer, Jasper Wong, Amy Robertson                                                        
+# Email: bauergr@oregonstate.edu
+# Course: CS467_400_W2021
+#
+# Description: Launches web application by serving up landing page
+#
+# Note: Main should be clear of excessive routes. All other routes have been modularized and placed in
+# separate python modules.
+#
 ###############################################################################################################
 
 from flask import Flask, Blueprint, render_template, session, redirect
@@ -17,6 +17,7 @@ import pets
 import users
 import admin
 import news
+import applications
 
 # This disables the requirement to use HTTPS so that you can test locally.
 import os 
@@ -28,6 +29,7 @@ app.register_blueprint(users.bp)
 app.register_blueprint(pets.bp)
 app.register_blueprint(admin.bp)
 app.register_blueprint(news.bp)
+app.register_blueprint(applications.bp)
 
 app.secret_key = os.urandom(24)
 
