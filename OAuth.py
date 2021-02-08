@@ -26,9 +26,8 @@ from datetime import datetime
 bp = Blueprint('OAuth', __name__)
 client = datastore.Client()
 
-
-
 OAUTH = OAuth2Session(constants.CLIENT_ID, redirect_uri=constants.REDIRECT_URI, scope=constants.SCOPES)
+    
     
 ###############################################################################################################
 
@@ -54,7 +53,6 @@ def printSession(header):
         print('IS ADMIN: ' + str(session['isAdmin']))
     else:
         print('IS ADMIN: isAdmin not in session')
-        
     print ('******************')
     
 ###############################################################################################################

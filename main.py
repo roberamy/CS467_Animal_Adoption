@@ -1,14 +1,14 @@
 ###############################################################################################################
-#                                                                                                             #          
-# Author: Gregory A. Bauer, Jasper Wong, Amy Robertson                                                        #
-# Email: bauergr@oregonstate.edu                                                                              #
-# Course: CS467_400_W2021                                                                                     #
-#                                                                                                             #
-# Description: Launches web application by serving up landing page                                            #
-#                                                                                                             #
-# Note: Main should be clear of excessive routes. All other routes have been modularized and placed in        #
-# separate python modules.                                                                                    #
-#                                                                                                             #
+#
+# Author: Gregory A. Bauer, Jasper Wong, Amy Robertson                                                        
+# Email: bauergr@oregonstate.edu
+# Course: CS467_400_W2021
+#
+# Description: Launches web application by serving up landing page
+#
+# Note: Main should be clear of excessive routes. All other routes have been modularized and placed in
+# separate python modules.
+#
 ###############################################################################################################
 
 from flask import Flask, Blueprint, render_template, session, redirect
@@ -18,6 +18,7 @@ import users
 import admin
 import news
 import profiles
+import applications
 
 # This disables the requirement to use HTTPS so that you can test locally.
 import os 
@@ -30,16 +31,15 @@ app.register_blueprint(pets.bp)
 app.register_blueprint(admin.bp)
 app.register_blueprint(news.bp)
 app.register_blueprint(profiles.bp)
+app.register_blueprint(applications.bp)
 
 app.secret_key = os.urandom(24)
 
-from OAuth import printSession
 ###############################################################################################################
 
 #Landing page with google login
 @app.route('/')
 def index():
-    printSession('***** INDEX *****')
     return render_template('index.html') 
   
 ###############################################################################################################
@@ -47,10 +47,9 @@ def index():
 @app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
-    printSession('***** AFTER SESSION CLEAR *****')
     return render_template('index.html')
 
 ###############################################################################################################
-  
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
