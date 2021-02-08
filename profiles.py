@@ -54,10 +54,10 @@ def view_profile():
                 r['id'] = r.key.id
                 r['self'] = constants.url + '/pets/' + str(r.key.id)
                 # fake url, file name needs to be from dogs assets file and remove numbers
-                r['img'] = str(r['name']) + "/" + str(r['name']) + "-01.jpg"
+                r['img'] = str(r['name']) + "/" + str(r['name']) + "-01.jpeg"
                 profile_img.append(r['img'])
                 print(r)
                 print(r['img'])
                 print(profile_img)
-                return render_template('profiles.html', profiles=profiles, profile_img=profile_img)
+            return render_template('profiles.html', profiles=profiles, profile_img=profile_img)
         return render_template('Real response message')
