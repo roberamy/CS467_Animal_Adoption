@@ -86,15 +86,16 @@
                             <div class="row no-gutters">
                                 <!-- Start of card -->
                                 <!-- fix css class names from template, specifically price and product-name -->
+                                <!-- photo static for now -->
                                 {% for profile in profiles %}
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
                                             <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/1-Sugar/Sugar-02.jpeg"></a></div>
                                             <div class="product-name"><a href="pet_page">{{profile.name}}</a></div>
                                             <div class="about">
-                                                <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
+                                                <div class="rating">{{ profile.age }}</div>
                                                 <div class="price">
-                                                    <h3>$100</h3>
+                                                    <h3>{{ profile.breed }}</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,7 +103,7 @@
                                 {% endfor %}
 
 
-                                <div class="col-12 col-md-6 col-lg-4">
+                                <!-- <div class="col-12 col-md-6 col-lg-4">
                                     <div class="clean-product-item">
                                         <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/1-Sugar/Sugar-02.jpeg"></a></div>
                                         <div class="product-name"><a href="pet_page">Sugar</a></div>
@@ -113,7 +114,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 
                                 <!-- first card -->
                                 <!-- <div class="col-12 col-md-6 col-lg-4">
