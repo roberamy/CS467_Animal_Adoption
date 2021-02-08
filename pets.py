@@ -470,10 +470,10 @@ def delete_pet(pet_id):
 
 ###############################################################################################################
         
-@bp.route('/profiles', methods=["GET"])
-def view_profile():
-    printSession('***** ADOPT *****')
-    if 'sub' not in session:
-        return "sub not in session."
-    else:
-        return render_template('profiles.html')
+# @bp.route('/profiles', methods=["GET"])
+# def view_profile():
+#     printSession('***** ADOPT *****')
+#     if 'sub' not in session:
+#         return "sub not in session."
+#     else:
+#         return render_template('profiles.html')
