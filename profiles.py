@@ -23,11 +23,16 @@ from google.auth import crypt
 from google.auth import jwt
 from google.auth.transport import requests
 from datetime import datetime
+# User modules
+from repository import *
+
 #import requests
 bp = Blueprint('profiles', __name__)
 client = datastore.Client()
 
 from OAuth import printSession
+
+
 
 ###############################################################################################################
 @bp.route('/profiles', methods=["GET"])
