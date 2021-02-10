@@ -8,6 +8,6 @@ uploads/
 *.pyc
 __pycache__/admin.cpython-38.pyc
 __pycache__/constants.cpython-38.pyc
-__pycache__/constants.cpython-38.pyc
 __pycache__/admin.cpython-38.pyc
 __pycache__/profiles.cpython-38.pyc
+**/__pycache__/
