@@ -4,4 +4,4 @@ key.json
 __pycache__/
 uploads/
 **/*.sw?
-__pycache__
+*.pyc
