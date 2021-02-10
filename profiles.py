@@ -9,7 +9,7 @@
 # Note:
 #
 #
-# References:
+# References: https://stackoverflow.com/questions/35444880/how-to-view-an-image-stored-in-google-cloud-storage-bucket
 # 
 ###############################################################################################################
 
