@@ -14,7 +14,7 @@
 #       only one. The singleton allows only one entry point to create the new instance of the class. ...      #
 #       Singletons are often useful where we have to control the resources, such as database connections or   #
 #       sockets.  'https://www.google.com/search?q=why+use+a+singleton+class&rlz=1C1CHBD_enUS885US885         #
-#                  &oq=why+use+a+singleton+class&aqs=chrome..69i57.6661j0j7&sourceid=chrome&ie=UTF-8          #                                                                                      #
+#                  &oq=why+use+a+singleton+class&aqs=chrome..69i57.6661j0j7&sourceid=chrome&ie=UTF-8          #
 ###############################################################################################################
 
 from google.cloud import datastore

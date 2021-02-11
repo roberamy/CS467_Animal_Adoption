@@ -31,7 +31,7 @@ from datetime import datetime
 from repository import *
 
 #import requests
-bp = Blueprint('adopt_profiles', __name__)
+bp = Blueprint('adopt', __name__)
 client = datastore.Client()
 
 from OAuth import printSession
@@ -56,5 +56,21 @@ def view_profile():
         # redo temporary error response
         return "Error"
 
+###############################################################################################################
+#temperary route to figure pet pages out
+@bp.route('/pet_page', methods=["GET"])
+def view_pet_page():
+    if 'sub' not in session:
+        return "Error: \'sub\' not in session!!!"
+    elif request.method == 'GET':
+        # Return all pet entities in the datastore to populate 'profiles.html'
+        # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
+        data = PetDsRepository.all()
 
+        # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
+        public_url = "https://storage.googleapis.com/" + BUCKET_NAME
+        return render_template('pet_page.html', pets=data, public_url=public_url)
+    else:
+        # redo temporary error response
+        return "Error"
 
