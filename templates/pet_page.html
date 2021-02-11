@@ -27,6 +27,7 @@
 
 {% block content %}
     <!-- Add page content here... -->
+    <!-- How to view image stored in Google Cloud Storage bucket https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME -->
 
     <!-- <main class="page product-page"> -->
         <section class="clean-block clean-product dark">
@@ -38,7 +39,8 @@
                             <div class="col-md-6">
                                 <!-- CSS needs to be updated for gallery class -->
                                 <div class="gallery">
-                                    <div class="sp-wrap"><a href="static/img/dogs/1-Sugar/Sugar-01.jpeg"><img class="img-fluid d-block mx-auto" src="static/img/dogs/1-Sugar/Sugar-01.jpeg"></a><a href="static/img/dogs/1-Sugar/Sugar-02.jpeg"><img class="img-fluid d-block mx-auto" src="static/img/dogs/1-Sugar/Sugar-02.jpeg"></a><a href="static/img/dogs/1-Sugar/Sugar-03.jpeg"><img class="img-fluid d-block mx-auto" src="static/img/dogs/1-Sugar/Sugar-03.jpeg"></a></div>
+                                    
+                                    <div class="sp-wrap"><a href="static/img/dogs/Sugar/Sugar-01.jpeg"><img class="img-fluid d-block mx-auto" src="static/img/dogs/Sugar/Sugar-01.jpeg"></a><a href="static/img/dogs/Sugar/Sugar-01.jpeg"></a></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -67,7 +69,8 @@
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                     <div class="row">
                                         <div class="col-md-5">
-                                            <figure class="figure"><img class="img-fluid figure-img" src="static/img/dogs/1-Sugar/Sugar-02.jpeg"></figure>
+                                                                                        <!-- Make src dynamic with jinja -->
+                                            <figure class="figure"><img class="img-fluid figure-img" src="https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/golden_retriever2cctjmlzw.jpg"></figure>
                                         </div>
                                         <div class="col-md-7">
                                             <h4>Lorem Ipsum</h4>
@@ -80,7 +83,8 @@
                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                         </div>
                                         <div class="col-md-5">
-                                            <figure class="figure"><img class="img-fluid figure-img" src="static/img/dogs/1-Sugar/Sugar-03.jpeg"></figure>
+                                            <!-- Make src dynamic with jinja -->
+                                            <figure class="figure"><img class="img-fluid figure-img" src="https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/golden_retriever2cctjmlzw.jpg"></figure>
                                         </div>
                                     </div>
                                 </div>
