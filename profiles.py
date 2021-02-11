@@ -10,6 +10,8 @@
 #
 #
 # References: https://stackoverflow.com/questions/35444880/how-to-view-an-image-stored-in-google-cloud-storage-bucket
+#             https://cloud.google.com/storage/docs/access-public-data#api-link
+#             
 # 
 ###############################################################################################################
 
@@ -32,7 +34,8 @@ client = datastore.Client()
 
 from OAuth import printSession
 
-
+# bucket name for GCS public URL + subfolder
+BUCKET_NAME = "datingappforanimaladoption.appspot.com/uploads/"
 
 ###############################################################################################################
 @bp.route('/profiles', methods=["GET"])
@@ -42,8 +45,14 @@ def view_profile():
     else:
         # Direct requests to GAE database
         if request.method == 'GET':
-            # Return all pet entities in the datastore to populate 'admin_profiles.html'
+            # Return all pet entities in the datastore to populate 'profiles.html'
             # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
             data = PetDsRepository.all()
-            return render_template('profiles.html', pets=data)
-        return render_template('Real response message')
+            
+            # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
+            public_url = "https://storage.googleapis.com/" + BUCKET_NAME
+            return render_template('profiles.html', pets=data, public_url=public_url)
+        return "Error"
+
+
+
