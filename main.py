@@ -17,7 +17,7 @@ import pets
 import users
 import admin
 import news
-import profiles
+import adopt_profiles
 import applications
 
 # This disables the requirement to use HTTPS so that you can test locally.
@@ -30,7 +30,7 @@ app.register_blueprint(users.bp)
 app.register_blueprint(pets.bp)
 app.register_blueprint(admin.bp)
 app.register_blueprint(news.bp)
-app.register_blueprint(profiles.bp)
+app.register_blueprint(adopt_profiles.bp)
 app.register_blueprint(applications.bp)
 
 app.secret_key = os.urandom(24)

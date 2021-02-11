@@ -29,7 +29,7 @@ from datetime import datetime
 from repository import *
 
 #import requests
-bp = Blueprint('profiles', __name__)
+bp = Blueprint('adopt_profiles', __name__)
 client = datastore.Client()
 
 from OAuth import printSession
@@ -38,7 +38,7 @@ from OAuth import printSession
 BUCKET_NAME = "datingappforanimaladoption.appspot.com/uploads/"
 
 ###############################################################################################################
-@bp.route('/profiles', methods=["GET"])
+@bp.route('/adopt_profiles', methods=["GET"])
 def view_profile():
     if 'sub' not in session:
         return "Error: \'sub\' not in session!!!"
@@ -51,7 +51,7 @@ def view_profile():
 
             # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
             public_url = "https://storage.googleapis.com/" + BUCKET_NAME
-            return render_template('profiles.html', pets=data, public_url=public_url)
+            return render_template('adopt_profiles.html', pets=data, public_url=public_url)
         return "Error"
 
 
