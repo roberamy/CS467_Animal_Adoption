@@ -11,6 +11,8 @@
 #
 # References: https://stackoverflow.com/questions/35444880/how-to-view-an-image-stored-in-google-cloud-storage-bucket
 #             https://cloud.google.com/storage/docs/access-public-data#api-link
+#             https://jinja.palletsprojects.com/en/2.10.x/templates/
+#             https://stackoverflow.com/questions/48002297/how-to-concatenate-int-with-str-type-in-jinja2-template
 #             
 # 
 ###############################################################################################################
