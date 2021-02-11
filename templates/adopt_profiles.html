@@ -86,9 +86,8 @@
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
                                             <!-- How to view image stored in Google Cloud Storage bucket https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME -->
-                                            <!--  -->
                                             <!-- <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src= "https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/chewy-NOBRu2TAqcs-unsplash_1uulozhkt.jpg"></a></div> -->
-
+                                            <!-- Add href source to make page and to put another image if profile_image_name is null or invalid -->
                                             <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src= "{{ public_url ~ profile.profile_image_name }}" ></a></div>
                                             <div class="product-name"><a href="pet_page">{{profile.name}}</a></div>
                                             <!-- <p>{{profile.img}}</p> -->
