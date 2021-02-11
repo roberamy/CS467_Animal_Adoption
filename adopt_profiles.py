@@ -51,6 +51,7 @@ def view_profile():
         public_url = "https://storage.googleapis.com/" + BUCKET_NAME
         return render_template('adopt_profiles.html', pets=data, public_url=public_url)
     else:
+        # redo temporary error response
         return "Error"
 
 
