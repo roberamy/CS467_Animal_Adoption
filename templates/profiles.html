@@ -92,7 +92,8 @@
                                             <!-- How to view image stored in Google Cloud Storage bucket https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME -->
                                             <!--  -->
                                             <!-- <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src= "https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/chewy-NOBRu2TAqcs-unsplash_1uulozhkt.jpg"></a></div> -->
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src= "https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/" + {{profile.profile_image_name}}></a></div>
+
+                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src= "{{ public_url ~ profile.profile_image_name }}" ></a></div>
                                             <div class="product-name"><a href="pet_page">{{profile.name}}</a></div>
                                             <!-- <p>{{profile.img}}</p> -->
                                             <div class="about">

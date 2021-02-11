@@ -48,7 +48,7 @@ def view_profile():
             # Return all pet entities in the datastore to populate 'profiles.html'
             # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
             data = PetDsRepository.all()
-            
+
             # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
             public_url = "https://storage.googleapis.com/" + BUCKET_NAME
             return render_template('profiles.html', pets=data, public_url=public_url)
