@@ -26,9 +26,6 @@
 {% endblock %}     <!-- Endblock for header -->
 
 {% block content %}
-    <!-- Add page content here... -->
-    <!-- How to view image stored in Google Cloud Storage bucket https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME -->
-
     <!-- <main class="page product-page"> -->
         <section class="clean-block clean-product dark">
             <div class="container">
@@ -37,6 +34,7 @@
                     <div class="product-info">
                         <div class="row">
                             <div class="col-md-6">
+                                <!-- How to view image stored in Google Cloud Storage bucket https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME -->
                                 <!-- Debug later. JS issue in script.min.js logic that broke when html was moved to templates folder for render_template -->
                                 <!-- Temp will be single image -->
                                 <!-- <div class="gallery">
@@ -55,6 +53,8 @@
                             <div class="col-md-6">
                                 <div class="info">
                                     <h3>{{ pet_data.name }}</h3>
+                                    <p>{{ pet_data.breed }}<i class="fas fa-circle"></i>{{ pet_data.location }}
+                                        <br>{{ pet_data.age }} <i class="fas fa-circle"></i>{{ pet_data.gender }}</p>
                                     <div class="rating"><img src="../static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
                                     <div class="price">
                                         <h3>$300.00</h3>
