@@ -48,7 +48,7 @@ def view_profile():
         # Return all pet entities in the datastore to populate 'profiles.html'
         # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
         data = PetDsRepository.all()
-
+        
         # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
         public_url = "https://storage.googleapis.com/" + BUCKET_NAME
         return render_template('adopt_profiles.html', pets=data, public_url=public_url)
@@ -57,22 +57,25 @@ def view_profile():
         return "Error"
 
 ###############################################################################################################
-#temperary route to figure pet pages out
-@bp.route('/pet_page/', methods=["GET"])
-def view_pet_page():
-    if 'sub' not in session:
-        return "Error: \'sub\' not in session!!!"
-    elif request.method == 'GET':
-        # Return all pet entities in the datastore to populate 'profiles.html'
-        # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
-        data = PetDsRepository.all()
+# #temperary route to figure pet pages out
+# @bp.route('/pet_page', methods=["GET"])
+# def view_pet_page():
+#     if 'sub' not in session:
+#         return "Error: \'sub\' not in session!!!"
+#     elif request.method == 'GET':
+#         # Return all pet entities in the datastore to populate 'profiles.html'
+#         # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
+#         data = PetDsRepository.all()
 
-        # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
-        public_url = "https://storage.googleapis.com/" + BUCKET_NAME
-        return render_template('pet_page.html', pets=data, public_url=public_url)
-    else:
-        # redo temporary error response
-        return "Error"
+#         # get specific pet data from pet key
+#         pet_data = PetDsRepository.get(4815377695506432)
+#         print(pet_data['name'])
+#         # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
+#         public_url = "https://storage.googleapis.com/" + BUCKET_NAME
+#         return render_template('pet_page.html', pets=data, public_url=public_url, pet_data=pet_data)
+#     else:
+#         # redo temporary error response
+#         return "Error"
 
 # @bp.route('/update_profile/<key>', methods=["GET"])
 # def update_profile(key):
@@ -84,3 +87,19 @@ def view_pet_page():
 #         return "Not an admin account."
 #     else:
 #         return render_template('add_edit_profile.html',pet=pet)
+
+##############################################################################################################
+# temperary route to figure pet pages out
+@bp.route('/pet_page/<pet_id>', methods=["GET"])
+def view_pet_page(pet_id):
+    if request.method == 'GET':
+        # get specific pet data from pet key
+        # 4815377695506432
+        pet_data = PetDsRepository.get(pet_id)
+        print("############################")
+        print(pet_data['name'])
+        print("Is the pet name printing?")
+        return render_template('pet_page.html', pet_data=pet_data)
+    else:
+        # redo temporary error response
+        return "Error"
