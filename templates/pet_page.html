@@ -38,24 +38,30 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <!-- Debug later. JS issue in script.min.js logic that broke when html was moved to templates folder for render_template -->
-                                <!-- Temp will be single page -->
+                                <!-- Temp will be single image -->
                                 <!-- <div class="gallery">
                                     <div class="sp-wrap">
-                                        <a href="assets/img/dogs/1-Sugar/Sugar-01.jpeg"><img class="img-fluid d-block mx-auto" src="assets/img/dogs/1-Sugar/Sugar-01.jpeg"></a>
-                                        <a href="assets/img/dogs/1-Sugar/Sugar-02.jpeg"><img class="img-fluid d-block mx-auto" src="assets/img/dogs/1-Sugar/Sugar-02.jpeg"></a>
-                                        <a href="assets/img/dogs/1-Sugar/Sugar-03.jpeg"><img class="img-fluid d-block mx-auto" src="assets/img/dogs/1-Sugar/Sugar-03.jpeg"></a>
+                                        <a href="../static/img/dogs/Sugar/Sugar-01.jpeg"><img class="img-fluid d-block mx-auto" src="../static/img/dogs/Sugar/Sugar-01.jpeg"></a>
+                                        <a href="../static/img/dogs/Sugar/Sugar-02.jpeg"><img class="img-fluid d-block mx-auto" src="../static/img/dogs/Sugar/Sugar-02.jpeg"></a>
+                                        <a href="../static/img/dogs/Sugar/Sugar-03.jpeg"><img class="img-fluid d-block mx-auto" src="../static/img/dogs/Sugar/Sugar-03.jpeg"></a>
                                     </div>
                                 </div> -->
+
+                                <!-- Make own class to resize photo until sp-wrap debugged-->
+                                <div>
+                                    <figure class="figure"><img class="img-fluid figure-img" src="{{ pet_data.profile_image_name }}"></figure>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="info">
                                     <h3>{{ pet_data.name }}</h3>
-                                    <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
+                                    <div class="rating"><img src="../static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
                                     <div class="price">
                                         <h3>$300.00</h3>
                                     </div><button class="btn btn-primary" type="button"><i class="icon ion-ios-paw"></i>More Info</button>
                                     <div class="summary">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Vestibulum diam risus, sagittis at fringilla at, pulvinar vel risus. Vestibulum dignissim eu nulla eu imperdiet. Morbi mollis tellus a nunc vestibulum consequat. Quisque tristique elit et nibh dapibus sodales. Nam sollicitudin a urna sed iaculis.</p>
+                                        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Vestibulum diam risus, sagittis at fringilla at, pulvinar vel risus. Vestibulum dignissim eu nulla eu imperdiet. Morbi mollis tellus a nunc vestibulum consequat. Quisque tristique elit et nibh dapibus sodales. Nam sollicitudin a urna sed iaculis.</p> -->
+                                        <p>{{ pet_data.description }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +80,7 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                                                                         <!-- Make src dynamic with jinja -->
-                                            <figure class="figure"><img class="img-fluid figure-img" src="https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/golden_retriever2cctjmlzw.jpg"></figure>
+                                            <figure class="figure"><img class="img-fluid figure-img" src="{{ pet_data.profile_image_name }}"></figure>
                                         </div>
                                         <div class="col-md-7">
                                             <h4>Lorem Ipsum</h4>
@@ -88,7 +94,7 @@
                                         </div>
                                         <div class="col-md-5">
                                             <!-- Make src dynamic with jinja -->
-                                            <figure class="figure"><img class="img-fluid figure-img" src="https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/golden_retriever2cctjmlzw.jpg"></figure>
+                                            <figure class="figure"><img class="img-fluid figure-img" src="{{ pet_data.profile_image_name }}"></figure>
                                         </div>
                                     </div>
                                 </div>
