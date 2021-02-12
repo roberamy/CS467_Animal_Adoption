@@ -91,9 +91,7 @@
                                             <!-- <div class="image"><a href="pet_page"><img class="img-fluid d-block mx-auto" src= "{{ public_url ~ profile.profile_image_name }}" ></a></div> -->
                                             <!-- database value change to full bucket + image name together -->
                                             <div class="image"><a href="pet_page/{{ profile.key.id }}"><img class="img-fluid d-block mx-auto" src= "{{ profile.profile_image_name }}" ></a></div>
-                                            <!-- Add href source to make page and to put another image if profile_image_name is null or invalid -->
                                             <div class="product-name"><a href="pet_page/{{ profile.key.id }}">{{profile.name}}</a></div>
-                                            <!-- <p>{{profile.img}}</p> -->
                                             <div class="about">
                                                 <!-- CSS needs debug for text-align: left should be center-->
                                                 <div class="product-name">{{ profile.age }}</div>
