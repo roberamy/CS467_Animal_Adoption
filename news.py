@@ -20,6 +20,9 @@ from google.auth import crypt
 from google.auth import jwt
 from google.auth.transport import requests
 from datetime import datetime
+import news
+from repository import *
+
 
 bp = Blueprint('news', __name__)
 client = datastore.Client()
@@ -50,10 +53,11 @@ def news_post():
         
 ###############################################################################################################
 
-@bp.route("/pet_page", methods=["GET"])
-def pet_page():
+@bp.route("/pet_page/<key>", methods=["GET"])
+def pet_page(key):
+    data = PetDsRepository.get(key)
     if 'sub' not in session:
-        return "sub not in session."
+        return render_template('pet_page.html', pet=data)
     else:
-        return render_template('pet_page.html')
+        return render_template('pet_page.html', pet=data)
 

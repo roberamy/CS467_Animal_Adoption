@@ -22,6 +22,7 @@ import news
 import os 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
+
 app = Flask(__name__)
 app.register_blueprint(OAuth.bp)
 app.register_blueprint(users.bp)
@@ -31,13 +32,11 @@ app.register_blueprint(news.bp)
 
 app.secret_key = os.urandom(24)
 
-from OAuth import printSession
 ###############################################################################################################
 
 #Landing page with google login
 @app.route('/')
 def index():
-    printSession('***** INDEX *****')
     return render_template('index.html') 
   
 ###############################################################################################################
@@ -45,10 +44,9 @@ def index():
 @app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
-    printSession('***** AFTER SESSION CLEAR *****')
     return render_template('index.html')
 
 ###############################################################################################################
-  
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
