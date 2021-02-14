@@ -66,12 +66,17 @@
                                     <p>{{ pet_data.breed }}<i class="fas fa-circle"></i>{{ pet_data.location }}
                                         <br>{{ pet_data.age }} <i class="fas fa-circle"></i>{{ pet_data.gender }}</p>
                                     <!-- <div class="rating"><img src="../static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div> -->
-                                    <div class="price">
+
+                                    <!-- <div class="price">
                                         <h3>$300.00</h3>
-                                    </div><button class="btn btn-primary" type="button"><i class="icon ion-ios-paw"></i>More Info</button>
+                                    </div> -->
+                                    <button class="btn btn-primary" type="button"><i class="icon ion-ios-paw"></i>More Info</button>
                                     <div class="summary">
                                         <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Vestibulum diam risus, sagittis at fringilla at, pulvinar vel risus. Vestibulum dignissim eu nulla eu imperdiet. Morbi mollis tellus a nunc vestibulum consequat. Quisque tristique elit et nibh dapibus sodales. Nam sollicitudin a urna sed iaculis.</p> -->
                                         <p>{{ pet_data.description }}</p>
+                                        <p>{{ pet_data.properties }}</p>
+                                        <p>{{ pet_data.status }}</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -81,21 +86,24 @@
                         <div>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane active fade show description" role="tabpanel" id="description">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                    <p>{{ pet_data.description }}</p>
+                                    <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> -->
                                     <div class="row">
                                         <div class="col-md-5">
-                                                                                        <!-- Make src dynamic with jinja -->
+                                            <!-- Make src dynamic with jinja -->
                                             <figure class="figure"><img class="img-fluid figure-img" src="{{ pet_data.profile_image_name }}"></figure>
                                         </div>
                                         <div class="col-md-7">
-                                            <h4>Lorem Ipsum</h4>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                            <h4>Good In A Home With:</h4>
+                                            <p>{{ pet_data.properties }}</p>
+                                            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> -->
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-7 right">
-                                            <h4>Lorem Ipsum</h4>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                            <h4>Status PR Blurb</h4>
+                                            <p>{{ pet_data.status }}</p>
+                                            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> -->
                                         </div>
                                         <div class="col-md-5">
                                             <!-- Make src dynamic with jinja -->
