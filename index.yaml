@@ -1,8 +1,0 @@
-indexes:
-
-- kind: breeds
-  properties:
-  - name: name
-    direction: desc
-  - name: type
-

@@ -87,9 +87,6 @@
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
                                             <!-- How to view image stored in Google Cloud Storage bucket https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME -->
-                                            <!-- change href with dynamic link , current bucket and concatentate image name-->
-                                            <!-- <div class="image"><a href="pet_page"><img class="img-fluid d-block mx-auto" src= "{{ public_url ~ profile.profile_image_name }}" ></a></div> -->
-                                            <!-- database value change to full bucket + image name together -->
                                             <div class="image"><a href="pet_page/{{ profile.key.id }}"><img class="img-fluid d-block mx-auto" src= "{{ profile.profile_image_name }}" ></a></div>
                                             <div class="product-name"><a href="pet_page/{{ profile.key.id }}">{{profile.name}}</a></div>
                                             <div class="about">

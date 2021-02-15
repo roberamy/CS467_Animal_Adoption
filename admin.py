@@ -34,7 +34,6 @@ from google.cloud import storage
 # User modules
 from repository import *
 from forms.admin_profile_form import AdminProfileForm
-from OAuth import printSession
 
 
 UPLOADS_PATH = join(dirname(realpath(__file__)), 'uploads/')
@@ -43,11 +42,11 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 bp = Blueprint('admin', __name__)
 client = datastore.Client()
 
+
 ###############################################################################################################
 
 @bp.route('/admin_profiles', methods=['GET'])
 def adminPage():
-    printSession('***** PROFILE ADMIN *****')
     if 'isAdmin' not in session:
         return "isAdmin not in session."
     elif session['isAdmin'] == False:
@@ -56,46 +55,32 @@ def adminPage():
         # Return all pet entities in the datastore to populate 'admin_profiles.html'
         # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
         data = PetDsRepository.all()
-        for d in data:
-            d['created_at'] = datetime.datetime.strftime(d['created_at'], "%Y-%m-%d")
         return render_template('admin_profiles.html', pets=data)
     
 ###############################################################################################################
     
 @bp.route('/add_profile', methods=["GET"])
 def add_profile():
-    printSession('***** ADD PROFILE *****')
     if 'isAdmin' not in session:
         return "isAdmin not in session."
     elif session['isAdmin'] == False:
         return "Not an admin account."
     else:
-        # Get all breeds from database & sort alphabetically
-        query = client.query(kind=constants.breeds)
-        query.order = ["name"]
-        breeds = list(query.fetch())
-        #print("LENGTH:" + str(length))
         form = AdminProfileForm()
-        return render_template('add_edit_profile.html', breeds=breeds)
+        return render_template('add_edit_profile.html')
         
-###############################################################################################################
+ ###############################################################################################################   
     
 @bp.route('/update_profile/<key>', methods=["GET"])
 def update_profile(key):
-    printSession('***** UPDATE PROFILE *****')
     pet = PetDsRepository.get(key)
-    #print(pet)
-    #print(pet['type'])
+    print(pet)
     if 'isAdmin' not in session:
         return "isAdmin not in session."
     elif session['isAdmin'] == False:
         return "Not an admin account."
     else:
-        # Get all breeds from database & sort alphabetically
-        query = client.query(kind=constants.breeds)
-        query.order = ["name"]
-        breeds = list(query.fetch())
-        return render_template('add_edit_profile.html',pet=pet, breeds=breeds)
+        return render_template('add_edit_profile.html',pet=pet)
 
 ###############################################################################################################
   

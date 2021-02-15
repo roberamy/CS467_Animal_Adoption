@@ -1,7 +1,5 @@
 <!--
-Referenced:
-https://www.techiedelight.com/dynamically-create-drop-down-list-javascript/#:~:text=To%20add%20a%20drop%2Ddown,appendChild()%20method%20or%20jQuery's%20.
-https://www.w3schools.com/jsref/event_onchange.asp
+
 -->
 {% extends "nav.html" %}
 
@@ -15,19 +13,6 @@ https://www.w3schools.com/jsref/event_onchange.asp
     {% endblock %}
     {% block html_head %}
         <!-- Add CSS custom to this tempate here... -->
-        <style>
-            ::placeholder { color: Gray }
-            select:invalid { color: Gray; }
-            .hiddenOptions > select
-            {
-                display: none;
-            }
-
-            .hiddenOptions > select.active
-            {
-                display: inline-block;
-            }
-        </style>
     {% endblock %}
     <!-- Add additional custom headers here... -->
     <div>
@@ -64,26 +49,18 @@ https://www.w3schools.com/jsref/event_onchange.asp
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col">
-                                        <select required class="form-control" name="type" id="type" onchange="updateBreeds()">
+                                        <select required class="form-control" name="type">
                                             <option value="" disabled selected>Type</option>
                                             <option value="Cat" {% if pet and pet.type=='Cat' %} selected="selected" {% endif %}>Cat</option>
                                             <option value="Dog" {% if pet and pet.type=='Dog' %} selected="selected" {% endif %}>Dog</option>
                                             <option value="Other" {% if pet and pet.type=='Other' %} selected="selected" {% endif %}>Other</option>
                                         </select></div>
                                     <div class="col">
-                                        <select required class="form-control" name="breed" id="breed">
+                                        <select required class="form-control" name="breed">
                                             <option value="" disabled selected>Breed</option>
-                                            {% if pet and breeds %}
-                                                {% for breed in breeds%}
-                                                    {% if breed.type == pet.type %}
-                                                        <option value='{{breed.name}}' {% if pet.breed==breed.name %} selected="selected" {% endif %}>{{breed.name}}</option>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% else %}
-                                                {% for breed in breeds%}
-                                                    <option value='{{breed.name}}'>{{breed.name}}</option>
-                                                {% endfor %}
-                                            {% endif %}                                            
+                                            <option value="American Shorthair" {% if pet and pet.breed=='American Shorthair' %} selected="selected" {% endif %}>American Shorthair</option>
+                                            <option value="German Shepherd" {% if pet and pet.breed=='German Shepherd' %} selected="selected" {% endif %}>German Shepherd</option>
+                                            <option value="Golden Retriever" {% if pet and pet.breed=='Golden Retriever' %} selected="selected" {% endif %}>Golden Retriever</option>
                                         </select>
                                     </div>
                                 </div>
@@ -161,12 +138,11 @@ https://www.w3schools.com/jsref/event_onchange.asp
                                         <input id="adoption_date" name="adoption_date" class="form-control" style="padding-right:8px;" type="text" {{'required' if pet.availability == "Adopted"}} value='{{pet.adoption_date}}' placeholder="Date (mm/dd/yyyy)">
                                     </div>
                                     <div class="col">
-                                        <input id="adopted_by" name="adopted_by" class="form-control" style="padding-right:8px;" type="text" {{'required' if pet.availability == "Adopted"}} value='{{pet.adopted_by}}' placeholder="Adopted By (ex: John Smith)"
+                                        <input id="adoption_date" name="adoption_date" class="form-control" style="padding-right:8px;" type="text" {{'required' if pet.availability == "Adopted"}} value='{{pet.adoption_by}}' placeholder="Adopter (ex: John Smith)"
                                     </div>
                                     <div class="form-group">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="picked_up" id="picked_up"
-                                                {% if pet and pet.picked_up=="on" %} checked="checked" {% endif %}>
+                                            <input class="form-check-input" type="checkbox" name="singlePet" id="singlePet">
                                                 <label class="form-check-label" for="formCheck-4">Picked Up<br></label>
                                         </div>
                                     </div>
@@ -211,25 +187,9 @@ https://www.w3schools.com/jsref/event_onchange.asp
     </div>
 </div>
 {% endblock %}
+
 {% block script %}
     <!-- Add Javascript custom to this tempate here... -->
+    <!-- Bootstrap Studio Script Files -->
     <script src="../static/js/Application-Form.js?v=1"></script>
-    <script>
-        var allBreeds = {{ breeds|tojson }}
-        function updateBreeds() {
-            var type = document.getElementById("type").value;
-            var breed = document.getElementById("breed");
-            breed.options.length = 1;
-            for (var i = 0; i<allBreeds.length; i++){
-                if (allBreeds[i].type == type){
-                    var option = document.createElement("option");
-                    option.value = allBreeds[i].name;
-                    option.name = allBreeds[i].name;
-                    option.id = allBreeds[i].name;
-                    option.innerHTML = allBreeds[i].name;
-                    breed.appendChild(option);
-                }
-            }
-        }
-    </script>
 {% endblock %}
