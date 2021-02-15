@@ -4,3 +4,10 @@ key.json
 __pycache__/
 uploads/
 **/*.sw?
+*.pyc
+*.pyc
+__pycache__/admin.cpython-38.pyc
+__pycache__/constants.cpython-38.pyc
+__pycache__/admin.cpython-38.pyc
+__pycache__/profiles.cpython-38.pyc
+**/__pycache__/

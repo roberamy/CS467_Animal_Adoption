@@ -24,10 +24,6 @@
 {% endblock %}
 
 {% block content %}
-    <!-- Add page content here... -->
-    <!-- <div>
-        <p>Content TBD...</p>
-    </div> -->
 
     <!-- J add -->
     <section class="clean-block clean-catalog dark">
@@ -80,22 +76,22 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Start of profile cards row -->
                     <div class="col-md-9">
                         <div class="products">
                             <div class="row no-gutters">
                                 <!-- Start of card -->
                                 <!-- fix css class names from template, specifically price and product-name -->
-                                <!-- photo static for now -->
-                                {% for profile in profiles %}
+                                {% for profile in pets %}
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
-                                            <!-- How to dynamic link pic, current static -->
-                                            <!-- <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/1-Sugar/Sugar-02.jpeg"></a></div> -->
-                                            <!-- <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src= "{{ url_for('static', filename='/'.join(['img',profile.type, profile.name]))}}"></a></div> -->
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src= "{{ url_for('static', filename='img/dogs/' + profile.img )}}"></a></div>
-                                            <div class="product-name"><a href="pet_page">{{profile.name}}</a></div>
-                                            <!-- <p>{{profile.img}}</p> -->
+                                            <!-- How to view image stored in Google Cloud Storage bucket https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME -->
+                                            <!-- change href with dynamic link , current bucket and concatentate image name-->
+                                            <!-- <div class="image"><a href="pet_page"><img class="img-fluid d-block mx-auto" src= "{{ public_url ~ profile.profile_image_name }}" ></a></div> -->
+                                            <!-- database value change to full bucket + image name together -->
+                                            <div class="image"><a href="pet_page/{{ profile.key.id }}"><img class="img-fluid d-block mx-auto" src= "{{ profile.profile_image_name }}" ></a></div>
+                                            <div class="product-name"><a href="pet_page/{{ profile.key.id }}">{{profile.name}}</a></div>
                                             <div class="about">
                                                 <!-- CSS needs debug for text-align: left should be center-->
                                                 <div class="product-name">{{ profile.age }}</div>
@@ -108,20 +104,6 @@
                                         </div>
                                     </div>
                                 {% endfor %}
-
-
-                                <!-- <div class="col-12 col-md-6 col-lg-4">
-                                    <div class="clean-product-item">
-                                        <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src="static/img/dogs/1-Sugar/Sugar-02.jpeg"></a></div>
-                                        <div class="product-name"><a href="pet_page">Sugar</a></div>
-                                        <div class="about">
-                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
-                                            <div class="price">
-                                                <h3>$100</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                                 
                             </div>
                             <!-- End of product cards -->
