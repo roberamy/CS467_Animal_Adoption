@@ -57,10 +57,10 @@ Pet Profile Admin
                                     <th class="text-center" style="min-width: 300px">Description</th>
                                     <th class="text-center" style="min-width: 150px">Location</th>
                                     <th class="text-center">Available</th>
-                                    <th class="text-center">Photo</th>
+                                    <th class="text-center filter-false sorter-false">Photo</th>
                                     <th class="text-center">Adoption Date</th>
                                     <th class="text-center">Adopted By</th>
-                                    <th class="text-center">Picked Up</th>
+                                    <th class="text-center filter-false sorter-false">Picked Up</th>
                                     <th class="text-center filter-false sorter-false" style="min-width:100px"></th>
                                 </tr>
                             </thead>
@@ -78,10 +78,10 @@ Pet Profile Admin
                                     <td>{{pet.description}}</td>
                                     <td>{{pet.location}}</td>
                                     <td>{{pet.availability}}</td>
-                                    <td>{% if pet and pet.key.id and pet.profile_image_name %}&#10004;{% endif %}</td>
+                                    <td>{% if pet.profile_image_name %}&#10004;{% endif %}</td>
                                     <td>{{pet.adoption_date}}</td>
                                     <td>{{pet.adopted_by}}</td>
-                                    <td>{% if pet and pet.key.id and pet.isAdopted %}&#10004;{% endif %}</td>
+                                    <td>{% if pet.picked_up==True %}&#10004;{% endif %}</td>
                                     <td class="text-center">
                                         <a class="btn btn-success" role="button"
                                             style="background:rgb(30,26,193); border:rgb(30,26,193); margin:2px; font-size:11px; height:30px; width:30px; padding-left:10px; padding-top: 7px;"

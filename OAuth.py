@@ -1,14 +1,14 @@
 ###############################################################################################################
-#                                                                                                             #          
-# Author: Gregory A. Bauer, Jasper Wong, Amy Robertson                                                        #
-# Email: bauergr@oregonstate.edu                                                                              #
-# Course: CS467_400_W2021                                                                                     #
-# Sources: https://developers.google.com/identity/protocols/oauth2/web-server#httprest,                       #
-#   https://stackoverflow.com/questions/17057191/redirect-while-passing-arguments,                            #
-#   https://flask.palletsprojects.com/en/1.1.x/quickstart/,                                                   #
-#   https://stackoverflow.com/questions/51262531/flask-context-variable-not-available-in-template/51262916    #
-#                                                                                                             #  
-#                                                                                                             #
+#                                                                                                                       
+# Author: Gregory A. Bauer, Jasper Wong, Amy Robertson
+# Email: bauergr@oregonstate.edu
+# Course: CS467_400_W2021
+# Sources: https://developers.google.com/identity/protocols/oauth2/web-server#httprest,
+#   https://stackoverflow.com/questions/17057191/redirect-while-passing-arguments,
+#   https://flask.palletsprojects.com/en/1.1.x/quickstart/,
+#   https://stackoverflow.com/questions/51262531/flask-context-variable-not-available-in-template/51262916
+#   https://stackoverflow.com/questions/39261260/flask-session-variable-not-persisting-between-requests/39261335
+#
 ###############################################################################################################
 
 from flask import Blueprint, request, Response, redirect, render_template, session
@@ -90,6 +90,7 @@ def callback():
     session['id_token'] = token['id_token']
     session['usr_email'] = id_info['email']
     session['sub'] = id_info['sub']
+    session.modified = True
 
     email = session['usr_email']
     jwt = session['id_token']
@@ -105,9 +106,10 @@ def callback():
             # User already exists
             if user['uniqueID'] == sub:
                 session['isAdmin'] = user['isAdmin']
+                session.modified = True
                 #return render_template('index.html')
                 printSession('***** RESULTS EXISTING USER *****')
-                return redirect('/')
+                return redirect('/admin_news')
                 #return render_template('results.html', sub=sub, email=email, jwt=jwt, isAdmin=session['isAdmin'])
         except:
             pass
@@ -118,9 +120,10 @@ def callback():
     new_user = datastore.entity.Entity(key=client.key(constants.users))
     new_user.update({"uniqueID": sub, "email": email, "isAdmin": False, "creation_date": dt_string, "last_modified": None})
     session['isAdmin'] = False
+    session.modified = True
     client.put(new_user)
     printSession('***** RESULTS NEW USER *****')
-    return redirect('/')
+    return redirect('/profiles')
 
 ###############################################################################################################   
 

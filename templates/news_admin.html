@@ -1,0 +1,132 @@
+<!--
+
+-->
+{% extends "nav.html" %}
+
+{% block header %}
+{% block title %}
+News Admin
+{% endblock %}
+{% block html_head %}
+<!-- Add CSS custom to this tempate here... -->
+<!-- Bootstrap Studio CSS Files -->
+<link rel="stylesheet" href="../static/css/Table-with-search--sort-filters.css">
+<!-- Bootstrap Studio Links -->
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/css/theme.bootstrap_4.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+{% endblock %}
+<!-- Add additional custom headers here... -->
+<div>
+    <header class=" bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px"
+        overflow="auto">
+        <div class="container">
+            <h1 style="font-size: 30px;">Administer News Posts</h1>
+        </div>
+    </header>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Add page content here... -->
+<div class="masthead bg-primary text-white text-center" style="font-size: 12px;" overflow="auto">
+    <div class="container-fluid" overflow="auto">
+        <div class="card" id="TableSorterCard">
+            <div class="card-header py-3">
+                <div class="row table-topper align-items-center">
+                    <div class="col-12 col-sm-5 col-md-6 text-left" style="margin: 0px;padding: 5px 5px;">
+                        <a class="btn btn-primary" role="button" href="/add_news"><i class="fa fa-plus"></i>&nbsp;Add
+                            News Post</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive" style="font-size:12px">
+                        <table class="table table-striped table tablesorter" id="ipi-table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center">Created</th>
+                                    <th class="text-center" style="min-width: 150px">Title</th>
+                                    <th class="text-center" style="min-width: 300px">Content</th>
+                                    <th class="text-center">Author</th>
+                                    <th class="text-center filter-false sorter-false" style="max-width:100px;">Photo</th>
+                                    <th class="text-center filter-false sorter-false" style="min-width:100px"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-left">
+                                {% for post in news %}
+                                <tr>
+                                    <td>{{ post.created }}</td>
+                                    <td>{{ post.title }}</td>
+                                    <td>{{ post.content }}</td>
+                                    <td>{{ post.author }}</td>
+                                    <td>{% if post.image_name %}&#10004;{% endif %}</td>
+                                    <td class="text-center">
+                                        <a class="btn btn-success" role="button"
+                                            style="background:rgb(30,26,193); border:rgb(30,26,193); margin:2px; font-size:11px; height:30px; width:30px; padding-left:10px; padding-top: 7px;"
+                                            href="/update_news/{{post.key.id}}"><i class="fas fa-pencil-alt"
+                                                style="font-size: 11px;"></i>
+                                        </a>
+                                        <a class="btn btn-danger deleteBtn" data-key="{{post.key.id}}" role="button"
+                                            style="margin:2px; font-size:11px; height:30px; width:30px; padding-left:8px; padding-top:5px;"><i
+                                                class="fas fa-trash" style="font-size: 11px;"></i>
+                                        </a>
+                                    </td>
+                                    
+
+                                </tr>
+                                {% endfor %}
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<!-- Add Javascript custom to this tempate here... -->
+<!-- Bootstrap Studio Script Files -->
+<script src="../static/js/Table-with-search--sort-filters.js"></script>
+<!-- Bootstrap Studio Script Links -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-filter.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.deleteBtn', function () {
+            var key = $(this).data('key');
+            swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                animation: false,
+                customClass: 'animated tada',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: '/delete_news',
+                        type: 'POST',
+                        data: {
+                            "key": key,
+                        },
+                        success: function (result) {
+                            res = JSON.parse(result);
+                            if (res.success == true) {
+                                toastr.success(res.message);
+                                window.location.reload();
+                            } else {
+                                toastr.error(res.message);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

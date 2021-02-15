@@ -1,0 +1,114 @@
+<!--
+Referenced:
+https://www.techiedelight.com/dynamically-create-drop-down-list-javascript/#:~:text=To%20add%20a%20drop%2Ddown,appendChild()%20method%20or%20jQuery's%20.
+https://www.w3schools.com/jsref/event_onchange.asp
+-->
+{% extends "nav.html" %}
+
+{% block header %}
+    {% block title %}
+        {% if news and news.key.id %}
+            Update News Post
+        {% else %}
+            Add News Post
+        {% endif %}
+    {% endblock %}
+    {% block html_head %}
+        <!-- Add CSS custom to this tempate here... -->
+        <style>
+            ::placeholder { color: Gray }
+            select:invalid { color: Gray; }
+            .hiddenOptions > select
+            {
+                display: none;
+            }
+            .hiddenOptions > select.active
+            {
+                display: inline-block;
+            }
+        </style>
+    {% endblock %}
+    <!-- Add additional custom headers here... -->
+    <div>
+        <header class="bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
+            <div class="container">
+                <h1 style="font-size: 30px;">
+                    {% if news and news.key.id %}
+                        Update News: {{ news.title }}
+                    {% else %}
+                        Add News Post
+                    {% endif %}
+                </h1>
+            </div>
+        </header>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="bg-primary container-fluid" overflow="auto" style="padding-top: 14px;padding-bottom: 14px;">
+    <div class="card" id="TableSorterCard">
+        <div class="row">
+            <div class="col-12">
+                <section style="padding-top: 30px;">
+                    <div class="container">
+                        <form id="news-form" enctype="multipart/form-data" action="/store_news" method="post">
+                            <input type="hidden" name="news_key" value="{% if news and news.key.id %} {{news.key.id}} {% endif %}" id="news_key" />
+                            <input type="hidden" name="news_image" value="{% if news and news.image_name %} {{news.image_name}} {% endif %}" id="news_image" />
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col"><input class="form-control" type="text" required="" name="title" id="title" placeholder="Title"
+                                        value="{% if news and news.title %} {{news.title}} {% endif %}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col"><input class="form-control" type="text" required="" name="author" id="author" placeholder="Author" value="{% if news and news.author %} {{news.author}} {% endif %}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <textarea rows="10" id="description" required class="form-control" placeholder="Content" id="content" name="content" value="">{% if news and news.content -%} {{news.content}} {% endif %}</textarea>
+                            </div>
+                            <div class="file">
+                                <p class="font-italic text-dark text-center">Choose a post image. The image uploaded will be rendered below.</p>
+                                <!-- Upload image input-->
+                                <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm ">
+                                    <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
+                                </div>
+                                <!-- Uploaded image area-->
+                                <div class="image-area mt-4 text-dark">
+                                    <img id="imageResult" src="{% if news and news.image_name %} https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/{{news.image_name}} {% endif %}" alt="" class="img-fluid rounded shadow-sm mx-auto d-block" width=200>
+                                </div>
+                                <div class="col d-none">
+                                    <input id="urllink" name="url" type="url" class="form-control" readonly/>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="form-group justify-content-center d-flex">
+                        <div id="new-news-submit-btn" style="padding-top:15px; padding-right:25px;">
+                            <div class="form-row" >
+                                <button class="btn btn-primary btn-dark m-0 rounded-pill px-4" type="submit" id="save_profile" style="min-width: 150px;">Submit</button>
+                            </div>
+                        </div>
+                        <div id="new-profile-cancel-btn" style="padding-top:15px;">
+                            <div class="form-row" >
+                                <button class="btn btn-danger btn-dark m-0 rounded-pill px-4" type="button" style="min-width: 150px;" onclick="window.location.href='/admin_news';">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <h3 id="fail" class="text-center text-danger d-none"><br>Form not Submitted&nbsp;<a href="contact.html">Try Again</a><br><br></h3>
+                <h3 id="success-1" class="text-center text-success d-none"><br>Form Submitted Successfully&nbsp;<a href="contact.html">Send Another Response</a><br><br></h3>
+            </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    <!-- Add Javascript custom to this tempate here... -->
+<script src="../static/js/News-Form.js?v=1"></script>
+{% endblock %}
