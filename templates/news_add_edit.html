@@ -7,11 +7,11 @@ https://www.w3schools.com/jsref/event_onchange.asp
 
 {% block header %}
     {% block title %}
-        {% if news and news.key.id %}
-            Update News Post
-        {% else %}
-            Add News Post
-        {% endif %}
+    {% if pet and pet.key.id %}
+        Update News
+    {% else %}
+        Add News
+    {% endif %}
     {% endblock %}
     {% block html_head %}
         <!-- Add CSS custom to this tempate here... -->
@@ -22,6 +22,7 @@ https://www.w3schools.com/jsref/event_onchange.asp
             {
                 display: none;
             }
+
             .hiddenOptions > select.active
             {
                 display: inline-block;
@@ -33,8 +34,8 @@ https://www.w3schools.com/jsref/event_onchange.asp
         <header class="bg-primary text-white text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
             <div class="container">
                 <h1 style="font-size: 30px;">
-                    {% if news and news.key.id %}
-                        Update News: {{ news.title }}
+                    {% if pet and pet.key.id %}
+                        Update News Post
                     {% else %}
                         Add News Post
                     {% endif %}
@@ -51,34 +52,31 @@ https://www.w3schools.com/jsref/event_onchange.asp
             <div class="col-12">
                 <section style="padding-top: 30px;">
                     <div class="container">
-                        <form id="news-form" enctype="multipart/form-data" action="/store_news" method="post">
-                            <input type="hidden" name="news_key" value="{% if news and news.key.id %} {{news.key.id}} {% endif %}" id="news_key" />
-                            <input type="hidden" name="news_image" value="{% if news and news.image_name %} {{news.image_name}} {% endif %}" id="news_image" />
+                        <form id="application-form" enctype="multipart/form-data">
+                            <input type="hidden" name="pet_key" value="{%- if pet and pet.key.id -%} {{pet.key.id}} {%- endif -%}" id="pet_key" />
+                            <input type="hidden" name="profile_image_name" value="{%- if pet and pet.news_image_name -%}{{pet.news_image_name}}{%- endif -%}" id="profile_image_name" />
                             <div class="form-group">
                                 <div class="form-row">
-                                    <div class="col"><input class="form-control" type="text" required="" name="title" id="title" placeholder="Title"
-                                        value="{% if news and news.title %} {{news.title}} {% endif %}">
+                                    <div class="col"><input required class="form-control" type="text" value="{%- if pet and pet.title -%}{{pet.title}}{%- endif -%}" id="name" name="name" placeholder="Title">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="form-row">
-                                    <div class="col"><input class="form-control" type="text" required="" name="author" id="author" placeholder="Author" value="{% if news and news.author %} {{news.author}} {% endif %}">
-                                    </div>
-                                </div>
+                                <input id="author" name="author" required class="form-control" type="text" value="{%- if pet and pet.author -%}{{pet.author}}{%- endif -%}" placeholder="Author">
                             </div>
                             <div class="form-group">
-                                <textarea rows="10" id="description" required class="form-control" placeholder="Content" id="content" name="content" value="">{% if news and news.content -%} {{news.content}} {% endif %}</textarea>
+                                <textarea rows="15" id="content" required class="form-control" placeholder="Content" name="content">{% if pet and pet.content %}{{pet.content}}{% endif %}</textarea>
                             </div>
                             <div class="file">
-                                <p class="font-italic text-dark text-center">Choose a post image. The image uploaded will be rendered below.</p>
+                                <p class="font-italic text-dark text-center">Choose a profile image. The image uploaded will be rendered below.</p>
                                 <!-- Upload image input-->
                                 <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm ">
                                     <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
                                 </div>
                                 <!-- Uploaded image area-->
                                 <div class="image-area mt-4 text-dark">
-                                    <img id="imageResult" src="{% if news and news.image_name %} https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/{{news.image_name}} {% endif %}" alt="" class="img-fluid rounded shadow-sm mx-auto d-block" width=200>
+                                    <img id="imageResult" src="{% if pet and pet.news_image_name %} https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/{{pet.news_image_name}} {% endif %}" 
+                                    alt="" class="img-fluid rounded shadow-sm mx-auto d-block"  width=200>
                                 </div>
                                 <div class="col d-none">
                                     <input id="urllink" name="url" type="url" class="form-control" readonly/>
@@ -86,9 +84,9 @@ https://www.w3schools.com/jsref/event_onchange.asp
                             </div>
                     </div>
                     <div class="form-group justify-content-center d-flex">
-                        <div id="new-news-submit-btn" style="padding-top:15px; padding-right:25px;">
+                        <div id="new-profile-submit-btn" style="padding-top:15px; padding-right:25px;">
                             <div class="form-row" >
-                                <button class="btn btn-primary btn-dark m-0 rounded-pill px-4" type="submit" id="save_profile" style="min-width: 150px;">Submit</button>
+                                <button class="btn btn-primary btn-dark m-0 rounded-pill px-4" type="button" id="save_profile" style="min-width: 150px;">Submit</button>
                             </div>
                         </div>
                         <div id="new-profile-cancel-btn" style="padding-top:15px;">
@@ -110,5 +108,5 @@ https://www.w3schools.com/jsref/event_onchange.asp
 {% endblock %}
 {% block script %}
     <!-- Add Javascript custom to this tempate here... -->
-<script src="../static/js/News-Form.js?v=1"></script>
+    <script src="../static/js/News-Form.js"></script>
 {% endblock %}

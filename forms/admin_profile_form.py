@@ -52,6 +52,6 @@ class AdminProfileForm(Form):
     properties = StringField('Properties', [validators.InputRequired()])
     adoption_date = StringField('adoption_date')
     adopted_by = StringField('adopted_by')
-   # picked_up = BooleanField('picked_up')
+    picked_up = StringField('picked_up')
     profile_image = FileField('Image')
     ''' End Form Validation Options '''
