@@ -4,6 +4,11 @@
     {% block title %} News {% endblock %}
     {% block html_head %}
         <!-- Add CSS custom to this tempate here... -->
+        <style>
+            p.c {
+              white-space: pre-wrap;
+            }
+        </style>
         <!-- J add -->
         <link rel="stylesheet" href="static/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
@@ -37,46 +42,24 @@
                 <p>Latest news about us and fur kids</p>
             </div> -->
             <div class="block-content">
+                {% for post in news %}
                 <div class="clean-blog-post">
                     <div class="row">
-                        <div class="col-lg-5"><img class="rounded img-fluid" src="static/img/tech/image4.jpg"></div>
+                        <div class="col-lg-5"><img class="rounded img-fluid" src="{% if post.image_name %} https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/{{post.image_name}} {% endif %}">
+                        </div>
                         <div class="col-lg-7">
-                            <h3>Lorem Ipsum dolor sit amet</h3>
-                            <div class="info"><span class="text-muted">Jan 16, 2018 by&nbsp;<a href="#">John Smith</a></span></div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p><a class="btn btn-outline-primary btn-sm" role="button" href="news_post">Read More</a>
+                            <h3>{{ post.title }}</h3>
+                            <div class="info">
+                                <span class="text-muted">{{ post.created }} by&nbsp; {{ post.author }}</span>
+                            </div>
+                            <p class="c">{{ post.content }}</p>
+                            <!--
+                            <a class="btn btn-outline-primary btn-sm" role="button" href="/news_post">Read More</a>
+                            -->
                         </div>
                     </div>
                 </div>
-                <div class="clean-blog-post">
-                    <div class="row">
-                        <div class="col-lg-5"><img class="rounded img-fluid" src="static/img/tech/image4.jpg"></div>
-                        <div class="col-lg-7">
-                            <h3>Lorem Ipsum dolor sit amet</h3>
-                            <div class="info"><span class="text-muted">Jan 16, 2018 by&nbsp;<a href="#">John Smith</a></span></div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p><button class="btn btn-outline-primary btn-sm" type="button">Read More</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="clean-blog-post">
-                    <div class="row">
-                        <div class="col-lg-5"><img class="rounded img-fluid" src="static/img/tech/image4.jpg"></div>
-                        <div class="col-lg-7">
-                            <h3>Lorem Ipsum dolor sit amet</h3>
-                            <div class="info"><span class="text-muted">Jan 16, 2018 by&nbsp;<a href="#">John Smith</a></span></div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p><a class="btn btn-outline-primary btn-sm" role="button" href="news_post.html">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="clean-blog-post">
-                    <div class="row">
-                        <div class="col-lg-5"><img class="rounded img-fluid" src="static/img/tech/image4.jpg"></div>
-                        <div class="col-lg-7">
-                            <h3>Lorem Ipsum dolor sit amet</h3>
-                            <div class="info"><span class="text-muted">Jan 16, 2018 by&nbsp;<a href="#">John Smith</a></span></div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p><a class="btn btn-outline-primary btn-sm" role="button" href="news_post.html">Read More</a>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
