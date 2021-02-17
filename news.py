@@ -10,11 +10,13 @@
 #
 # References:
 # https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
+# https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9
 ###############################################################################
 
 # Library modules
-from flask import Blueprint, request, Response, redirect, render_template 
+from flask import Blueprint, request, Response, redirect, render_template
 from flask import session, send_from_directory
+from flask_paginate import Pagination, get_page_args
 from google.cloud import datastore
 from requests_oauthlib import OAuth2Session
 import json
@@ -35,6 +37,7 @@ from repository import NewsRepository
 from forms.news_form import NewsForm
 from OAuth import printSession
 
+
 UPLOADS_PATH = join(dirname(realpath(__file__)), 'uploads/')
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -43,6 +46,12 @@ client = datastore.Client()
 
 ###############################################################################
 
+
+def get_news_page(data, offset=0, per_page=10):
+    return data[offset: offset + per_page]
+
+
+# General user view of news posts
 @bp.route('/news', methods=["GET"])
 def news():
     printSession('***** NEWS *****')
@@ -50,12 +59,26 @@ def news():
         return "sub not in session."
     else:
         data = NewsRepository.all()
+        total = len(data)
+        print('LENGHT: ' + str(total))
         for d in data:
             d['created'] = datetime.strftime(d['created'], "%B %d, %Y")
-        return render_template('news.html', news=data)
+        # pagination code
+        page, per_page, offset = get_page_args(page_parameter='page',
+                                               per_page_parameter='per_page')
+        pagination_news = get_news_page(data, offset=offset, per_page=per_page)
+        pagination = Pagination(page=page, per_page=per_page, total=total,
+                                css_framework='bootstrap4')
+        return render_template('news.html',
+                               news=pagination_news,
+                               page=page,
+                               per_page=per_page,
+                               pagination=pagination,)
 
 ###############################################################################
 
+
+# Route to add/edit a news post
 @bp.route('/add_news', methods=["GET"])
 def add_news():
     printSession('***** ADD PROFILE *****')
@@ -64,11 +87,11 @@ def add_news():
     elif session['isAdmin'] is False:
         return "Not an admin account."
     else:
-
         form = NewsForm()
-        return render_template('news_add_edit.html')
+        return render_template('news_add_edit.html', form=form)
 
 ###############################################################################
+
 
 @bp.route('/update_news/<key>', methods=["GET"])
 def update_news(key):
@@ -85,6 +108,7 @@ def update_news(key):
 
 ###############################################################################
 
+
 @bp.route('/store_news', methods=["POST"])
 def store_news():
     # Instantiate AdminProfileForm class used for input validation
@@ -95,20 +119,24 @@ def store_news():
             NewsRepository.create(request.form)
         # Update 'news' entity if key provided
         else:
-            NewsRepository.update(form=request.form, key=request.form['pet_key'])
+            NewsRepository.update(
+                form=request.form, key=request.form['pet_key'])
         responseBody = {"success": True, "message": "Data Successfully saved"}
     else:
-        errors = []
+        # errors = []
         for fieldName, errorMessages in form.errors.items():
-            field = []
+            # field = []
             print(fieldName)
             for err in errorMessages:
                 print(err)
-        responseBody = {"success": False, "message": "There are errors in the inputs"}
+        responseBody = {"success": False,
+                        "message": fieldName.title() + ': ' + err}
     return (json.dumps(responseBody), 200)
 
 ###############################################################################
 
+
+# Route for admin view of all news posts
 @bp.route('/admin_news', methods=["GET"])
 def news_admin():
     printSession('***** PROFILE ADMIN *****')
@@ -128,6 +156,7 @@ def news_admin():
 
 ###############################################################################
 
+
 # Route to delete news post from datastore
 @bp.route('/delete_news', methods=["POST"])
 def delete_post():
@@ -139,5 +168,3 @@ def delete_post():
     return (json.dumps(responseBody), 200)
 
 ###############################################################################
-
-

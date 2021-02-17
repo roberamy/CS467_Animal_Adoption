@@ -1,5 +1,5 @@
 ###############################################################################################################
-#                                                                                                             #          
+#                                                                                                             #
 # Author: Gregory A. Bauer, Jasper Wong, Amy Robertson                                                        #
 # Email: bauergr@oregonstate.edu                                                                              #
 # Course: CS467_400_W2021                                                                                     #
@@ -45,6 +45,7 @@ client = datastore.Client()
 
 ###############################################################################################################
 
+
 @bp.route('/admin_profiles', methods=['GET'])
 def adminPage():
     printSession('***** PROFILE ADMIN *****')
@@ -57,11 +58,13 @@ def adminPage():
         # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
         data = PetDsRepository.all()
         for d in data:
-            d['created_at'] = datetime.datetime.strftime(d['created_at'], "%Y-%m-%d")
+            d['created_at'] = datetime.datetime.strftime(
+                d['created_at'], "%Y-%m-%d")
         return render_template('admin_profiles.html', pets=data)
-    
+
 ###############################################################################################################
-    
+
+
 @bp.route('/add_profile', methods=["GET"])
 def add_profile():
     printSession('***** ADD PROFILE *****')
@@ -77,15 +80,16 @@ def add_profile():
         #print("LENGTH:" + str(length))
         form = AdminProfileForm()
         return render_template('add_edit_profile.html', breeds=breeds)
-        
+
 ###############################################################################################################
-    
+
+
 @bp.route('/update_profile/<key>', methods=["GET"])
 def update_profile(key):
     printSession('***** UPDATE PROFILE *****')
     pet = PetDsRepository.get(key)
-    #print(pet)
-    #print(pet['type'])
+    # print(pet)
+    # print(pet['type'])
     if 'isAdmin' not in session:
         return "isAdmin not in session."
     elif session['isAdmin'] == False:
@@ -95,11 +99,11 @@ def update_profile(key):
         query = client.query(kind=constants.breeds)
         query.order = ["name"]
         breeds = list(query.fetch())
-        return render_template('add_edit_profile.html',pet=pet, breeds=breeds)
+        return render_template('add_edit_profile.html', pet=pet, breeds=breeds)
 
 ###############################################################################################################
 # # 02-08-21. J, temp comment because to get card page to open I'll need to comment profiles route. Will rename pet profiles
-# # later and leave profiles for admin. Current adopt href is /profiles.             
+# # later and leave profiles for admin. Current adopt href is /profiles.
 # @bp.route('/profiles', methods=["GET"])
 # def view_profile():
 #     if 'sub' not in session:
@@ -108,7 +112,8 @@ def update_profile(key):
 #         return render_template('profiles.html')
 
 ###############################################################################################################
-        
+
+
 @bp.route('/store_profile', methods=["POST"])
 def store_profile():
     # Instantiate AdminProfileForm class used for input validation
@@ -119,7 +124,8 @@ def store_profile():
             PetDsRepository.create(request.form)
         # Update pet entity if key provided
         else:
-            PetDsRepository.update(form=request.form,key=request.form['pet_key'])
+            PetDsRepository.update(
+                form=request.form, key=request.form['pet_key'])
         responseBody = {"success": True, "message": "Data Successfully saved"}
     else:
         errors = []
@@ -128,11 +134,12 @@ def store_profile():
             print(fieldName)
             for err in errorMessages:
                 print(err)
-        responseBody = {"success": False, "message": "There are errors in the inputs"}
-    #if 'sub' not in session:
-      #  return "sub not in session."
-    #else:
-        #content = request.get_json()
+        responseBody = {"success": False,
+                        "message": fieldName.title() + ': ' + err}
+    # if 'sub' not in session:
+        # return "sub not in session."
+    # else:
+        # content = request.get_json()
     # try:
     #     content = request.get_json()
     #     for c in content:
@@ -141,14 +148,18 @@ def store_profile():
     #     pass
     return (json.dumps(responseBody), 200)
 
-# Returns random character string of provided length to be concatenated with fileName 
-# before storing in Google Storage bucket
+# Returns random character string of provided length to be concatenated
+# with fileName before storing in Google Storage bucket
+
+
 def get_random_string(length):
     letters = string.ascii_lowercase
     result_str = ''.join(random.choice(letters) for i in range(length))
     return result_str
 
 # Route to add image to storage bucket
+
+
 @bp.route('/add_image', methods=["POST"])
 def add_image():
     file = request.files['image']
@@ -159,24 +170,31 @@ def add_image():
         responseBody = {"success": False, "message": "No File Selected"}
     if file:
         # Construct secure filename with werkzeug module
-        name = file.filename.split('.')[0] + get_random_string(8) # Secure file names
+        name = file.filename.split(
+            '.')[0] + get_random_string(8)  # Secure file names
         filename = secure_filename(name + '.' + file.filename.split('.')[1])
-        #file.save(os.path.join(UPLOADS_PATH, filename)) # Didn't work!!
+        # file.save(os.path.join(UPLOADS_PATH, filename)) # Didn't work!!
         blob = bucket.blob('uploads/' + filename)
         blob.upload_from_string(file.getvalue())
-        responseBody = {"success": True, "message": "File Saved", "profile_image_name": filename}
+        responseBody = {"success": True, "message": "File Saved",
+                        "profile_image_name": filename}
     return (json.dumps(responseBody), 200)
 
 # Route to delete profile from datastore
+
+
 @bp.route('/delete_profile', methods=["POST"])
 def delete_profile():
     key = request.form['key']
-    # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
+    # Instantiate singleton PetDsRepository class with member functions
+    # see 'repository.py'
     PetDsRepository.delete_profile(key=key)
     responseBody = {"success": True, "message": "Deleted"}
     return (json.dumps(responseBody), 200)
 
-# Route to download file from 
+# Route to download file from
+
+
 @bp.route('/uploads/<filename>')
 def send_file(filename):
     return send_from_directory(UPLOADS_PATH, filename)

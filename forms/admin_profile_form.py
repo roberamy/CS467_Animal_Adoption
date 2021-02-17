@@ -18,18 +18,20 @@ import constants
 
 client = datastore.Client()
 
+
 # Function gets & formats breed types from database for form validation
 def petBreeds():
     query = client.query(kind=constants.breeds)
     query.order = ["name"]
     breeds = list(query.fetch())
     breed_options = []
-    length = 0
+    # length = 0
     for e in breeds:
-        option = e["name"]
+        # option = e["name"]
         breed_options.append(e["name"])
     return breed_options
-        
+
+
 class AdminProfileForm(Form):
     ''' Form Field Options '''
     type_select = [('Cat', 'Cat'),('Dog', 'Dog'),('Other', 'Other')]
