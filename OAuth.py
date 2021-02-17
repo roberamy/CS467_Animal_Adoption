@@ -109,7 +109,7 @@ def callback():
                 session.modified = True
                 #return render_template('index.html')
                 printSession('***** RESULTS EXISTING USER *****')
-                return redirect('/admin_news') # why redirect to admin_news?
+                return redirect('/admin_news') # why redirect to admin_news? I think someone left this.
                 #return render_template('results.html', sub=sub, email=email, jwt=jwt, isAdmin=session['isAdmin'])
         except:
             pass
