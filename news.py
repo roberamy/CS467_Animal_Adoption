@@ -10,6 +10,7 @@
 #
 # References:
 # https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
+# https://pythonhosted.org/Flask-paginate/
 # https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9
 ###############################################################################
 
