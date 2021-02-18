@@ -23,8 +23,6 @@ client = datastore.Client()
 
 bp = Blueprint('pets', __name__)
 
-CLIENT_ID = r'939115278036-he2m51te7ohrp1m9r457nos1dbnh5u2o.apps.googleusercontent.com'
-CLIENT_SECRET = r'LQQ_RyrsV-eA1uiuux0RrI7J'
 
 # Helper function to validate pet attributes
 def _validateRequiredAttributes(content):
@@ -99,7 +97,7 @@ def create_pet():
                 # Grab 'sub' ID from JWT verification
                 req = requests.Request()
                 # Raises: exceptions.GoogleAuthError – If the issuer is invalid.
-                id_info = id_token.verify_oauth2_token(JWT, req, CLIENT_ID)
+                id_info = id_token.verify_oauth2_token(JWT, req, constants.CLIENT_ID)
                 sub = id_info['sub']
             except:
                 responseBody = {"Error": "Invalid JWT"}
@@ -160,7 +158,7 @@ def read_pets():
             # Grab 'sub' ID from JWT verification
             req = requests.Request()
             # Raises: exceptions.GoogleAuthError – If the issuer is invalid.
-            id_info = id_token.verify_oauth2_token(JWT, req, CLIENT_ID)
+            id_info = id_token.verify_oauth2_token(JWT, req, constants.CLIENT_ID)
             sub = id_info['sub']
         except:
             responseBody = {"Error": "Invalid JWT"}
@@ -224,7 +222,7 @@ def get_pet(pet_id):
             # Grab 'sub' ID from JWT verification
             req = requests.Request()
             # Raises: exceptions.GoogleAuthError – If the issuer is invalid.
-            id_info = id_token.verify_oauth2_token(JWT, req, CLIENT_ID)
+            id_info = id_token.verify_oauth2_token(JWT, req, constants.CLIENT_ID)
             sub = id_info['sub']
         except:
             responseBody = {"Error": "Invalid JWT"}
@@ -288,7 +286,7 @@ def update_pet(pet_id):
                 # Grab 'sub' ID from JWT verification
                 req = requests.Request()
                 # Raises: exceptions.GoogleAuthError – If the issuer is invalid.
-                id_info = id_token.verify_oauth2_token(JWT, req, CLIENT_ID)
+                id_info = id_token.verify_oauth2_token(JWT, req, constants.CLIENT_ID)
                 sub = id_info['sub']
             except:
                 responseBody = {"Error": "Invalid JWT"}
@@ -349,7 +347,7 @@ def update_pet(pet_id):
             # Grab 'sub' ID from JWT verification
             req = requests.Request()
             # Raises: exceptions.GoogleAuthError – If the issuer is invalid.
-            id_info = id_token.verify_oauth2_token(JWT, req, CLIENT_ID)
+            id_info = id_token.verify_oauth2_token(JWT, req, constants.CLIENT_ID)
             sub = id_info['sub']
         except:
             responseBody = {"Error": "Invalid JWT"}
@@ -425,7 +423,7 @@ def delete_pet(pet_id):
         try: # JWT is valid
             # Grab 'sub' ID from JWT verification
             req = requests.Request()
-            id_info = id_token.verify_oauth2_token(JWT, req, CLIENT_ID)
+            id_info = id_token.verify_oauth2_token(JWT, req, constants.CLIENT_ID)
             sub = id_info['sub']
         
             # Check if pet exists

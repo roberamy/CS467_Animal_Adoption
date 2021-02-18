@@ -43,3 +43,7 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.showNewline {
+  white-space: pre-wrap;
+}

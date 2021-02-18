@@ -10,7 +10,7 @@ News Admin
 {% block html_head %}
 <!-- Add CSS custom to this tempate here... -->
 <style>
-    p.c {
+    .showNewline {
       white-space: pre-wrap;
     }
 </style>
@@ -52,21 +52,22 @@ News Admin
                             <thead class="thead-dark">
                                 <tr>
                                     <th class="text-center">Created</th>
+
                                     <th class="text-center" style="min-width: 150px">Title</th>
                                     <th class="text-center" style="min-width: 300px">Content</th>
-                                    <th class="text-center">Author</th>
-                                    <th class="text-center filter-false sorter-false" style="max-width:100px;">Photo</th>
+                                    <th class="text-center" style="min-width: 150px">Author</th>
+                                    <th class="text-center filter-false sorter-false">Photo</th>
                                     <th class="text-center filter-false sorter-false" style="min-width:100px"></th>
                                 </tr>
                             </thead>
                             <tbody class="text-left">
-                                {% for post in news %}
+                                {% for post in news%}
                                 <tr>
-                                    <td>{{ post.created }}</td>
-                                    <td>{{ post.title }}</td>
-                                    <td><p class="c">{{ post.content }}</p></td>
-                                    <td>{{ post.author }}</td>
-                                    <td>{% if post.image_name %}&#10004;{% endif %}</td>
+                                    <td>{{post.created}}</td>
+                                    <td>{{post.title}}</td>
+                                    <td><span class="showNewline">{{post.content}}</span></td>
+                                    <td>{{post.author}}</td>
+                                    <td>{% if post.news_image_name %}&#10004;{% endif %}</td>
                                     <td class="text-center">
                                         <a class="btn btn-success" role="button"
                                             style="background:rgb(30,26,193); border:rgb(30,26,193); margin:2px; font-size:11px; height:30px; width:30px; padding-left:10px; padding-top: 7px;"
@@ -78,8 +79,6 @@ News Admin
                                                 class="fas fa-trash" style="font-size: 11px;"></i>
                                         </a>
                                     </td>
-                                    
-
                                 </tr>
                                 {% endfor %}
                                 <tr></tr>

@@ -9,6 +9,11 @@ Pet Profile Admin
 {% endblock %}
 {% block html_head %}
 <!-- Add CSS custom to this tempate here... -->
+<style>
+    .showNewline {
+      white-space: pre-wrap;
+    }
+</style>
 <!-- Bootstrap Studio CSS Files -->
 <link rel="stylesheet" href="../static/css/Table-with-search--sort-filters.css">
 <!-- Bootstrap Studio Links -->
@@ -73,7 +78,7 @@ Pet Profile Admin
                                     <td>{{pet.breed}}</td>
                                     <td>{{pet.age}}</td>
                                     <td>{{pet.gender}}</td>
-                                    <td>{{pet.properties}}</td>
+                                    <td><span class="showNewline">{{pet.properties}}</span></td>
                                     <td>{{pet.status}}</td>
                                     <td>{{pet.description}}</td>
                                     <td>{{pet.location}}</td>
