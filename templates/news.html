@@ -5,8 +5,12 @@
     {% block html_head %}
         <!-- Add CSS custom to this tempate here... -->
         <style>
-            p.c {
-              white-space: pre-wrap;
+            .container {
+                display: flex;
+                justify-content: center;
+            }
+            p.showNewline {
+                white-space: pre-wrap;
             }
         </style>
         <!-- J add -->
@@ -45,14 +49,15 @@
                 {% for post in news %}
                 <div class="clean-blog-post">
                     <div class="row">
-                        <div class="col-lg-5"><img class="rounded img-fluid" src="{% if post.image_name %} https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/{{post.image_name}} {% endif %}">
+                        <div class="col-lg-5"><img class="rounded img-fluid" 
+                            src="{% if post.news_image_name %} https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/{{post.news_image_name}} {% endif %}">
                         </div>
                         <div class="col-lg-7">
-                            <h3>{{ post.title }}</h3>
+                            <h3>{{post.title}}</h3>
                             <div class="info">
-                                <span class="text-muted">{{ post.created }} by&nbsp; {{ post.author }}</span>
+                                <span class="text-muted">{{post.created}} by&nbsp; {{post.author}}</span>
                             </div>
-                            <p class="c">{{ post.content }}</p>
+                            <p class="showNewline">{{post.content}}</p>
                             <!--
                             <a class="btn btn-outline-primary btn-sm" role="button" href="/news_post">Read More</a>
                             -->
@@ -60,6 +65,18 @@
                     </div>
                 </div>
                 {% endfor %}
+                <nav class="container">
+                    <div>
+                        {{ pagination.links }}
+                    </div>
+                    <!--
+                    <ul class="pagination">
+                        <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                    </ul>
+                    -->
+
+                </nav>
             </div>
         </div>
     </section>

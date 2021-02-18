@@ -49,7 +49,7 @@ function uploadimage(input_tag) {
 	var file = document.getElementById(input_tag);
 	var form = new FormData();
 	form.append("image", file.files[0])
-	$('#save_news').prop('disabled', true);
+	$('#save_profile').prop('disabled', true);
 
 	var settings = {
 		//"url": "https://api.imgbb.com/1/upload?key="+apikey,
@@ -69,24 +69,31 @@ function uploadimage(input_tag) {
 		var res = JSON.parse(response);
 		if(res.success) {
 			toastr.success(res.message);
-			$('#news_image').val(res.profile_image_name);
-			$('#save_news').prop('disabled', false);
+			$('#profile_image_name').val(res.profile_image_name);
+			$('#save_profile').prop('disabled', false);
 		} else {
 			toastr.error(res.message);
 		}
 		console.log(response);
+		//var jx = JSON.parse(response);
+		//console.log(jx.data.url);
+		//urllink.innerHTML = jx.data.url ;
 	});
 }
 
-$(document).on('click','#save_news',function(){
-    form = new FormData($('#news-form')[0]);
-    $('#save_news').prop('disabled', true);
+$(document).on('click','#save_profile',function(){
+    form = new FormData($('#application-form')[0]);
+    $('#save_profile').prop('disabled', true);
     var ch_data = [];
+    $('input[type="checkbox"]:checked').each(function(){
+        ch_data.push($(this).attr('value'));
+    });
+    form.append('properties',ch_data);
     $.ajax({
         processData: false,
         contentType: false,
         type: "POST",
-        url: "/store_news",
+        url: '/store_news',
         data: form,
         success: function (data) {
             res = JSON.parse(data);
@@ -97,13 +104,14 @@ $(document).on('click','#save_news',function(){
             else {
                 toastr.error(res.message);
             }
-            $('#save_news').prop('disabled', false);
+            $('#save_profile').prop('disabled', false);
         },
         error: function (error) {
             toastr.error("Sorry, There is an error in ajax call");
-            $('#save_news').prop('disabled', false);
+            $('#save_profile').prop('disabled', false);
         }
     });
+
 });
 
 $(document).on('dragstart dragenter dragover', function(event) {    

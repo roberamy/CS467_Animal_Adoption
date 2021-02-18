@@ -51,7 +51,7 @@ https://www.w3schools.com/jsref/event_onchange.asp
         <div class="row">
             <div class="col-12">
                 <section style="padding-top: 30px;">
-                    <div class="container">
+                    <div class="container-fluid">
                         <form id="application-form" enctype="multipart/form-data">
                             <input type="hidden" name="pet_key" value="{%- if pet and pet.key.id -%} {{pet.key.id}} {%- endif -%}" id="pet_key" />
                             <input type="hidden" name="profile_image_name" value="{%- if pet and pet.profile_image_name -%} {{pet.profile_image_name}} {%- endif -%}" id="profile_image_name" />
@@ -131,22 +131,60 @@ https://www.w3schools.com/jsref/event_onchange.asp
                                 </div>
                             </div>
                             <div class="form-group" id="disposition">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="properties[]" value="Good with other animals." {% if pet and pet.properties.find('Good with other animals.') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-1">
-                                        <label class="form-check-label" for="formCheck-1">Good with other animals.<br></label>
+                                <label>Select one or more properties:</label>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="properties[]" value="Good with other animals" 
+                                            {% if pet and pet.properties.find('Good with other animals') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-1">
+                                                <label class="form-check-label" for="formCheck-1">Good with other animals<br></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="properties[]" value="Good with children" 
+                                            {% if pet and pet.properties.find('Good with children') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-2">
+                                            <label class="form-check-label" for="formCheck-2" style="width: 100%;">Good with children<br></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="properties[]" value="Single pet household only" 
+                                            {% if pet and pet.properties.find('Single pet household only') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-4">
+                                            <label class="form-check-label" for="formCheck-4">Single pet household only<br></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="properties[]" value="Must be leashed at all times" 
+                                            {% if pet and pet.properties.find('Must be leashed at all times') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-3">
+                                            <label class="form-check-label" for="formCheck-3">Must be leashed at all times<br></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="properties[]" value="Suitable for apartments" 
+                                            {% if pet and pet.properties.find('Suitable for apartments') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-4">
+                                            <label class="form-check-label" for="formCheck-4">Suitable for apartments<br></label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="properties[]" value="Spay/Neutered" 
+                                            {% if pet and pet.properties.find('Spayed/Neutered') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-4">
+                                            <label class="form-check-label" for="formCheck-4">Spay/Neutered<br></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="properties[]" value="Vaccinations up to date" 
+                                            {% if pet and pet.properties.find('Vaccinations up to date') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-4">
+                                            <label class="form-check-label" for="formCheck-4">Vaccinations up to date.<br></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="properties[]" value="Special needs" 
+                                            {% if pet and pet.properties.find('Special needs') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-4">
+                                            <label class="form-check-label" for="formCheck-4">Special Needs<br></label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="properties[]" value="None" 
+                                            {% if pet and pet.properties.find('None') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-4">
+                                            <label class="form-check-label" for="formCheck-4">None<br></label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="properties[]" value="Good with children." {% if pet and pet.properties.find('Good with children.') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-2">
-                                    <label class="form-check-label" for="formCheck-2" style="width: 100%;">Good with children.<br></label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="properties[]" value="Animal must be leashed at all times." {% if pet and pet.properties.find('Animal must be leashed at all times.') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-3">
-                                    <label class="form-check-label" for="formCheck-3">Animal must be leashed at all times.<br></label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="properties[]" value="Suitable for apartments." {% if pet and pet.properties.find('Suitable for apartments.') != -1 %} checked="checked" {% endif %} type="checkbox" id="formCheck-4">
-                                    <label class="form-check-label" for="formCheck-4">Suitable for apartments.<br></label>
-                                </div>
+                                
+
                             </div>
                             {% if pet and pet.key.id %}
                             <div class="form-group" id="adoptionDetails" name="adoptionDetails">
@@ -158,17 +196,32 @@ https://www.w3schools.com/jsref/event_onchange.asp
                                 </div>
                                 <div class="form-row">
                                     <div class="col">
-                                        <input id="adoption_date" name="adoption_date" class="form-control" style="padding-right:8px;" type="text" {{'required' if pet.availability == "Adopted"}} value='{{pet.adoption_date}}' placeholder="Date (mm/dd/yyyy)">
+                                        <input id="adoption_date" name="adoption_date" class="form-control" style="padding-right:8px;" type="date" 
+                                        {{'required' if pet.availability == "Adopted"}} value='{{pet.adoption_date}}' placeholder="Date (mm/dd/yyyy)">
                                     </div>
                                     <div class="col">
-                                        <input id="adopted_by" name="adopted_by" class="form-control" style="padding-right:8px;" type="text" {{'required' if pet.availability == "Adopted"}} value='{{pet.adopted_by}}' placeholder="Adopted By (ex: John Smith)"
+                                        <input id="adopted_by" name="adopted_by" class="form-control" style="padding-right:8px;" type="text" 
+                                        {{'required' if pet.availability == "Adopted"}} value='{{pet.adopted_by}}' placeholder="Adopted By (ex: John Smith)">
                                     </div>
+                                    <!-- 
                                     <div class="form-group">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="picked_up" id="picked_up"
                                                 {% if pet and pet.picked_up=="on" %} checked="checked" {% endif %}>
                                                 <label class="form-check-label" for="formCheck-4">Picked Up<br></label>
                                         </div>
+                                    </div>
+                                -->
+                                </div>
+                                <div class="form-row">
+                                    <div class="col" style="float:left">
+                                        <span style="padding-right: 10px;" class="my-label">Picked Up:</span>
+                                        <input style="display:inline-block;" type="radio" id="yes" name="picked_up" value="yes"
+                                        {% if pet and pet.picked_up is true %} checked="checked" {% endif %}>
+                                        <label style="padding-right: 10px;" for="yes">Yes</label>
+                                        <input style="display:inline-block;" type="radio" id="no" name="picked_up" value="no"
+                                        {% if pet and pet.picked_up is false %} checked="checked" {% endif %}>
+                                        <label style="padding-right: 10px;" for="no">No</label>
                                     </div>
                                 </div>
                             </div>

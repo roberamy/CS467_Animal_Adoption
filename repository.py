@@ -75,10 +75,17 @@ class PetDsRepository(Singleton):
     # Takes multi-part form as argument
     def update(form, key):
         db = datastore.Client()
-        key = Key('pets',int(key),project='datingappforanimaladoption')
+        key = Key('pets', int(key), project='datingappforanimaladoption')
         # entity = datastore.Entity(key=key)
+
         entity = db.get(key)
         now = datetime.datetime.now()
+        print("Form - PICKED UP:")
+        print(form['picked_up'])
+        if form['picked_up'] == "yes":
+            pickedUp = True
+        else:
+            pickedUp = False
         entity.update({
             'age': form['age'],
             'name': form['name'],
@@ -93,12 +100,14 @@ class PetDsRepository(Singleton):
             'updated_at': now,
             'adoption_date': form['adoption_date'],
             'adopted_by': form['adopted_by'],
-            #'picked_up': form['picked_up'],
+            'picked_up': pickedUp,
             'profile_image_name': form['profile_image_name']
         })
+        print('UPDATED ENTITY:')
+        print(entity['picked_up'])
         db.put(entity)
         return entity.key
-     
+
     def upload_image(image_name):
         db = datastore.Client()
         entity = datastore.Entity(key=db.key('profile_images'))
@@ -110,20 +119,20 @@ class PetDsRepository(Singleton):
 
     def delete_profile(key):
         db = datastore.Client()
-        ent_key = Key('pets',int(key),project='datingappforanimaladoption')
+        ent_key = Key('pets', int(key), project='datingappforanimaladoption')
         entity = db.get(ent_key)
         db.delete(entity.key)
 
     def get(key):
         db = datastore.Client()
-        ent_key = Key('pets',int(key),project='datingappforanimaladoption')
+        ent_key = Key('pets', int(key), project='datingappforanimaladoption')
         entity = db.get(ent_key)
         return entity
 
 
 class NewsRepository(Singleton):
 
-    # Return all news entities in datastore
+    # Return all pets in datastore
     def all():
         db = datastore.Client()
         query = db.query(kind='news')
@@ -131,34 +140,37 @@ class NewsRepository(Singleton):
         query.order = ["-created"]
         return list(query.fetch())
 
-    # Create new news entity in datastore
+    # Create new 'news' entity in datastore
+    # Takes multi-part form as argument
     def create(form):
         db = datastore.Client()
         entity = datastore.Entity(key=db.key('news'))
         now = datetime.datetime.now()
         entity.update({
-            'created': now,
-            'title': form['title'],
+            'title': form['name'],
             'content': form['content'],
             'author': form['author'],
+            'created': now,
             'updated': now,
-            'image_name': form['news_image']
+            'news_image_name': form['profile_image_name']
         })
         db.put(entity)
         return entity.key
-    
+
     # Update entity in datastore
+    # Takes multi-part form as argument
     def update(form, key):
         db = datastore.Client()
-        key = Key('news',int(key),project='datingappforanimaladoption')
+        key = Key('news', int(key), project='datingappforanimaladoption')
+        # entity = datastore.Entity(key=key)
         entity = db.get(key)
         now = datetime.datetime.now()
         entity.update({
-            'title': form['title'],
-            'author': form['author'],
+            'title': form['name'],
             'content': form['content'],
+            'author': form['author'],
             'updated': now,
-            'image_name': form['news_image']
+            'news_image_name': form['profile_image_name']
         })
         db.put(entity)
         return entity.key
@@ -171,17 +183,15 @@ class NewsRepository(Singleton):
         })
         db.put(entity)
         return entity.key
-        
-    #Get new entity from datastore
-    def get(key):
-        db = datastore.Client()
-        ent_key = Key('news',int(key),project='datingappforanimaladoption')
-        entity = db.get(ent_key)
-        return entity
 
-    # Delete news entity from datastore
-    def delete_post(key):
+    def delete_news(key):
         db = datastore.Client()
-        ent_key = Key('news',int(key),project='datingappforanimaladoption')
+        ent_key = Key('news', int(key), project='datingappforanimaladoption')
         entity = db.get(ent_key)
         db.delete(entity.key)
+
+    def get(key):
+        db = datastore.Client()
+        ent_key = Key('news', int(key), project='datingappforanimaladoption')
+        entity = db.get(ent_key)
+        return entity
