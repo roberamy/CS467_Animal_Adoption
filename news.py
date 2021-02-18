@@ -4,7 +4,7 @@
 # Email: bauergr@oregonstate.edu
 # Course: CS467_400_W2021
 #
-# Description: Routes for news page
+# Description: Routes for news pages
 #
 # Note:
 #
@@ -48,6 +48,7 @@ client = datastore.Client()
 ###############################################################################
 
 
+# helper pagination function
 def get_news_page(data, offset=0, per_page=10):
     return data[offset: offset + per_page]
 
@@ -82,7 +83,7 @@ def news():
 # Route to add/edit a news post
 @bp.route('/add_news', methods=["GET"])
 def add_news():
-    printSession('***** ADD PROFILE *****')
+    printSession('***** ADD NEWS *****')
     if 'isAdmin' not in session:
         return "isAdmin not in session."
     elif session['isAdmin'] is False:
@@ -94,9 +95,10 @@ def add_news():
 ###############################################################################
 
 
+# Route to render update news post template
 @bp.route('/update_news/<key>', methods=["GET"])
 def update_news(key):
-    printSession('***** UPDATE POST *****')
+    printSession('***** UPDATE NEWS *****')
     news = NewsRepository.get(key)
     print(news)
     # print(pet['type'])
@@ -110,6 +112,7 @@ def update_news(key):
 ###############################################################################
 
 
+# Route to store updated news post
 @bp.route('/store_news', methods=["POST"])
 def store_news():
     # Instantiate AdminProfileForm class used for input validation
@@ -140,7 +143,7 @@ def store_news():
 # Route for admin view of all news posts
 @bp.route('/admin_news', methods=["GET"])
 def news_admin():
-    printSession('***** PROFILE ADMIN *****')
+    printSession('***** NEWS ADMIN *****')
     if 'isAdmin' not in session:
         return "isAdmin not in session."
     elif session['isAdmin'] is False:

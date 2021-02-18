@@ -1,20 +1,22 @@
-###############################################################################################################
-#                                                                                                             #          
-# Author: Gregory A. Bauer, Jasper Wong, Amy Robertson                                                        #
-# Email: bauergr@oregonstate.edu                                                                              #
-# Course: CS467_400_W2021                                                                                     #
-#                                                                                                             #
-# Description: Form validation package used in 'add_profile' template. Creates form class with form           #
-#              fields and pertinent validation rules                                                          #
-#                                                                                                             #
-# ref: https://wtforms.readthedocs.io/en/2.3.x/crash_course/                                                  #
-#                                                                                                             #
-###############################################################################################################
+###############################################################################
+#
+# Author: Gregory A. Bauer, Jasper Wong, Amy Robertson
+# Email: bauergr@oregonstate.edu
+# Course: CS467_400_W2021
+#
+# Description:
+#   Form validation package used in 'add_profile' template.
+#   Creates form class with form fields and pertinent validation rules
+#
+# References:
+# https://wtforms.readthedocs.io/en/2.3.x/crash_course/
+# https://wtforms.readthedocs.io/en/2.3.x/validators/
+################################################################################
 
-from wtforms import *
+from wtforms import Form, validators, ValidationError, TextAreaField
+from wtforms import StringField, SelectField, FileField
 from google.cloud import datastore
 import constants
-
 
 client = datastore.Client()
 
@@ -31,26 +33,58 @@ def petBreeds():
         breed_options.append(e["name"])
     return breed_options
 
+# Helper function to validate location input
+def validateLocation(form, field):
+    states = [
+        'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL',
+        'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+        'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM',
+        'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'PR', 'RI', 'SC', 'SD',
+        'TN', 'TX', 'UT', 'VT', 'VA', 'VI', 'WA', 'WV', 'WI', 'WY']
+    state = field.data[-2:]
+    checkState = False
+    length = len(field.data)
+    # Check that 4th character from end is a comma
+    if field.data[length-4] != ',':
+        raise ValidationError('Format Error (ex: Portland, OR)')
+    # Check that 4th character from end is a space
+    if field.data[length-3] != ' ':
+        raise ValidationError('Format Error (ex: Portland, OR)')
+    # Check that last two characters are capital
+    if (field.data[length-1]).isupper() is False:
+        raise ValidationError('Format Error (ex: Portland, OR)')
+    if (field.data[length-2]).isupper() is False:
+        raise ValidationError('Format Error (ex: Portland, OR)')
+    # Check that state is valid
+    for s in states:
+        if state == s:
+            checkState = True
+    if checkState is False:
+        raise ValidationError('Invalid State (ex: Portland, OR)')
+
 
 class AdminProfileForm(Form):
     ''' Form Field Options '''
-    type_select = [('Cat', 'Cat'),('Dog', 'Dog'),('Other', 'Other')]
+    type_select = [('Cat', 'Cat'), ('Dog', 'Dog'), ('Other', 'Other')]
     breed_select = petBreeds()
-    #breed_select = [('Abyssinian','Abyssinian'), ('Akita','Akita'), ('Alaskan Malamute','Alaskan Malamute'), ('American Shorthair','American Shorthair'), ('Australian Shepherd','Australian Shepherd'), ('Basset Hound','Basset Hound'), ('Bearded Dragon','Bearded Dragon'), ('Bernese Mountain Dog','Bernese Mountain Dog'), ('Border Collie','Border Collie'), ('Boxer','Boxer'), ('Bull Terrier','Bull Terrier'), ('Bulldog','Bulldog'), ('Bullmastiff','Bullmastiff'), ('Burmese','Burmese'), ('Canarie','Canarie'), ('Cavalier King Charles Spaniel','Cavalier King Charles Spaniel'), ('Chameleon','Chameleon'), ('Chihuahua','Chihuahua'), ('Chinchilla','Chinchilla'), ('Chow Chow','Chow Chow'), ('Cockatiel','Cockatiel'), ('Cockatoo','Cockatoo'), ('Cocker Spaniel','Cocker Spaniel'), ('Collie','Collie'), ('Corgi','Corgi'), ('Dachshund','Dachshund'), ('Dalmatian','Dalmatian'), ('Doberman Pinscher','Doberman Pinscher'), ('Domestic Longhair','Domestic Longhair'), ('Finch','Finch'), ('French Bulldog','French Bulldog'), ('Gecko','Gecko'), ('Gerbil','Gerbil'), ('German Shepherd','German Shepherd'), ('Golden Retriever','Golden Retriever'), ('Great Dane','Great Dane'), ('Guinea Pig','Guinea Pig'), ('Hamster','Hamster'), ('Himalayan','Himalayan'), ('Iguana','Iguana'), ('Labrador Retriever','Labrador Retriever'), ('Macaw','Macaw'), ('Maine Coon','Maine Coon'), ('Manx','Manx'), ('Mouse','Mouse'), ('Newfoundland','Newfoundland'), ('Papillon','Papillon'), ('Parakeet','Parakeet'), ('Parrot','Parrot'), ('Pekingese','Pekingese'), ('Persian','Persian'), ('Pomeranian','Pomeranian'), ('Poodle','Poodle'), ('Pug','Pug'), ('Ragdoll','Ragdoll'), ('Rat','Rat'), ('Rottweiler','Rottweiler'), ('Russell Terrier','Russell Terrier'), ('Shiba Inu','Shiba Inu'), ('Siamese','Siamese'), ('Siberian Husky','Siberian Husky'), ('Sphynx','Sphynx'), ('Springer Spaniel','Springer Spaniel'), ('St. Bernard','St. Bernard'), ('Weimaraner','Weimaraner'), ('Yorkshire Terrier','Yorkshire Terrier')]
-    age_select = [('Adult','Adult'),('Baby','Baby'),('Senior','Senior'),('Young','Young')]
-    gender_select = [('Male', 'Male'),('Female', 'Female')]
-    availability_select = [('Adopted','Adopted'),('Available','Available'),('Pending','Pending'),('Not Available','Not Available')]
+    age_select = [('Adult', 'Adult'), ('Baby', 'Baby'),
+                  ('Senior', 'Senior'), ('Young', 'Young')]
+    gender_select = [('Male', 'Male'), ('Female', 'Female')]
+    availability_select = [('Adopted', 'Adopted'),
+                           ('Available', 'Available'),
+                           ('Pending', 'Pending'),
+                           ('Not Available', 'Not Available')]
     ''' End Form Field Options '''
     ''' Begin Form Validation Options '''
     name = StringField('Enter Name', [validators.Length(min=3), validators.InputRequired()])
-    type = SelectField(u'Type',choices = type_select, validators=[validators.InputRequired()])
-    breed = SelectField(u'Breed',choices = breed_select, validators=[validators.InputRequired()])
-    age = SelectField(u'Age', choices = age_select,validators=[validators.InputRequired()])
-    gender = SelectField(u'Gender',choices = gender_select,validators=[validators.InputRequired()])
-    status = StringField('Status',[validators.Length(min=3), validators.InputRequired()])
-    description = TextAreaField('Description',[validators.Length(min=3), validators.InputRequired()])
-    location = StringField('Location',[validators.Length(min=3), validators.InputRequired()])
-    availability = SelectField(u'Availability',choices = availability_select,validators=[validators.InputRequired()])
+    type = SelectField(u'Type', choices=type_select, validators=[validators.InputRequired()])
+    breed = SelectField(u'Breed', choices=breed_select, validators=[validators.InputRequired()])
+    age = SelectField(u'Age', choices=age_select, validators=[validators.InputRequired()])
+    gender = SelectField(u'Gender', choices=gender_select, validators=[validators.InputRequired()])
+    status = StringField('Status', [validators.Length(min=3), validators.InputRequired()])
+    description = TextAreaField('Description', [validators.Length(min=3), validators.InputRequired()])
+    location = StringField('Location', [validators.Length(min=4), validators.InputRequired(), validateLocation])
+    availability = SelectField(u'Availability', choices=availability_select, validators=[validators.InputRequired()])
     properties = StringField('Properties', [validators.InputRequired()])
     adoption_date = StringField('adoption_date')
     adopted_by = StringField('adopted_by')
