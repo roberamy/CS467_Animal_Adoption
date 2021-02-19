@@ -62,11 +62,7 @@ def view_profile():
 def view_pet_page(pet_id):
     if request.method == 'GET':
         # get specific pet data from pet key
-        # 4815377695506432
         pet_data = PetDsRepository.get(pet_id)
-        # print("############################")
-        # print(pet_data['name'])
-        # print("Is the pet name printing?")
         return render_template('pet_page.html', pet_data=pet_data)
     else:
         # redo temporary error response
