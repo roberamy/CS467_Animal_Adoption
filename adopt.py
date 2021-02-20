@@ -13,10 +13,12 @@
 #             https://cloud.google.com/storage/docs/access-public-data#api-link
 #             https://jinja.palletsprojects.com/en/2.10.x/templates/
 #             https://stackoverflow.com/questions/48002297/how-to-concatenate-int-with-str-type-in-jinja2-template
+#             https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9 per_page solution flask
 #             
 # 
 ###############################################################################################################
 
+# Library modules
 from flask import Blueprint, request, Response, redirect, render_template, session, make_response
 from google.cloud import datastore
 from requests_oauthlib import OAuth2Session
@@ -27,6 +29,9 @@ from google.auth import crypt
 from google.auth import jwt
 from google.auth.transport import requests
 from datetime import datetime
+
+from flask_paginate import Pagination, get_page_args
+
 # User modules
 from repository import *
 
@@ -40,21 +45,21 @@ from OAuth import printSession
 BUCKET_NAME = "datingappforanimaladoption.appspot.com/uploads/"
 
 ###############################################################################################################
-@bp.route('/adopt_profiles', methods=["GET"])
-def view_profile():
-    if 'sub' not in session:
-        return "Error: \'sub\' not in session!!!"
-    elif request.method == 'GET':
-        # Return all pet entities in the datastore to populate 'profiles.html'
-        # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
-        data = PetDsRepository.all()
+# @bp.route('/adopt_profiles', methods=["GET"])
+# def view_profile():
+#     if 'sub' not in session:
+#         return "Error: \'sub\' not in session!!!"
+#     elif request.method == 'GET':
+#         # Return all pet entities in the datastore to populate 'profiles.html'
+#         # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
+#         data = PetDsRepository.all()
         
-        # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
-        # public_url = "https://storage.googleapis.com/" + BUCKET_NAME
-        return render_template('adopt_profiles.html', pets=data)
-    else:
-        # redo temporary error response
-        return "Error"
+#         # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
+#         # public_url = "https://storage.googleapis.com/" + BUCKET_NAME
+#         return render_template('adopt_profiles.html', pets=data)
+#     else:
+#         # redo temporary error response
+#         return "Error"
 
 ##############################################################################################################
 # temperary route to figure pet pages out
@@ -67,3 +72,46 @@ def view_pet_page(pet_id):
     else:
         # redo temporary error response
         return "Error"
+
+###############################################################################
+# helper pagination function, per_page modified in __init__py
+def get_pet_page(data, offset=0, per_page=10):
+    return data[offset: offset + per_page]
+
+@bp.route('/adopt_profiles', methods=["GET"])
+def view_profile():
+    printSession('***** Adopt_profiles *****')
+    if 'sub' not in session:
+        return "sub not in session."
+    elif request.method == 'GET':
+        # Return all pet entities in the datastore to populate 'profiles.html'
+        # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
+        data = PetDsRepository.all()
+
+        total = len(data)
+        # pagination code
+        page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
+        
+        # change per page value after get_page_args
+        per_page = 9
+        offset = (page - 1) * per_page
+
+        pagination_adopt_profile = get_pet_page(data, offset=offset, per_page=per_page)
+
+        pagination = Pagination(page=page, 
+                                per_page=per_page, 
+                                total=total,
+                                css_framework='bootstrap4')
+
+        return render_template('adopt_profiles.html',
+                               pets=pagination_adopt_profile,
+                               page=page,
+                               per_page=per_page,
+                               pagination=pagination)
+        
+        # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
+        # public_url = "https://storage.googleapis.com/" + BUCKET_NAME
+        # return render_template('adopt_profiles.html', pets=data)
+    else:
+        # redo temporary error response
+        return "Error Error"
