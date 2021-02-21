@@ -14,6 +14,7 @@
 #             https://jinja.palletsprojects.com/en/2.10.x/templates/
 #             https://stackoverflow.com/questions/48002297/how-to-concatenate-int-with-str-type-in-jinja2-template
 #             https://gist.github.com/mozillazg/69fb40067ae6d80386e10e105e6803c9 per_page solution flask
+#             https://flask-paginate.readthedocs.io/en/master/
 #             
 # 
 ###############################################################################################################
@@ -102,6 +103,13 @@ def view_profile():
                                 per_page=per_page, 
                                 total=total,
                                 css_framework='bootstrap4')
+
+        # pagination = Pagination(page=page, 
+        #                         per_page=per_page, 
+        #                         total=total,
+        #                         css_framework='bootstrap4',
+        #                         inner_window = 2,
+        #                         )        
 
         return render_template('adopt_profiles.html',
                                pets=pagination_adopt_profile,
