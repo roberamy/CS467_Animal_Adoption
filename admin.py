@@ -112,7 +112,7 @@ def view_profile():
     if 'sub' not in session:
         return "sub not in session."
     else:
-        return render_template('profiles.html')
+        return render_template('index.html')
 
 ###############################################################################
 
