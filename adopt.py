@@ -45,23 +45,6 @@ from OAuth import printSession
 # bucket name for GCS public URL + subfolder
 BUCKET_NAME = "datingappforanimaladoption.appspot.com/uploads/"
 
-###############################################################################################################
-# @bp.route('/adopt_profiles', methods=["GET"])
-# def view_profile():
-#     if 'sub' not in session:
-#         return "Error: \'sub\' not in session!!!"
-#     elif request.method == 'GET':
-#         # Return all pet entities in the datastore to populate 'profiles.html'
-#         # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
-#         data = PetDsRepository.all()
-        
-#         # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
-#         # public_url = "https://storage.googleapis.com/" + BUCKET_NAME
-#         return render_template('adopt_profiles.html', pets=data)
-#     else:
-#         # redo temporary error response
-#         return "Error"
-
 ##############################################################################################################
 # temperary route to figure pet pages out
 @bp.route('/pet_page/<pet_id>', methods=["GET"])
@@ -118,8 +101,6 @@ def view_profile():
                                pagination=pagination)
         
         # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
-        # public_url = "https://storage.googleapis.com/" + BUCKET_NAME
-        # return render_template('adopt_profiles.html', pets=data)
     else:
         # redo temporary error response
         return "Error Error"
