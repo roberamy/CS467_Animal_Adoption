@@ -117,7 +117,7 @@ def callback():
                 session.modified = True
                 # return render_template('index.html')
                 printSession('***** RESULTS EXISTING USER *****')
-                return redirect('/admin_profiles')
+                return redirect('/')
                 # return render_template('results.html', sub=sub, email=email,
                 #                       jwt=myjwt, isAdmin=session['isAdmin'])
         except:
@@ -133,7 +133,7 @@ def callback():
     session.modified = True
     client.put(new_user)
     printSession('***** RESULTS NEW USER *****')
-    return redirect('/profiles')
+    return redirect('/')
 
 ###############################################################################
 
