@@ -1,0 +1,234 @@
+{% extends "nav.html" %}
+
+
+{% block header %}
+    {% block title %} Available Pets {% endblock %}
+    {% block html_head %}
+        <!-- Add CSS custom to this tempate here... -->
+        <!-- J add -->
+        <link rel="stylesheet" href="static/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
+        <link rel="stylesheet" href="static/css/styles.min.css">
+    {% endblock %}
+
+
+
+    <!-- Add additional custom headers here... -->
+    <header class="text-center" style="padding-top:120px;font-size: 14px;height:175px" overflow="auto">
+
+        <div class="container">
+            <h1 style="font-size: 30px;">Pets Available for Adoption</h1>
+
+
+ 
+
+
+
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+
+<!-- <div class="col-md-9">
+    <div class="products">
+        <div class="row no-gutters">
+            {% for pet in pets%}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="clean-product-item">
+                    <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src={{pet.profile_image_name}}></a></div>
+                    <div class="product-name"><a href="pet_page">{{pet.name}}</a></div>
+                    <div class="about">
+                        <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
+                        <div class="price">
+                            <h3>$100</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        <nav>
+            <ul class="pagination">
+                <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+            </ul>
+        </nav>
+    </div>
+</div> -->
+
+    <!-- Add page content here... -->
+    <!-- <div>
+        <p>Content TBD...</p>
+    </div> -->
+
+    <!-- J add -->
+    <section class="clean-block clean-catalog dark">
+        <div class="container">
+            <!-- <div class="block-heading">
+                <h2 class="text-info">Dogs Available for Adoption</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
+            </div> -->
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="d-none d-md-block">
+                            <div class="filters">                                
+                                <!-- <div class="filter-item">
+                                    <h3>Type</h3>
+                                    <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
+                                        <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Cats<br></a><a class="dropdown-item" href="#">Dogs</a><a class="dropdown-item" href="#">Other Pets</a></div>
+                                    </div>
+                                </div>
+                                <div class="filter-item">
+                                    <h3>Breed</h3>
+                                    <div class="dropdown" ><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
+                                        <div class="dropdown-menu" id='breddded'><a class="dropdown-item" href="#" value = "german" target="_blank">German Shepherd<br></a><a class="dropdown-item" href="#">Alaskan Malamute</a><a class="dropdown-item" href="#">American Bulldog</a></div>
+                                    </div>
+                                </div> -->
+
+                                <div class="filter-item">
+                                    <H1>Search</H1><br>
+                                    <h3>Type</h3>
+
+                                <select class="form-select btn btn-primary dropdown-toggle" id='species' aria-label="Default select example" >
+
+                                    <option value = "Any">Any</option>
+                                    <option value="Dog">Dog</option>
+                                    <option value="Cat">Cat</option>
+                                    <option value="Other">Other</option>
+                                  </select>
+                                </div>
+                                <div class="filter-item">
+                                    <h3>Breed</h3>
+
+                                    <select class="form-select btn btn-primary dropdown-toggle" id='breed' aria-label="Default select example" >
+                                        <option value = "Any">Any</option>
+                                        <option  value="Golden Retriever">Golden Retriever</option>
+                                    <option value="German Shepherd">German Shepherd</option>
+                                    <option value="American Shorthair">American Shorthair</option>
+                                  </select><br><br>
+                                  <button id="filter_button" class = 'btn btn-primary'>Search</button>
+                                </div>
+
+
+
+<!-- 
+                                <div class="filter-item">
+                                    <h3>Good With</h3>
+                                    <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
+                                        <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Kids<br></a><a class="dropdown-item" href="#">Other Dogs</a><a class="dropdown-item" href="#">Cats</a></div>
+                                    </div>
+                                </div> -->
+                                
+                                <!-- <div class="filter-item">
+                                    <h3>Good With</h3>
+                                    <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
+                                        <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Kids<br></a><a class="dropdown-item" href="#">Other Dogs</a><a class="dropdown-item" href="#">Cats</a></div>
+                                    </div>
+                                </div>
+                                <div class="filter-item">
+                                    <h3><strong>Date Available for Adoption</strong></h3>
+                                    <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
+                                        <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Affenpinscher<br></a><a class="dropdown-item" href="#">Alaskan Malamute</a><a class="dropdown-item" href="#">American Bulldog</a></div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="d-md-none"><a class="btn btn-link d-md-none filter-collapse" data-toggle="collapse" aria-expanded="false" aria-controls="filters" href="#filters" role="button">Filters<i class="icon-arrow-down filter-caret"></i></a>
+                            <div class="collapse" id="filters">
+                                <div class="filters">
+                                    <div class="filter-item">
+                                        <h3>Breed</h3>
+                                        <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
+                                            <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Affenpinscher<br></a><a class="dropdown-item" href="#">Alaskan Malamute</a><a class="dropdown-item" href="#">American Bulldog</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="products">
+                            <div class="row no-gutters">
+                                {% for pet in pets%}
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="clean-product-item">
+                                        <div class="image"><a href="/pet_page/{{pet.key.id}}"><img class="img-fluid d-block mx-auto" src= {{pet.profile_image_name}}></a></div>
+                                        <div class="product-name"><a href="/pet_page/{{pet.key.id}}">{{pet.name}}</a></div>
+                                        <div class="about">
+                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-half-empty.svg"><img src="static/img/star-empty.svg"></div>
+                                            <div class="price">
+                                                <h3>$100</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                    
+                            </div>
+                            <nav>
+                                <ul class="pagination">
+                                    <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </section>
+{% endblock %}
+
+{% block script %}
+    <!-- Add Javascript custom to this tempate here... -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="../static/js/Filter-Form.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+
+            $("#filter_button").click(function () {
+                sessionStorage.setItem('species', $('#species').val()) 
+                sessionStorage.setItem('breed', $('#breed').val()) 
+                species_val = $('#species').val()
+                breed_val = $('#breed').val()
+                the_message =JSON.stringify({breed: breed_val, species: species_val})
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "/profiles",
+                    data: the_message}).done(function (data) {
+                        window.location = '/profiles'
+                        console.log(data)  // display the returned data in the console.
+                        $('#species').val(sessionStorage.getItem('species'))
+                        $('#breed').val(sessionStorage.getItem('breed'))
+                })
+            });
+            window.onload = function() {
+                $('#species').val(sessionStorage.getItem('species'))
+                $('#breed').val(sessionStorage.getItem('breed'))
+            }
+        });  
+    </script>
+{% endblock %}
+
+
