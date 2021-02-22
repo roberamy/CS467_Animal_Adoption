@@ -5,66 +5,67 @@
     {% block html_head %}
         <!-- Add CSS custom to this tempate here... -->
         <!-- J add -->
-        <link rel="stylesheet" href="../static/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="static/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-        <link rel="stylesheet" href="../static/css/styles.min.css">
+        <link rel="stylesheet" href="static/css/styles.min.css">
     {% endblock %}
     <!-- Add additional custom headers here... -->
 
     <div>
         <header class="text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
             <div class="container">
-                <!-- Header reflects status depending on availability -->
-                {% if pet_data.availability == "Adopted" %}
-                    <h1 style="font-size: 30px;">{{ pet_data.availability }}</h1>
-                {% else %}
-                    <h1 style="font-size: 30px;">{{ pet_data.availability }} for Adoption</h1>
-                {% endif %}
+                <h1 style="font-size: 30px;">Pets Available for Adoption</h1>
+
             </div>
         </header>
     </div>
 {% endblock %}     <!-- Endblock for header -->
 
 {% block content %}
+    <!-- Add page content here... -->
+
+    <!-- <div>
+        <p>Content TBD...</p>
+    </div> -->
+
+    <!-- J add -->
+
     <!-- <main class="page product-page"> -->
         <section class="clean-block clean-product dark">
             <div class="container">
-
+                <!-- <div class="block-heading">
+                    <h2 class="text-info">Pet Page</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
+                </div> -->
                 <div class="block-content">
                     <div class="product-info">
                         <div class="row">
                             <div class="col-md-6">
-                                <!-- How to view image stored in Google Cloud Storage bucket https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME -->
-                                <!-- Debug later. JS issue in script.min.js logic that broke when html was moved to templates folder for render_template -->
-                                <!-- Temp will be single image -->
-                                <!-- <div class="gallery">
-                                    <div class="sp-wrap">
-                                        <a href="../static/img/dogs/Sugar/Sugar-01.jpeg"><img class="img-fluid d-block mx-auto" src="../static/img/dogs/Sugar/Sugar-01.jpeg"></a>
-                                        <a href="../static/img/dogs/Sugar/Sugar-02.jpeg"><img class="img-fluid d-block mx-auto" src="../static/img/dogs/Sugar/Sugar-02.jpeg"></a>
-                                        <a href="../static/img/dogs/Sugar/Sugar-03.jpeg"><img class="img-fluid d-block mx-auto" src="../static/img/dogs/Sugar/Sugar-03.jpeg"></a>
-                                    </div>
-                                </div> -->
-                                <div>
-                                    <figure class="figure"><img class="img-fluid figure-img" src="{{ pet_data.profile_image_name }}"></figure>
+                                <!-- CSS needs to be updated for gallery class -->
+                                <div class="gallery">
+                                    <div class="image"><a href="#"><img class="img-fluid d-block mx-auto" src= {{pet.profile_image_name}}></a></div>
+
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="info">
-                                    <h3>{{ pet_data.name }}</h3>                                 
-                                        <p>{{ pet_data.breed }} <i class="fas fa-circle fa-xs"></i> {{ pet_data.location }}
-                                        <br>{{ pet_data.age }} <i class="fas fa-circle fa-xs"></i> {{ pet_data.gender }}</p>
-                                    <!-- Redirect button to actual page or something -->
-                                    <button class="btn btn-primary" type="button"><i class="icon ion-ios-paw"></i>More Info</button>
+                                    <h2>{{pet.name}}</h3>
+
+                                    <h4>{{pet.gender}}</h4>
+                                    <h4>{{pet.location}}</h4>
+                                    <h4>{{pet.breed}}</h4>
+
+
+                                    <div class="rating"><img src="../static/img/star.svg"><img src="../static/img/star.svg"><img src="../static/img/star.svg"><img src="../static/img/star-half-empty.svg"><img src="../static/img/star-empty.svg"></div>
+                                    <div class="price">
+                                        <h3>$300.00</h3>
+                                    </div><button class="btn btn-primary" type="button"><i class="icon ion-ios-paw"></i>More Info</button>
                                     <div class="summary">
-                                        <h4>ABOUT</h4>
-                                        <h5>QUALITIES</h5>
-                                        <p>{{ pet_data.properties }}</p>
-                                        <h5>HEALTH</h5>
-                                        <p>{{ pet_data.status }}</p>
+                                        <p>{{pet.description}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -72,10 +73,75 @@
                     </div>
                     <div class="product-info">
                         <div>
+
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane active fade show description" role="tabpanel" id="description">
-                                    <h3>Meet {{ pet_data.name }}</h3>
-                                    <p>{{ pet_data.description }}</p>
+                                <!-- <div class="tab-pane active fade show description" role="tabpanel" id="description">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <figure class="figure"><img class="img-fluid figure-img" src="static/img/dogs/1-Sugar/Sugar-02.jpeg"></figure>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <h4>Lorem Ipsum</h4>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-7 right">
+                                            <h4>Lorem Ipsum</h4>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <figure class="figure"><img class="img-fluid figure-img" src="static/img/dogs/1-Sugar/Sugar-03.jpeg"></figure>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="tab-pane fade show specifications" role="tabpanel" id="specifications">
+                                    <div class="table-responsive table-bordered">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="stat">Display</td>
+                                                    <td>5.2"</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">Camera</td>
+                                                    <td>12MP</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">RAM</td>
+                                                    <td>4GB</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="stat">OS</td>
+                                                    <td>iOS</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show" role="tabpanel" id="reviews">
+                                    <div class="reviews">
+                                        <div class="review-item">
+                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-empty.svg"></div>
+                                            <h4>Incredible product</h4><span class="text-muted"><a href="#">John Smith</a>, 20 Jan 2018</span>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        </div>
+                                    </div>
+                                    <div class="reviews">
+                                        <div class="review-item">
+                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-empty.svg"></div>
+                                            <h4>Incredible product</h4><span class="text-muted"><a href="#">John Smith</a>, 20 Jan 2018</span>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        </div>
+                                    </div>
+                                    <div class="reviews">
+                                        <div class="review-item">
+                                            <div class="rating"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star.svg"><img src="static/img/star-empty.svg"></div>
+                                            <h4>Incredible product</h4><span class="text-muted"><a href="#">John Smith</a>, 20 Jan 2018</span>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec augue nunc, pretium at augue at, convallis pellentesque ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
