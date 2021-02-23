@@ -34,9 +34,10 @@ import random
 import string
 from google.cloud import storage
 # User modules
-from repository import NewsRepository
+from repository import *
 from forms.news_form import NewsForm
 from OAuth import printSession
+import news
 
 
 UPLOADS_PATH = join(dirname(realpath(__file__)), 'uploads/')
@@ -172,3 +173,11 @@ def delete_post():
     return (json.dumps(responseBody), 200)
 
 ###############################################################################
+
+@bp.route("/pet_page/<key>", methods=["GET"])
+def pet_page(key):
+    data = PetDsRepository.get(key)
+    if 'sub' not in session:
+        return render_template('pet_page.html', pet=data)
+    else:
+        return render_template('pet_page.html', pet=data)

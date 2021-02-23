@@ -43,6 +43,14 @@ class PetDsRepository(Singleton):
         # sort in descending order (newest to oldest)
         query.order = ["-created_at"]
         return list(query.fetch())
+        
+    def filter(species,breed):
+        db = datastore.Client()
+        query = db.query(kind='pets')
+        query.add_filter("type", "=", species)
+        query.add_filter("breed", "=", breed)
+        pets = list(query.fetch())
+        return pets
 
     # Create new pet entity in datastore
     # Takes multi-part form as argument
