@@ -87,13 +87,6 @@ def view_profile():
                                 total=total,
                                 css_framework='bootstrap4')
 
-        # pagination = Pagination(page=page, 
-        #                         per_page=per_page, 
-        #                         total=total,
-        #                         css_framework='bootstrap4',
-        #                         inner_window = 2,
-        #                         )        
-
         return render_template('adopt_profiles.html',
                                pets=pagination_adopt_profile,
                                page=page,
@@ -104,3 +97,22 @@ def view_profile():
     else:
         # redo temporary error response
         return "Error Error"
+
+# @bp.route('/profiles', methods=["GET", "POST"])
+# def view_profile():
+#     global species, breed, pdata
+#     if 'sub' not in session:
+#         return "sub not in session."
+#     else:
+#         if request.method == 'POST':
+#             content = request.get_json()
+#             species = content['species']
+#             breed = content['breed']
+#             if species == 'Any' and breed == "Any":
+#                 pdata = PetDsRepository.all()    
+#         else:
+#             if species == 'Any' and breed == "Any":
+#                 pdata = PetDsRepository.all() 
+#             else:
+#                 pdata = PetDsRepository.filter(species,breed)
+#         return render_template('profiles.html', pets = pdata,  breed = breed, species=species)

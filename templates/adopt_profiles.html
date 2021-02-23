@@ -37,6 +37,7 @@
                     <div class="col-md-3">
                         <div class="d-none d-md-block">
                             <div class="filters">
+
                                 <div class="filter-item">
                                     <h3>Type</h3>
                                     <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
@@ -61,6 +62,32 @@
                                         <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Affenpinscher<br></a><a class="dropdown-item" href="#">Alaskan Malamute</a><a class="dropdown-item" href="#">American Bulldog</a></div>
                                     </div>
                                 </div>
+
+                                <H2>New</H2>
+                                <div class="filter-item">
+                                    <H1>Search</H1><br>
+                                    <h3>Type</h3>
+
+                                <select class="form-select btn btn-primary dropdown-toggle" id='species' aria-label="Default select example" >
+
+                                    <option value = "Any">Any</option>
+                                    <option value="Dog">Dog</option>
+                                    <option value="Cat">Cat</option>
+                                    <option value="Other">Other</option>
+                                  </select>
+                                </div>
+                                <div class="filter-item">
+                                    <h3>Breed</h3>
+
+                                    <select class="form-select btn btn-primary dropdown-toggle" id='breed' aria-label="Default select example" >
+                                        <option value = "Any">Any</option>
+                                        <option  value="Golden Retriever">Golden Retriever</option>
+                                    <option value="German Shepherd">German Shepherd</option>
+                                    <option value="American Shorthair">American Shorthair</option>
+                                  </select><br><br>
+                                  <button id="filter_button" class = 'btn btn-primary'>Search</button>
+                                </div>
+
                             </div>
                         </div>
                         <div class="d-md-none"><a class="btn btn-link d-md-none filter-collapse" data-toggle="collapse" aria-expanded="false" aria-controls="filters" href="#filters" role="button">Filters<i class="icon-arrow-down filter-caret"></i></a>
