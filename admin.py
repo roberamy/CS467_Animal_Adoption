@@ -15,8 +15,7 @@
 ###############################################################################
 
 # Library modules
-from flask import Blueprint, request, Response, redirect, render_template
-from flask import session, send_from_directory
+from flask import Blueprint, request, Response, redirect, render_template, session, send_from_directory, jsonify, make_response, url_for
 from google.cloud import datastore
 from requests_oauthlib import OAuth2Session
 import json
@@ -33,7 +32,7 @@ import random
 import string
 from google.cloud import storage
 # User modules
-from repository import PetDsRepository
+from repository import *
 from forms.admin_profile_form import AdminProfileForm
 from OAuth import printSession
 
@@ -43,6 +42,11 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 bp = Blueprint('admin', __name__)
 client = datastore.Client()
+
+# Used for /profiles route
+species = "Any"
+breed = "Any" 
+pdata = PetDsRepository.all()
 
 ###############################################################################
 
@@ -107,49 +111,71 @@ def update_profile(key):
         return render_template('add_edit_profile.html', pet=pet, breeds=breeds)
 
 ###############################################################################################################
-@bp.route('/profiles', methods=["GET"])
+@bp.route('/profiles', methods=["GET", "POST"])
 def view_profile():
+    global species, breed, pdata
     if 'sub' not in session:
         return "sub not in session."
     else:
-        return render_template('index.html')
+        if request.method == 'POST':
+            content = request.get_json()
+            species = content['species']
+            breed = content['breed']
+            if species == 'Any' and breed == "Any":
+                pdata = PetDsRepository.all()    
+        else:
+            if species == 'Any' and breed == "Any":
+                pdata = PetDsRepository.all() 
+            else:
+                pdata = PetDsRepository.filter(species,breed)
+        return render_template('profiles.html', pets = pdata,  breed = breed, species=species)
 
 ###############################################################################
 
+#added route to filter pets
+@bp.route('/filter', methods=["POST"])
+def filter():
+    global species, breed, pdata
+    #form = FilterForm()
+    content = request.get_json()
+    species = content['species']
+    breed = content['breed']
+    if species == 'Any' and breed == "Any":
+        pdata = PetDsRepository.all()
+    else:
+        pdata = PetDsRepository.filter(species,breed)
+    return render_template('profiles.html', pets = pdata)
+    
+###############################################################################
 
 @bp.route('/store_profile', methods=["POST"])
 def store_profile():
-    # Instantiate AdminProfileForm class used for input validation
-    form = AdminProfileForm(request.form)
-    if form.validate():
-        # Create new pet entity in data store if no key provided
-        if request.form['pet_key'] == '':
-            PetDsRepository.create(request.form)
-        # Update pet entity if key provided
-        else:
-            PetDsRepository.update(
-                form=request.form, key=request.form['pet_key'])
-        responseBody = {"success": True, "message": "Data Successfully saved"}
+    if 'sub' not in session:
+        return ("sub not in session.", 403)
     else:
-        errors = []
-        for fieldName, errorMessages in form.errors.items():
-            field = []
-            print(fieldName)
-            for err in errorMessages:
-                print(err)
-        responseBody = {"success": False,
+        # Instantiate AdminProfileForm class used for input validation
+        form = AdminProfileForm(request.form)
+        if form.validate():
+            # Create new pet entity in data store if no key provided
+            if request.form['pet_key'] == '':
+                PetDsRepository.create(request.form)
+            # Update pet entity if key provided
+            else:
+                PetDsRepository.update(
+                    form=request.form, key=request.form['pet_key'])
+            responseBody = {"success": True, "message": "Data Successfully saved"}
+            return (json.dumps(responseBody), 200)
+        else:
+            errors = []
+            for fieldName, errorMessages in form.errors.items():
+                field = []
+                print(fieldName)
+                for err in errorMessages:
+                    print(err)
+            responseBody = {"success": False,
                         "message": fieldName.title() + ': ' + err}
-    # if 'sub' not in session:
-        # return "sub not in session."
-    # else:
-        # content = request.get_json()
-    # try:
-    #     content = request.get_json()
-    #     for c in content:
-    #         print(c)
-    # except:
-    #     pass
-    return (json.dumps(responseBody), 200)
+            return (json.dumps(responseBody), 400)
+        
 
 ###############################################################################
 
