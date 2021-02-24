@@ -150,18 +150,3 @@ def view_profile():
                                breed=breed, 
                                species=species
                                )
-
-        # return render_template('adopt_profiles.html', pets = pdata,  breed = breed, species=species)
-
-#added route to filter pets
-@bp.route('/filter', methods=["POST"])
-def filter():
-    global species, breed, pdata
-    content = request.get_json()
-    species = content['species']
-    breed = content['breed']
-    if species == 'Any' and breed == "Any":
-        pdata = PetDsRepository.all()
-    else:
-        pdata = PetDsRepository.filter(species,breed)
-    return render_template('adopt_profiles.html', pets = pdata)
