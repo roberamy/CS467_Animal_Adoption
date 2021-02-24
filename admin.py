@@ -65,7 +65,9 @@ def adminPage():
         data = PetDsRepository.all()
         for d in data:
             # Format datetime to yyyy-mm-dd
-            d['created_at'] = datetime.strftime(d['created_at'], "%Y-%m-%d")
+            # d['created_at'] = datetime.strftime(d['created_at'], "%Y-%m-%d")
+            # getting error without datetime.datetime module call
+            d['created_at'] = datetime.datetime.strftime(d['created_at'], "%Y-%m-%d")
             # Format properties to include \n to improve html display
             d['properties'] = "\n".join(d['properties'].split(','))
         return render_template('admin_profiles.html', pets=data)
