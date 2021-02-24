@@ -166,8 +166,7 @@ def add_image():
         responseBody = {"success": False, "message": "No File Selected"}
     if file:
         # Construct secure filename with werkzeug module
-        name = file.filename.split(
-            '.')[0] + get_random_string(8)  # Secure file names
+        name = file.filename.split('.')[0] + get_random_string(8)  # Secure file names
         filename = secure_filename(name + '.' + file.filename.split('.')[1])
         # file.save(os.path.join(UPLOADS_PATH, filename)) # Didn't work!!
         blob = bucket.blob('uploads/' + filename)
