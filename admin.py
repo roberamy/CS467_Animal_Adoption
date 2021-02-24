@@ -15,7 +15,8 @@
 ###############################################################################
 
 # Library modules
-from flask import Blueprint, request, Response, redirect, render_template, session, send_from_directory, jsonify, make_response, url_for
+from flask import Blueprint, request, Response, redirect, render_template
+from flask import session, send_from_directory
 from google.cloud import datastore
 from requests_oauthlib import OAuth2Session
 import json
@@ -32,7 +33,7 @@ import random
 import string
 from google.cloud import storage
 # User modules
-from repository import *
+from repository import PetDsRepository
 from forms.admin_profile_form import AdminProfileForm
 from OAuth import printSession
 
@@ -109,42 +110,6 @@ def update_profile(key):
         query.order = ["name"]
         breeds = list(query.fetch())
         return render_template('add_edit_profile.html', pet=pet, breeds=breeds)
-
-###############################################################################################################
-@bp.route('/profiles', methods=["GET", "POST"])
-def view_profile():
-    global species, breed, pdata
-    if 'sub' not in session:
-        return "sub not in session."
-    else:
-        if request.method == 'POST':
-            content = request.get_json()
-            species = content['species']
-            breed = content['breed']
-            if species == 'Any' and breed == "Any":
-                pdata = PetDsRepository.all()    
-        else:
-            if species == 'Any' and breed == "Any":
-                pdata = PetDsRepository.all() 
-            else:
-                pdata = PetDsRepository.filter(species,breed)
-        return render_template('profiles.html', pets = pdata,  breed = breed, species=species)
-
-###############################################################################
-
-#added route to filter pets
-@bp.route('/filter', methods=["POST"])
-def filter():
-    global species, breed, pdata
-    #form = FilterForm()
-    content = request.get_json()
-    species = content['species']
-    breed = content['breed']
-    if species == 'Any' and breed == "Any":
-        pdata = PetDsRepository.all()
-    else:
-        pdata = PetDsRepository.filter(species,breed)
-    return render_template('profiles.html', pets = pdata)
     
 ###############################################################################
 
@@ -201,8 +166,7 @@ def add_image():
         responseBody = {"success": False, "message": "No File Selected"}
     if file:
         # Construct secure filename with werkzeug module
-        name = file.filename.split(
-            '.')[0] + get_random_string(8)  # Secure file names
+        name = file.filename.split('.')[0] + get_random_string(8)  # Secure file names
         filename = secure_filename(name + '.' + file.filename.split('.')[1])
         # file.save(os.path.join(UPLOADS_PATH, filename)) # Didn't work!!
         blob = bucket.blob('uploads/' + filename)
