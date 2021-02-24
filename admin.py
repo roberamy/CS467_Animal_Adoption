@@ -110,42 +110,6 @@ def update_profile(key):
         query.order = ["name"]
         breeds = list(query.fetch())
         return render_template('add_edit_profile.html', pet=pet, breeds=breeds)
-
-###############################################################################################################
-# @bp.route('/profiles', methods=["GET", "POST"])
-# def view_profile():
-#     global species, breed, pdata
-#     if 'sub' not in session:
-#         return "sub not in session."
-#     else:
-#         if request.method == 'POST':
-#             content = request.get_json()
-#             species = content['species']
-#             breed = content['breed']
-#             if species == 'Any' and breed == "Any":
-#                 pdata = PetDsRepository.all()    
-#         else:
-#             if species == 'Any' and breed == "Any":
-#                 pdata = PetDsRepository.all() 
-#             else:
-#                 pdata = PetDsRepository.filter(species,breed)
-#         return render_template('profiles.html', pets = pdata,  breed = breed, species=species)
-
-###############################################################################
-
-# #added route to filter pets
-# @bp.route('/filter', methods=["POST"])
-# def filter():
-#     global species, breed, pdata
-#     #form = FilterForm()
-#     content = request.get_json()
-#     species = content['species']
-#     breed = content['breed']
-#     if species == 'Any' and breed == "Any":
-#         pdata = PetDsRepository.all()
-#     else:
-#         pdata = PetDsRepository.filter(species,breed)
-#     return render_template('profiles.html', pets = pdata)
     
 ###############################################################################
 
