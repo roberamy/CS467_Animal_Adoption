@@ -44,7 +44,7 @@
                                         <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Cats<br></a><a class="dropdown-item" href="#">Dogs</a><a class="dropdown-item" href="#">Other Pets</a></div>
                                     </div>
                                 </div>
-                                <div class="filter-item">
+                                <!-- <div class="filter-item">
                                     <h3>Breed</h3>
                                     <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
                                         <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Affenpinscher<br></a><a class="dropdown-item" href="#">Alaskan Malamute</a><a class="dropdown-item" href="#">American Bulldog</a></div>
@@ -61,31 +61,29 @@
                                     <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
                                         <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Affenpinscher<br></a><a class="dropdown-item" href="#">Alaskan Malamute</a><a class="dropdown-item" href="#">American Bulldog</a></div>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <H2>New</H2>
                                 <div class="filter-item">
                                     <H1>Search</H1><br>
                                     <h3>Type</h3>
+                                    <select class="form-select btn btn-primary dropdown-toggle" id='species' aria-label="Default select example" >
+                                        <option value="Any">Any</option>
+                                        <option value="Dog">Dog</option>
+                                        <option value="Cat">Cat</option>
+                                        <option value="Other">Other</option>
+                                      </select>
+                                    </div>
 
-                                <select class="form-select btn btn-primary dropdown-toggle" id='species' aria-label="Default select example" >
-
-                                    <option value = "Any">Any</option>
-                                    <option value="Dog">Dog</option>
-                                    <option value="Cat">Cat</option>
-                                    <option value="Other">Other</option>
-                                  </select>
-                                </div>
                                 <div class="filter-item">
                                     <h3>Breed</h3>
-
                                     <select class="form-select btn btn-primary dropdown-toggle" id='breed' aria-label="Default select example" >
-                                        <option value = "Any">Any</option>
-                                        <option  value="Golden Retriever">Golden Retriever</option>
-                                    <option value="German Shepherd">German Shepherd</option>
-                                    <option value="American Shorthair">American Shorthair</option>
-                                  </select><br><br>
-                                  <button id="filter_button" class = 'btn btn-primary'>Search</button>
+                                        <option value="Any">Any</option>
+                                        <option value="Golden Retriever">Golden Retriever</option>
+                                        <option value="German Shepherd">German Shepherd</option>
+                                        <option value="American Shorthair">American Shorthair</option>
+                                    </select><br><br>
+                                    <button id="filter_button" class = 'btn btn-primary'>Search</button>
                                 </div>
 
                             </div>
@@ -132,13 +130,6 @@
                             </div>
                             <!-- End of product cards -->
                             <nav>
-                                <!-- <ul class="pagination">
-                                    <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                                </ul> -->
                                 {{ pagination.links }}
                             </nav>
                         </div>
@@ -151,6 +142,35 @@
 
 {% block script %}
     <!-- Add Javascript custom to this tempate here... -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+
+            $("#filter_button").click(function () {
+                sessionStorage.setItem('species', $('#species').val()) 
+                sessionStorage.setItem('breed', $('#breed').val()) 
+                species_val = $('#species').val()
+                breed_val = $('#breed').val()
+                the_message =JSON.stringify({breed: breed_val, species: species_val})
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json",
+                    url: "/adopt_profiles",
+                    data: the_message}).done(function (data) {
+                        window.location = '/adopt_profiles'
+                        console.log(data)  // display the returned data in the console.
+                        $('#species').val(sessionStorage.getItem('species'))
+                        $('#breed').val(sessionStorage.getItem('breed'))
+                })
+            });
+            window.onload = function() {
+                $('#species').val(sessionStorage.getItem('species'))
+                $('#breed').val(sessionStorage.getItem('breed'))
+            }
+        });  
+    </script>
 {% endblock %}
 
 
