@@ -15,7 +15,8 @@
 ###############################################################################
 
 # Library modules
-from flask import Blueprint, request, Response, redirect, render_template, session, send_from_directory, jsonify, make_response, url_for
+from flask import Blueprint, request, Response, redirect, render_template
+from flask import session, send_from_directory
 from google.cloud import datastore
 from requests_oauthlib import OAuth2Session
 import json
@@ -32,7 +33,7 @@ import random
 import string
 from google.cloud import storage
 # User modules
-from repository import *
+from repository import PetDsRepository
 from forms.admin_profile_form import AdminProfileForm
 from OAuth import printSession
 
@@ -65,9 +66,7 @@ def adminPage():
         data = PetDsRepository.all()
         for d in data:
             # Format datetime to yyyy-mm-dd
-            # d['created_at'] = datetime.strftime(d['created_at'], "%Y-%m-%d")
-            # getting error without datetime.datetime module call
-            d['created_at'] = datetime.datetime.strftime(d['created_at'], "%Y-%m-%d")
+            d['created_at'] = datetime.strftime(d['created_at'], "%Y-%m-%d")
             # Format properties to include \n to improve html display
             d['properties'] = "\n".join(d['properties'].split(','))
         return render_template('admin_profiles.html', pets=data)
