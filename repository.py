@@ -43,6 +43,16 @@ class PetDsRepository(Singleton):
         # sort in descending order (newest to oldest)
         query.order = ["-created_at"]
         return list(query.fetch())
+
+    # Return available adoptable pets in datastore
+    def available():
+        db = datastore.Client()
+        query = db.query(kind='pets')
+        # sort in descending order (newest to oldest)
+        query.order = ["-created_at"]
+        query.add_filter("availability", "=", "Available")
+
+        return list(query.fetch())
         
     def filter(species,breed):
         db = datastore.Client()
