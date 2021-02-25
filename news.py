@@ -34,7 +34,7 @@ import random
 import string
 from google.cloud import storage
 # User modules
-from repository import *
+from repository import NewsRepository
 from forms.news_form import NewsForm
 from OAuth import printSession
 import news
@@ -171,13 +171,3 @@ def delete_post():
     NewsRepository.delete_news(key=key)
     responseBody = {"success": True, "message": "Deleted"}
     return (json.dumps(responseBody), 200)
-
-###############################################################################
-
-@bp.route("/pet_page/<key>", methods=["GET"])
-def pet_page(key):
-    data = PetDsRepository.get(key)
-    if 'sub' not in session:
-        return render_template('pet_page.html', pet=data)
-    else:
-        return render_template('pet_page.html', pet=data)
