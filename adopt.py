@@ -122,13 +122,27 @@ def view_profile():
             species = content['species']
             breed = content['breed']
             if species == 'Any' and breed == "Any":
-                pdata = PetDsRepository.all()    
-        else:
+                pdata = PetDsRepository.all()
+                print("I'm in here 1")
+                # pdata = PetDsRepository.available()    
+        else: # psuedo GET
             if species == 'Any' and breed == "Any":
-                pdata = PetDsRepository.all() 
+                pdata = PetDsRepository.all()
+                print("I'm in here 2")
+                # pdata = PetDsRepository.available() 
             else:
                 pdata = PetDsRepository.filter(species,breed)
+                print("I'm in here 3")
+                print(species)
 
+        # start of filtering out of adopted in pets for adopt cards
+        print(pdata)
+        print("****************"*10)
+        print(species)
+        print(breed)
+        print("****************"*10)
+
+        # start of pagination code
         total = len(pdata)
         # pagination code
         page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
@@ -147,6 +161,11 @@ def view_profile():
         # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
         public_url = "https://storage.googleapis.com/" + BUCKET_NAME
 
+        # Get all breeds from database & sort alphabetically
+        query = client.query(kind=constants.breeds)
+        query.order = ["name"]
+        breeds = list(query.fetch())
+
         return render_template('adopt_profiles.html',
                                pets=pagination_adopt_profile,
                                page=page,
@@ -154,5 +173,6 @@ def view_profile():
                                pagination=pagination,
                                breed=breed, 
                                species=species,
-                               public_url=public_url
+                               public_url=public_url,
+                               breeds=breeds
                                )

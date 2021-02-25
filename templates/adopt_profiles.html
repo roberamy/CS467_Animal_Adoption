@@ -38,12 +38,12 @@
                         <div class="d-none d-md-block">
                             <div class="filters">
 
-                                <div class="filter-item">
+                                <!-- <div class="filter-item">
                                     <h3>Type</h3>
                                     <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
                                         <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Cats<br></a><a class="dropdown-item" href="#">Dogs</a><a class="dropdown-item" href="#">Other Pets</a></div>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <!-- Keep for reference to add additional search to route 02/23/21 -->
                                 <!-- <div class="filter-item">
@@ -69,37 +69,42 @@
                                 <div class="filter-item">
                                     <H1>Search</H1><br>
                                     <h3>Type</h3>
-                                    <select class="form-select btn btn-primary dropdown-toggle" id='species' aria-label="Default select example" >
+                                    <select class="form-control" id='species' aria-label="Default select example" >
+                                        <!-- <select required class="form-control" name="type" id="type" onchange="updateBreeds()"> -->
                                         <option value="Any">Any</option>
                                         <option value="Dog">Dog</option>
                                         <option value="Cat">Cat</option>
                                         <option value="Other">Other</option>
-                                      </select>
-                                    </div>
+                                    </select>
+                                </div>
 
                                 <div class="filter-item">
                                     <h3>Breed</h3>
-                                    <select class="form-select btn btn-primary dropdown-toggle" id='breed' aria-label="Default select example" >
+                                    <select class="form-control" id='breed' aria-label="Default select example" >
                                         <option value="Any">Any</option>
-                                        <option value="Golden Retriever">Golden Retriever</option>
-                                        <option value="German Shepherd">German Shepherd</option>
-                                        <option value="American Shorthair">American Shorthair</option>
+                                            {% for breed in breeds%}
+                                                <option value='{{breed.name}}'>{{breed.name}}</option>
+                                            {% endfor %}
                                     </select><br><br>
                                     <button id="filter_button" class = 'btn btn-primary'>Search</button>
                                 </div>
 
-                            </div>
-                        </div>
-                        <div class="d-md-none"><a class="btn btn-link d-md-none filter-collapse" data-toggle="collapse" aria-expanded="false" aria-controls="filters" href="#filters" role="button">Filters<i class="icon-arrow-down filter-caret"></i></a>
-                            <div class="collapse" id="filters">
-                                <div class="filters">
-                                    <div class="filter-item">
-                                        <h3>Breed</h3>
-                                        <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
-                                            <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Affenpinscher<br></a><a class="dropdown-item" href="#">Alaskan Malamute</a><a class="dropdown-item" href="#">American Bulldog</a></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- <select required class="form-control" name="breed" id="breed">
+                                    <option value="" disabled selected>Breed</option>
+                                    {% if pet and breeds %}
+                                        {% for breed in breeds%}
+                                            {% if breed.type == pet.type %}
+                                                <option value='{{breed.name}}' {% if pet.breed==breed.name %} selected="selected" {% endif %}>{{breed.name}}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for breed in breeds%}
+                                            <option value='{{breed.name}}'>{{breed.name}}</option>
+                                        {% endfor %}
+                                    {% endif %}                                            
+                                </select> -->
+
+
                             </div>
                         </div>
                     </div>
@@ -171,6 +176,26 @@
             }
         });  
     </script>
+
+<!-- <script src="../static/js/Application-Form.js?v=1"></script>
+<script>
+    var allBreeds = {{ breeds|tojson }}
+    function updateBreeds() {
+        var type = document.getElementById("type").value;
+        var breed = document.getElementById("breed");
+        breed.options.length = 1;
+        for (var i = 0; i<allBreeds.length; i++){
+            if (allBreeds[i].type == type){
+                var option = document.createElement("option");
+                option.value = allBreeds[i].name;
+                option.name = allBreeds[i].name;
+                option.id = allBreeds[i].name;
+                option.innerHTML = allBreeds[i].name;
+                breed.appendChild(option);
+            }
+        }
+    }
+</script> -->
 {% endblock %}
 
 
