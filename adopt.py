@@ -58,7 +58,9 @@ def view_pet_page(pet_id):
     if request.method == 'GET':
         # get specific pet data from pet key
         pet_data = PetDsRepository.get(pet_id)
-        return render_template('pet_page.html', pet_data=pet_data)
+        # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
+        public_url = "https://storage.googleapis.com/" + BUCKET_NAME
+        return render_template('pet_page.html', pet_data=pet_data, public_url=public_url)
     else:
         # redo temporary error response
         return "Error"
@@ -142,6 +144,8 @@ def view_profile():
                                 total=total,
                                 css_framework='bootstrap4'
                                 )      
+        # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
+        public_url = "https://storage.googleapis.com/" + BUCKET_NAME
 
         return render_template('adopt_profiles.html',
                                pets=pagination_adopt_profile,
@@ -149,5 +153,6 @@ def view_profile():
                                per_page=per_page,
                                pagination=pagination,
                                breed=breed, 
-                               species=species
+                               species=species,
+                               public_url=public_url
                                )
