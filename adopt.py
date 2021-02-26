@@ -65,52 +65,11 @@ def view_pet_page(pet_id):
         # redo temporary error response
         return "Error"
 
-# # ###############################################################################
-# # helper pagination function, per_page modified in __init__py
-# def get_pet_page(data, offset=0, per_page=10):
-#     return data[offset: offset + per_page]
-
-# @bp.route('/adopt_profiles', methods=["GET"])
-# def view_profile():
-#     printSession('***** Adopt_profiles *****')
-#     if 'sub' not in session:
-#         return "sub not in session."
-#     elif request.method == 'GET':
-#         # Return all pet entities in the datastore to populate 'profiles.html'
-#         # Instantiate singleton PetDsRepository class with member functions -- see 'repository.py'
-#         data = PetDsRepository.all()
-
-#         total = len(data)
-#         # pagination code
-#         page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
-        
-#         # change per page value after get_page_args
-#         per_page = 9
-#         offset = (page - 1) * per_page
-
-#         pagination_adopt_profile = get_pet_page(data, offset=offset, per_page=per_page)
-
-#         pagination = Pagination(page=page, 
-#                                 per_page=per_page, 
-#                                 total=total,
-#                                 css_framework='bootstrap4')      
-
-#         return render_template('adopt_profiles.html',
-#                                pets=pagination_adopt_profile,
-#                                page=page,
-#                                per_page=per_page,
-#                                pagination=pagination)
-        
-#         # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
-#     else:
-#         # redo temporary error response
-#         return "Error Error"
-
+###############################################################################
 # helper pagination function, per_page modified in __init__py
 def get_pet_page(data, offset=0, per_page=10):
     return data[offset: offset + per_page]
 
-# ################# Greg implementation integrated
 @bp.route('/adopt_profiles', methods=["GET", "POST"])
 def view_profile():
     global species, breed, pdata
@@ -121,29 +80,41 @@ def view_profile():
             content = request.get_json()
             species = content['species']
             breed = content['breed']
+
             if species == 'Any' and breed == "Any":
                 pdata = PetDsRepository.all()
-                print("I'm in here 1")
-                # pdata = PetDsRepository.available()    
+
         else: # psuedo GET
             if species == 'Any' and breed == "Any":
                 pdata = PetDsRepository.all()
-                print("I'm in here 2")
-                # pdata = PetDsRepository.available() 
             else:
                 pdata = PetDsRepository.filter(species,breed)
-                print("I'm in here 3")
-                print(species)
 
         # start of filtering out of adopted in pets for adopt cards
         # print(pdata)
         print("****************"*10)
         print(species)
         print(breed)
-        print("****************"*10)
+
+        # Discovered datastore doesn't allow combiningsg filters on 
+        # one property and order on another property for query so 
+        # filter post query of pet entities
+        def filter_out_adopt(pet_data_datastore):
+            adopted = "Adopted"
+            pet_data_filtered=[]
+
+            for pet in pet_data_datastore:
+                if pet['availability'] != adopted:
+                    pet_data_filtered.append(pet)
+
+            return pet_data_filtered
+
+        # new filtered pet data to not listed adopted in card profiles
+        pdata_filtered = filter_out_adopt(pdata)
 
         # start of pagination code
-        total = len(pdata)
+        total = len(pdata_filtered)
+
         # pagination code
         page, per_page, offset = get_page_args(page_parameter='page', per_page_parameter='per_page')
 
@@ -151,13 +122,14 @@ def view_profile():
         per_page = 9
         offset = (page - 1) * per_page
 
-        pagination_adopt_profile = get_pet_page(pdata, offset=offset, per_page=per_page)
+        pagination_adopt_profile = get_pet_page(pdata_filtered, offset=offset, per_page=per_page)
 
         pagination = Pagination(page=page, 
                                 per_page=per_page, 
                                 total=total,
                                 css_framework='bootstrap4'
-                                )      
+                                )    
+
         # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
         public_url = "https://storage.googleapis.com/" + BUCKET_NAME
 
