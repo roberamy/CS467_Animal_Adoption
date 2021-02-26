@@ -41,16 +41,28 @@
                                 <!-- Filter title: Qualities, Availability, Location, Gender, Age -->
                                 <!-- Entity names: properties, availability, location, gender, age -->
 
-                                <H2>New</H2>
-                                <div class="filter-item">
+                                <!-- <H2>New</H2> -->
+                                <!-- <div class="filter-item">
                                     <H1>Search</H1><br>
                                     <h3>Type</h3>
                                     <select class="form-control" id='species' aria-label="Default select example" >
-                                        <!-- <select required class="form-control" name="type" id="type" onchange="updateBreeds()"> -->
                                         <option value="Any">Any</option>
                                         <option value="Dog">Dog</option>
                                         <option value="Cat">Cat</option>
                                         <option value="Other">Other</option>
+                                    </select>
+                                </div> -->
+
+                                <div class="filter-item">
+                                    <!-- <select required class="form-control" name="type" id="type" onchange="updateBreeds()"> -->
+                                    <h2>Search</h2>
+                                    <br>
+                                    <h3>Type</h3>
+                                    <select required class="form-control" name="type" id="species" onchange="updateBreeds()">
+                                        <option value="Any">Any</option>
+                                        <option value="Cat" {% if pet and pet.type=='Cat' %} selected="selected" {% endif %}>Cat</option>
+                                        <option value="Dog" {% if pet and pet.type=='Dog' %} selected="selected" {% endif %}>Dog</option>
+                                        <option value="Other" {% if pet and pet.type=='Other' %} selected="selected" {% endif %}>Other</option>
                                     </select>
                                 </div>
 
@@ -157,7 +169,8 @@
 <script>
     var allBreeds = {{ breeds|tojson }}
     function updateBreeds() {
-        var type = document.getElementById("type").value;
+        // var type = document.getElementById("type").value;
+        var type = document.getElementById("species").value;
         var breed = document.getElementById("breed");
         breed.options.length = 1;
         for (var i = 0; i<allBreeds.length; i++){
