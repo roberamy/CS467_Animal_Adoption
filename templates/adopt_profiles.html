@@ -36,23 +36,10 @@
 
                                 <!-- Filter title: Qualities, Availability, Location, Gender, Age -->
                                 <!-- Entity names: properties, availability, location, gender, age -->
-
-                                <!-- <H2>New</H2> -->
-                                <!-- <div class="filter-item">
-                                    <H1>Search</H1><br>
-                                    <h3>Type</h3>
-                                    <select class="form-control" id='species' aria-label="Default select example" >
-                                        <option value="Any">Any</option>
-                                        <option value="Dog">Dog</option>
-                                        <option value="Cat">Cat</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div> -->
+                                <h2>Search</h2>
+                                <br>
 
                                 <div class="filter-item">
-                                    <!-- <select required class="form-control" name="type" id="type" onchange="updateBreeds()"> -->
-                                    <h2>Search</h2>
-                                    <br>
                                     <h3>Type</h3>
                                     <select required class="form-control" name="type" id="species" onchange="updateBreeds()">
                                         <option value="Any">Any</option>
@@ -64,49 +51,16 @@
 
                                 <div class="filter-item">
                                     <h3>Breed</h3>
-
                                     <select class="form-control" id='breed' >
                                         <option value="Any">Any</option>
                                             {% for breed in breeds%}
                                                 <option value='{{breed.name}}'>{{breed.name}}</option>
                                             {% endfor %}
                                     </select>
-
-                                    <!-- <select required class="form-control" name="breed" id="breed">
-                                        <option value="Any">Any</option>
-                                        {% if pet and breeds %}
-                                            {% for breed in breeds%}
-                                                {% if breed.type == pet.type %}
-                                                    <option value='{{breed.name}}' {% if pet.breed==breed.name %} selected="selected" {% endif %}>{{breed.name}}</option>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% else %}
-                                            {% for breed in breeds%}
-                                                <option value='{{breed.name}}'>{{breed.name}}</option>
-                                            {% endfor %}
-                                        {% endif %}                                            
-                                    </select> -->
                                     
                                     <br><br>
                                     <button id="filter_button" class = 'btn btn-primary'>Search</button>
                                 </div>
-
-                                <!-- <select required class="form-control" name="breed" id="breed">
-                                    <option value="" disabled selected>Breed</option>
-                                    {% if pet and breeds %}
-                                        {% for breed in breeds%}
-                                            {% if breed.type == pet.type %}
-                                                <option value='{{breed.name}}' {% if pet.breed==breed.name %} selected="selected" {% endif %}>{{breed.name}}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% else %}
-                                        {% for breed in breeds%}
-                                            <option value='{{breed.name}}'>{{breed.name}}</option>
-                                        {% endfor %}
-                                    {% endif %}                                            
-                                </select> -->
-
-
                             </div>
                         </div>
                     </div>
