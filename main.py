@@ -19,6 +19,7 @@ import admin
 import news
 import adopt
 import applications
+from repository import PetDsRepository
 
 # This disables the requirement to use HTTPS so that you can test locally.
 import os 
@@ -37,12 +38,15 @@ app.secret_key = os.urandom(24)
 
 ###############################################################################
 
-#Landing page with google login
+
+# Landing page with google login
 @app.route('/')
 def index():
-    return render_template('index.html')
-  
+    status = PetDsRepository.getLatestStatus()
+    return render_template('index.html', status=status)
+
 ###############################################################################
+
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -50,6 +54,7 @@ def logout():
     return render_template('index.html')
 
 ###############################################################################
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
