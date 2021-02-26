@@ -136,7 +136,7 @@ def view_profile():
                 print(species)
 
         # start of filtering out of adopted in pets for adopt cards
-        print(pdata)
+        # print(pdata)
         print("****************"*10)
         print(species)
         print(breed)
