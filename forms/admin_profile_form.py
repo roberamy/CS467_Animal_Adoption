@@ -33,8 +33,9 @@ def petBreeds():
         breed_options.append(e["name"])
     return breed_options
 
+
 # Helper function to validate location input
-def validateLocation(form, field):
+def validateLocation(Form, field):
     states = [
         'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL',
         'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
@@ -76,16 +77,16 @@ class AdminProfileForm(Form):
                            ('Not Available', 'Not Available')]
     ''' End Form Field Options '''
     ''' Begin Form Validation Options '''
-    name = StringField('Enter Name', [validators.Length(min=3), validators.InputRequired()])
+    name = StringField('Enter Name', validators=[validators.Length(min=3), validators.InputRequired()])
     type = SelectField(u'Type', choices=type_select, validators=[validators.InputRequired()])
     breed = SelectField(u'Breed', choices=breed_select, validators=[validators.InputRequired()])
     age = SelectField(u'Age', choices=age_select, validators=[validators.InputRequired()])
     gender = SelectField(u'Gender', choices=gender_select, validators=[validators.InputRequired()])
-    status = StringField('Status', [validators.Length(min=3), validators.InputRequired()])
+    status = StringField('Status', validators=[validators.Length(min=3), validators.InputRequired()])
     description = TextAreaField('Description', [validators.Length(min=3), validators.InputRequired()])
-    location = StringField('Location', [validators.Length(min=4), validators.InputRequired(), validateLocation])
+    location = StringField('Location', validators=[validators.InputRequired(), validateLocation])
     availability = SelectField(u'Availability', choices=availability_select, validators=[validators.InputRequired()])
-    properties = StringField('Properties', [validators.InputRequired()])
+    properties = StringField('Properties', validators=[validators.InputRequired()])
     adoption_date = StringField('adoption_date')
     adopted_by = StringField('adopted_by')
     picked_up = StringField('picked_up')

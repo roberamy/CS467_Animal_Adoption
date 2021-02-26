@@ -21,6 +21,7 @@ from google.cloud import datastore
 from google.cloud.datastore.key import Key
 import datetime
 
+
 class _Singleton(type):
     """ A metaclass that creates a Singleton base class when called. """
     _instances = {}
@@ -44,33 +45,7 @@ class PetDsRepository(Singleton):
         query.order = ["-created_at"]
         return list(query.fetch())
 
-    # # Return available adoptable pets in datastore
-    # # Discovered datastore doesn't allow combiningsg filters on one property
-    # # and order on another property
-    # def available():
-    #     db = datastore.Client()
-    #     query = db.query(kind='pets')
-    #     # sort in descending order (newest to oldest)
-    #     # query.order = ["-created_at"]
-    #     # print(list(query.fetch()))
-    #     # query.order = ["-created_at"]
-    #     query.add_filter("availability", ">", "Adopted")
-    #     # query.add_filter("availability", "=", "Pending")
-    #     # query.add_filter("availability", "=", "Not Available")
-    #     # query.add_filter("picked_up", "=", True)
-    #     # print(list(query.fetch()))
-    #     # query.order = ["-created_at"]
-    #     return list(query.fetch())
-        
-    # def filter(species,breed):
-    #     db = datastore.Client()
-    #     query = db.query(kind='pets')
-    #     query.add_filter("type", "=", species)
-    #     query.add_filter("breed", "=", breed)
-    #     pets = list(query.fetch())
-    #     return pets
-
-    def filter(species,breed):
+    def filter(species, breed):
         db = datastore.Client()
         query = db.query(kind='pets')
         if species != "Any" and breed == "Any":
@@ -173,6 +148,22 @@ class PetDsRepository(Singleton):
         entity = db.get(ent_key)
         return entity
 
+    def getLatestStatus():
+        db = datastore.Client()
+        query = db.query(kind='pets')
+        # sort in descending order (newest to oldest)
+        query.order = ["-created_at"]
+        data = list(query.fetch())
+        available = []
+        for d in data:
+            if d['availability'] == 'Available':
+                available.append(d)
+        # print('AVAILABLE: ' + str(len(available)))
+        if len(available) <= 6:
+            return available
+        else:
+            return available[0:6]
+
 
 class NewsRepository(Singleton):
 
@@ -191,7 +182,7 @@ class NewsRepository(Singleton):
         entity = datastore.Entity(key=db.key('news'))
         now = datetime.datetime.now()
         entity.update({
-            'title': form['name'],
+            'title': form['title'],
             'content': form['content'],
             'author': form['author'],
             'created': now,
@@ -210,7 +201,7 @@ class NewsRepository(Singleton):
         entity = db.get(key)
         now = datetime.datetime.now()
         entity.update({
-            'title': form['name'],
+            'title': form['title'],
             'content': form['content'],
             'author': form['author'],
             'updated': now,

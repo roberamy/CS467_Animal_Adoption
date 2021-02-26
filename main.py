@@ -19,12 +19,14 @@ import admin
 import news
 import adopt
 import applications
+from repository import PetDsRepository
 
 # This disables the requirement to use HTTPS so that you can test locally.
 import os 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
+
 app.register_blueprint(OAuth.bp)
 app.register_blueprint(users.bp)
 app.register_blueprint(pets.bp)
@@ -37,19 +39,24 @@ app.secret_key = os.urandom(24)
 
 ###############################################################################
 
-#Landing page with google login
+
+# Landing page with google login
 @app.route('/')
 def index():
-    return render_template('index.html')
-  
+    status = PetDsRepository.getLatestStatus()
+    return render_template('index.html', status=status)
+
 ###############################################################################
+
 
 @app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
-    return render_template('index.html')
+    status = PetDsRepository.getLatestStatus()
+    return render_template('index.html', status=status)
 
 ###############################################################################
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
