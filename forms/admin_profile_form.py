@@ -35,7 +35,7 @@ def petBreeds():
 
 
 # Helper function to validate location input
-def validateLocation(field):
+def validateLocation(Form, field):
     states = [
         'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL',
         'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
@@ -84,7 +84,7 @@ class AdminProfileForm(Form):
     gender = SelectField(u'Gender', choices=gender_select, validators=[validators.InputRequired()])
     status = StringField('Status', validators=[validators.Length(min=3), validators.InputRequired()])
     description = TextAreaField('Description', [validators.Length(min=3), validators.InputRequired()])
-    location = StringField('Location', validators=[validators.InputRequired(), validateLocation(Form['location'])])
+    location = StringField('Location', validators=[validators.InputRequired(), validateLocation])
     availability = SelectField(u'Availability', choices=availability_select, validators=[validators.InputRequired()])
     properties = StringField('Properties', validators=[validators.InputRequired()])
     adoption_date = StringField('adoption_date')

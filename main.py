@@ -26,6 +26,7 @@ import os
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
+
 app.register_blueprint(OAuth.bp)
 app.register_blueprint(users.bp)
 app.register_blueprint(pets.bp)
@@ -51,7 +52,8 @@ def index():
 @app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
-    return render_template('index.html')
+    status = PetDsRepository.getLatestStatus()
+    return render_template('index.html', status=status)
 
 ###############################################################################
 
