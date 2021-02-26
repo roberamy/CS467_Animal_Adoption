@@ -28,10 +28,6 @@
     <!-- J add -->
     <section class="clean-block clean-catalog dark">
         <div class="container">
-            <!-- <div class="block-heading">
-                <h2 class="text-info">Dogs Available for Adoption</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
-            </div> -->
             <div class="content">
                 <div class="row">
                     <div class="col-md-3">
@@ -189,18 +185,32 @@
     <script>
         var allBreeds = {{ breeds|tojson }}
         function updateBreeds() {
-            // var type = document.getElementById("type").value;
+            // type gets elementbyid for species instead of type to have it
+            // work with filter js code
             var type = document.getElementById("species").value;
             var breed = document.getElementById("breed");
             breed.options.length = 1;
-            for (var i = 0; i<allBreeds.length; i++){
-                if (allBreeds[i].type == type){
-                    var option = document.createElement("option");
-                    option.value = allBreeds[i].name;
-                    option.name = allBreeds[i].name;
-                    option.id = allBreeds[i].name;
-                    option.innerHTML = allBreeds[i].name;
-                    breed.appendChild(option);
+            // Add if else to update to rebuild breed when Any type is selected as option
+            if (type == "Any"){
+                for (var i = 0; i<allBreeds.length; i++){
+                        var option = document.createElement("option");
+                        option.value = allBreeds[i].name;
+                        option.name = allBreeds[i].name;
+                        option.id = allBreeds[i].name;
+                        option.innerHTML = allBreeds[i].name;
+                        breed.appendChild(option);
+                }
+            }
+            else {
+                for (var i = 0; i<allBreeds.length; i++){
+                    if (allBreeds[i].type == type){
+                        var option = document.createElement("option");
+                        option.value = allBreeds[i].name;
+                        option.name = allBreeds[i].name;
+                        option.id = allBreeds[i].name;
+                        option.innerHTML = allBreeds[i].name;
+                        breed.appendChild(option);
+                    }
                 }
             }
         }
