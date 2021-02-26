@@ -125,7 +125,7 @@
                     url: "/adopt_profiles",
                     data: the_message}).done(function (data) {
                         window.location = '/adopt_profiles'
-                        console.log(data)  // display the returned data in the console.
+                        // console.log(data)  // display the returned data in the console.
                         $('#species').val(sessionStorage.getItem('species'))
                         $('#breed').val(sessionStorage.getItem('breed'))
                 })
