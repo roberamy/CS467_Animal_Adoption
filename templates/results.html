@@ -11,6 +11,21 @@
     {% endblock %}
     {% block html_head %}
         <!-- Add CSS custom to this tempate here... -->
+        <style>
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        </style>
     {% endblock %}
     <!-- Add additional custom headers here... -->
     <header class="text-center" style="padding-top:120px;font-size: 12px;height:175px" overflow="auto">
@@ -21,12 +36,17 @@
 {% endblock %}
 
 {% block content %}
-<div style="padding-left:15px; padding right:15px;">
-    <p>User Info</p>
-    <p>Your Unique ID: {{sub}}</p>
-    <p>Your Email: {{email}}</p>
-    <p>Your JWT Token: {{jwt}}</p>
-    <p>Admin: {{isAdmin}}</p>
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
+    <main role="main" class="inner cover">
+        <h2 class="cover-heading">User:</h2>
+        <p class="lead">{{ first }} {{ last }}</p>
+        <h2 class="cover-heading">User ID:</h2>
+        <p style="word-wrap: break-word;">{{ id }}</p>
+        <h2 class="cover-heading">JWT:</h2>
+        <p style="word-wrap: break-word;">{{ myjwt }}</p>
+    </main>
+    <footer class="mastfoot mt-auto"></footer>
 </div>
 {% endblock %}
 
