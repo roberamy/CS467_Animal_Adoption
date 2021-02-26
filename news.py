@@ -15,26 +15,26 @@
 ###############################################################################
 
 # Library modules
-from flask import Blueprint, request, Response, redirect, render_template
-from flask import session, send_from_directory
+from flask import Blueprint, request, redirect, render_template
+from flask import session
 from flask_paginate import Pagination, get_page_args
 from google.cloud import datastore
-from requests_oauthlib import OAuth2Session
+# from requests_oauthlib import OAuth2Session
 import json
-import constants
-from google.oauth2 import id_token
-from google.auth import crypt
-from google.auth import jwt
-from google.auth.transport import requests
+# import constants
+# from google.oauth2 import id_token
+# from google.auth import crypt
+# from google.auth import jwt
+# from google.auth.transport import requests
 from datetime import datetime
-from werkzeug.utils import secure_filename
-import os
+# from werkzeug.utils import secure_filename
+# import os
 from os.path import join, dirname, realpath
-import random
-import string
-from google.cloud import storage
+# import random
+# import string
+# from google.cloud import storage
 # User modules
-from repository import *
+from repository import NewsRepository
 from forms.news_form import NewsForm
 from OAuth import printSession
 import news
@@ -56,14 +56,15 @@ def get_news_page(data, offset=0, per_page=10):
 
 # General user view of news posts
 @bp.route('/news', methods=["GET"])
-def news():
+def get_news():
     printSession('***** NEWS *****')
     if 'sub' not in session:
-        return "sub not in session."
+        # return "sub not in session."
+        return redirect('/')
     else:
         data = NewsRepository.all()
         total = len(data)
-        print('LENGHT: ' + str(total))
+        # print('LENGHT: ' + str(total))
         for d in data:
             d['created'] = datetime.strftime(d['created'], "%B %d, %Y")
         # pagination code
@@ -87,8 +88,10 @@ def add_news():
     printSession('***** ADD NEWS *****')
     if 'isAdmin' not in session:
         return "isAdmin not in session."
+        #return redirect('/')
     elif session['isAdmin'] is False:
-        return "Not an admin account."
+        # return "Not an admin account."
+        return redirect('/')
     else:
         form = NewsForm()
         return render_template('news_add_edit.html', form=form)
@@ -100,15 +103,17 @@ def add_news():
 @bp.route('/update_news/<key>', methods=["GET"])
 def update_news(key):
     printSession('***** UPDATE NEWS *****')
-    news = NewsRepository.get(key)
+    petNews = NewsRepository.get(key)
     print(news)
     # print(pet['type'])
     if 'isAdmin' not in session:
-        return "isAdmin not in session."
+        # return "isAdmin not in session."
+        return redirect('/')
     elif session['isAdmin'] is False:
-        return "Not an admin account."
+        # return "Not an admin account."
+        return redirect('/')
     else:
-        return render_template('news_add_edit.html', pet=news)
+        return render_template('news_add_edit.html', pet=petNews)
 
 ###############################################################################
 
@@ -147,8 +152,10 @@ def news_admin():
     printSession('***** NEWS ADMIN *****')
     if 'isAdmin' not in session:
         return "isAdmin not in session."
+        #return redirect('/')
     elif session['isAdmin'] is False:
         return "Not an admin account."
+        #return redirect('/')
     else:
         # Return all 'news' entities to populate 'admin_news.html'
         # Instantiate singleton NewsRepository class with member functions
@@ -173,11 +180,3 @@ def delete_post():
     return (json.dumps(responseBody), 200)
 
 ###############################################################################
-
-@bp.route("/pet_page/<key>", methods=["GET"])
-def pet_page(key):
-    data = PetDsRepository.get(key)
-    if 'sub' not in session:
-        return render_template('pet_page.html', pet=data)
-    else:
-        return render_template('pet_page.html', pet=data)

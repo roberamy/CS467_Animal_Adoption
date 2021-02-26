@@ -46,7 +46,7 @@ client = datastore.Client()
 
 # Used for /profiles route
 species = "Any"
-breed = "Any" 
+breed = "Any"
 pdata = PetDsRepository.all()
 
 ###############################################################################
@@ -57,8 +57,10 @@ def adminPage():
     printSession('***** PROFILE ADMIN *****')
     if 'isAdmin' not in session:
         return "isAdmin not in session."
+        #return redirect('/')
     elif session['isAdmin'] is False:
         return "Not an admin account."
+        #return redirect('/')
     else:
         # Return all pet entities to populate 'admin_profiles.html'
         # Instantiate singleton PetDsRepository class with member functions
@@ -79,8 +81,10 @@ def add_profile():
     printSession('***** ADD PROFILE *****')
     if 'isAdmin' not in session:
         return "isAdmin not in session."
+        #return redirect('/')
     elif session['isAdmin'] is False:
         return "Not an admin account."
+        #return redirect('/')
     else:
         # Get all breeds from database & sort alphabetically
         query = client.query(kind=constants.breeds)
@@ -101,22 +105,26 @@ def update_profile(key):
     # print(pet)
     # print(pet['type'])
     if 'isAdmin' not in session:
-        return "isAdmin not in session."
+        # return "isAdmin not in session."
+        return redirect('/')
     elif session['isAdmin'] is False:
-        return "Not an admin account."
+        # return "Not an admin account."
+        return redirect('/')
     else:
         # Get all breeds from database & sort alphabetically
         query = client.query(kind=constants.breeds)
         query.order = ["name"]
         breeds = list(query.fetch())
         return render_template('add_edit_profile.html', pet=pet, breeds=breeds)
-    
+
 ###############################################################################
+
 
 @bp.route('/store_profile', methods=["POST"])
 def store_profile():
     if 'sub' not in session:
         return ("sub not in session.", 403)
+        #return redirect('/')
     else:
         # Instantiate AdminProfileForm class used for input validation
         form = AdminProfileForm(request.form)
@@ -129,18 +137,16 @@ def store_profile():
                 PetDsRepository.update(
                     form=request.form, key=request.form['pet_key'])
             responseBody = {"success": True, "message": "Data Successfully saved"}
-            return (json.dumps(responseBody), 200)
         else:
-            errors = []
+            # errors = []
             for fieldName, errorMessages in form.errors.items():
-                field = []
+                # field = []
                 print(fieldName)
                 for err in errorMessages:
                     print(err)
             responseBody = {"success": False,
-                        "message": fieldName.title() + ': ' + err}
-            return (json.dumps(responseBody), 400)
-        
+                            "message": fieldName.title() + ': ' + err}
+        return (json.dumps(responseBody), 200)
 
 ###############################################################################
 
@@ -166,7 +172,8 @@ def add_image():
         responseBody = {"success": False, "message": "No File Selected"}
     if file:
         # Construct secure filename with werkzeug module
-        name = file.filename.split('.')[0] + get_random_string(8)  # Secure file names
+        name = file.filename.split('.')[0] + get_random_string(8)
+        # Secure file names
         filename = secure_filename(name + '.' + file.filename.split('.')[1])
         # file.save(os.path.join(UPLOADS_PATH, filename)) # Didn't work!!
         blob = bucket.blob('uploads/' + filename)

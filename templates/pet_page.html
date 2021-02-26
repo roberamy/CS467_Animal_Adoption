@@ -4,6 +4,11 @@
     {% block title %} Rescue Paws Pet Profile {% endblock %}
     {% block html_head %}
         <!-- Add CSS custom to this tempate here... -->
+        <style>
+            .showNewline {
+              white-space: pre-wrap;
+            }
+        </style>
         <!-- J add -->
         <link rel="stylesheet" href="../static/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
@@ -49,7 +54,9 @@
                                     </div>
                                 </div> -->
                                 <div>
-                                    <figure class="figure"><img class="img-fluid figure-img" src="{{ pet_data.profile_image_name }}"></figure>
+                                    <figure class="figure"><img class="img-fluid figure-img" 
+                                        src="{% if pet_data.profile_image_name %} https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/{{pet_data.profile_image_name}} {% endif %}">
+                                    </figure>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -57,13 +64,14 @@
                                     <h3>{{ pet_data.name }}</h3>                                 
                                         <p>{{ pet_data.breed }} <i class="fas fa-circle fa-xs"></i> {{ pet_data.location }}
                                         <br>{{ pet_data.age }} <i class="fas fa-circle fa-xs"></i> {{ pet_data.gender }}</p>
-                                    <!-- Redirect button to actual page or something -->
+                                    <!-- Redirect button to actual page or something
                                     <button class="btn btn-primary" type="button"><i class="icon ion-ios-paw"></i>More Info</button>
+                                    -->
                                     <div class="summary">
-                                        <h4>ABOUT</h4>
+                                        <!--<h4>ABOUT</h4>-->
                                         <h5>QUALITIES</h5>
-                                        <p>{{ pet_data.properties }}</p>
-                                        <h5>HEALTH</h5>
+                                        <p class="showNewline">{{ pet_data.properties }}</p>
+                                        <h5>STATUS</h5>
                                         <p>{{ pet_data.status }}</p>
                                     </div>
                                 </div>
@@ -75,7 +83,7 @@
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane active fade show description" role="tabpanel" id="description">
                                     <h3>Meet {{ pet_data.name }}</h3>
-                                    <p>{{ pet_data.description }}</p>
+                                    <p class="showNewline">{{ pet_data.description }}</p>
                                 </div>
                             </div>
                         </div>
