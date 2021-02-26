@@ -68,12 +68,30 @@
 
                                 <div class="filter-item">
                                     <h3>Breed</h3>
-                                    <select class="form-control" id='breed' aria-label="Default select example" >
+
+                                    <select class="form-control" id='breed' >
                                         <option value="Any">Any</option>
                                             {% for breed in breeds%}
                                                 <option value='{{breed.name}}'>{{breed.name}}</option>
                                             {% endfor %}
-                                    </select><br><br>
+                                    </select>
+
+                                    <!-- <select required class="form-control" name="breed" id="breed">
+                                        <option value="Any">Any</option>
+                                        {% if pet and breeds %}
+                                            {% for breed in breeds%}
+                                                {% if breed.type == pet.type %}
+                                                    <option value='{{breed.name}}' {% if pet.breed==breed.name %} selected="selected" {% endif %}>{{breed.name}}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for breed in breeds%}
+                                                <option value='{{breed.name}}'>{{breed.name}}</option>
+                                            {% endfor %}
+                                        {% endif %}                                            
+                                    </select> -->
+                                    
+                                    <br><br>
                                     <button id="filter_button" class = 'btn btn-primary'>Search</button>
                                 </div>
 
@@ -139,6 +157,7 @@
     <!-- Add Javascript custom to this tempate here... -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <!-- for filter -->
     <script>
         $(document).ready(function() {
             $("#filter_button").click(function () {
@@ -165,26 +184,27 @@
         });  
     </script>
 
-<script src="../static/js/Application-Form.js?v=1"></script>
-<script>
-    var allBreeds = {{ breeds|tojson }}
-    function updateBreeds() {
-        // var type = document.getElementById("type").value;
-        var type = document.getElementById("species").value;
-        var breed = document.getElementById("breed");
-        breed.options.length = 1;
-        for (var i = 0; i<allBreeds.length; i++){
-            if (allBreeds[i].type == type){
-                var option = document.createElement("option");
-                option.value = allBreeds[i].name;
-                option.name = allBreeds[i].name;
-                option.id = allBreeds[i].name;
-                option.innerHTML = allBreeds[i].name;
-                breed.appendChild(option);
+    <!-- script to change breed based on type -->
+    <script src="../static/js/Application-Form.js?v=1"></script>
+    <script>
+        var allBreeds = {{ breeds|tojson }}
+        function updateBreeds() {
+            // var type = document.getElementById("type").value;
+            var type = document.getElementById("species").value;
+            var breed = document.getElementById("breed");
+            breed.options.length = 1;
+            for (var i = 0; i<allBreeds.length; i++){
+                if (allBreeds[i].type == type){
+                    var option = document.createElement("option");
+                    option.value = allBreeds[i].name;
+                    option.name = allBreeds[i].name;
+                    option.id = allBreeds[i].name;
+                    option.innerHTML = allBreeds[i].name;
+                    breed.appendChild(option);
+                }
             }
         }
-    }
-</script>
+    </script>
 {% endblock %}
 
 
