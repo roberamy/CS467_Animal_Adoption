@@ -70,6 +70,19 @@ def view_pet_page(pet_id):
 def get_pet_page(data, offset=0, per_page=10):
     return data[offset: offset + per_page]
 
+# Discovered datastore doesn't allow combining filters on one property
+# and order on another property for query. So filtering out adopted in
+# pets for adopt cards after query of pet entities
+def filter_out_adopt(pet_data_datastore):
+    adopted = "Adopted"
+    pet_data_filtered=[]
+
+    for pet in pet_data_datastore:
+        if pet['availability'] != adopted:
+            pet_data_filtered.append(pet)
+
+    return pet_data_filtered
+
 @bp.route('/adopt_profiles', methods=["GET", "POST"])
 def view_profile():
     global species, breed, pdata
@@ -90,24 +103,9 @@ def view_profile():
             else:
                 pdata = PetDsRepository.filter(species,breed)
 
-        # start of filtering out of adopted in pets for adopt cards
-        # print(pdata)
         print("****************"*10)
         print(species)
         print(breed)
-
-        # Discovered datastore doesn't allow combiningsg filters on 
-        # one property and order on another property for query so 
-        # filter post query of pet entities
-        def filter_out_adopt(pet_data_datastore):
-            adopted = "Adopted"
-            pet_data_filtered=[]
-
-            for pet in pet_data_datastore:
-                if pet['availability'] != adopted:
-                    pet_data_filtered.append(pet)
-
-            return pet_data_filtered
 
         # new filtered pet data to not listed adopted in card profiles
         pdata_filtered = filter_out_adopt(pdata)
