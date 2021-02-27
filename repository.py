@@ -45,32 +45,6 @@ class PetDsRepository(Singleton):
         query.order = ["-created_at"]
         return list(query.fetch())
 
-    # # Return available adoptable pets in datastore
-    # # Discovered datastore doesn't allow combiningsg filters on one property
-    # # and order on another property
-    # def available():
-    #     db = datastore.Client()
-    #     query = db.query(kind='pets')
-    #     # sort in descending order (newest to oldest)
-    #     # query.order = ["-created_at"]
-    #     # print(list(query.fetch()))
-    #     # query.order = ["-created_at"]
-    #     query.add_filter("availability", ">", "Adopted")
-    #     # query.add_filter("availability", "=", "Pending")
-    #     # query.add_filter("availability", "=", "Not Available")
-    #     # query.add_filter("picked_up", "=", True)
-    #     # print(list(query.fetch()))
-    #     # query.order = ["-created_at"]
-    #     return list(query.fetch())
-        
-    # def filter(species,breed):
-    #     db = datastore.Client()
-    #     query = db.query(kind='pets')
-    #     query.add_filter("type", "=", species)
-    #     query.add_filter("breed", "=", breed)
-    #     pets = list(query.fetch())
-    #     return pets
-
     def filter(species, breed):
         db = datastore.Client()
         query = db.query(kind='pets')
