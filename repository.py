@@ -50,13 +50,13 @@ class PetDsRepository(Singleton):
         query = db.query(kind='pets')
         if species != "Any" and breed == "Any":
             query.add_filter("type", "=", species)
-            print("I'm in repository species != any if statement")
+            # print("I'm in repository species != any if statement")
         elif species == "Any" and breed != "Any":
             query.add_filter("breed", "=", breed)
         else:
             query.add_filter("type", "=", species)
             query.add_filter("breed", "=", breed)
-            print("I'm in repository species != any else statement")
+            # print("I'm in repository species != any else statement")
 
         pets = list(query.fetch())
         # print("Printing pets: ")
