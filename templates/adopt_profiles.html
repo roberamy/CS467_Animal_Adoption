@@ -165,10 +165,12 @@
             // load values stored in session
             window.onload = function() {
                 $('#species').val(sessionStorage.getItem('species'))
-                $('#breed').val(sessionStorage.getItem('breed'))
-
                 // call this function to update breeds on page reload
                 updateBreeds()
+
+                // breed listed after breed has been updated on page so
+                // it is not listed as "any"
+                $('#breed').val(sessionStorage.getItem('breed'))
             }
         });  
     </script>
@@ -179,12 +181,11 @@
     <script>
         var allBreeds = {{ breeds|tojson }}
         function updateBreeds() {
-            // type gets elementbyid for species instead of type to have it
-            // work with filter js code
+            // type gets elementbyid for species to have it work with filter js
             var type = document.getElementById("species").value;
             var breed = document.getElementById("breed");
             breed.options.length = 1;
-            
+
             // Add if else to update to rebuild breed when Any type is selected as option
             if (type == "Any"){
                 for (var i = 0; i<allBreeds.length; i++){
