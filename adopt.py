@@ -103,9 +103,9 @@ def view_profile():
             else:
                 pdata = PetDsRepository.filter(species,breed)
 
-        print("****************"*10)
-        print(species)
-        print(breed)
+        # print("****************"*10)
+        # print(species)
+        # print(breed)
 
         # new filtered pet data to not listed adopted in card profiles
         pdata_filtered = filter_out_adopt(pdata)
