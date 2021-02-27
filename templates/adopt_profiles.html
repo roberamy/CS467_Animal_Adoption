@@ -41,6 +41,7 @@
 
                                 <div class="filter-item">
                                     <h3>Type</h3>
+                                    <!-- <select required class="form-control" name="type" id="species" onchange="updateBreeds()" onreset="updateBreeds()"> -->
                                     <select required class="form-control" name="type" id="species" onchange="updateBreeds()">
                                         <option value="Any">Any</option>
                                         <!-- <option value="Cat" {% if pet and pet.type=='Cat' %} selected="selected" {% endif %}>Cat</option>
@@ -67,7 +68,7 @@
 
                             </div>
                             <br>
-                            
+
                         </div>
                     </div>
 
@@ -118,6 +119,31 @@
 
     <!-- for filter -->
     <script>
+        // $(document).ready(function() {
+        //     $("#filter_button").click(function () {
+        //         sessionStorage.setItem('species', $('#species').val()) 
+        //         sessionStorage.setItem('breed', $('#breed').val()) 
+        //         species_val = $('#species').val()
+        //         breed_val = $('#breed').val()
+        //         the_message =JSON.stringify({breed: breed_val, species: species_val})
+        //         $.ajax({
+        //             type: "POST",
+        //             contentType: "application/json",
+        //             url: "/adopt_profiles",
+        //             data: the_message}).done(function (data) {
+        //                 window.location = '/adopt_profiles'
+        //                 // console.log(data)  // display the returned data in the console.
+        //                 $('#species').val(sessionStorage.getItem('species'))
+        //                 $('#breed').val(sessionStorage.getItem('breed'))
+        //         })
+        //     });
+        //     window.onload = function() {
+        //         $('#species').val(sessionStorage.getItem('species'))
+        //         $('#breed').val(sessionStorage.getItem('breed'))
+        //     }
+        // });  
+
+        // testing to rebuild list when page loaded
         $(document).ready(function() {
             $("#filter_button").click(function () {
                 sessionStorage.setItem('species', $('#species').val()) 
@@ -136,15 +162,20 @@
                         $('#breed').val(sessionStorage.getItem('breed'))
                 })
             });
+            // load values stored in session
             window.onload = function() {
                 $('#species').val(sessionStorage.getItem('species'))
                 $('#breed').val(sessionStorage.getItem('breed'))
+
+                // call this function to update breeds on page reload
+                updateBreeds()
             }
         });  
     </script>
 
-    <!-- script to change breed based on type -->
-    <script src="../static/js/Application-Form.js?v=1"></script>
+    <!-- script to change breed based on type when a change event occurs --> 
+    <!-- Is the script application-form.js necessary for updateBreeds -->
+    <!-- <script src="../static/js/Application-Form.js?v=1"></script> -->
     <script>
         var allBreeds = {{ breeds|tojson }}
         function updateBreeds() {
@@ -153,6 +184,7 @@
             var type = document.getElementById("species").value;
             var breed = document.getElementById("breed");
             breed.options.length = 1;
+            
             // Add if else to update to rebuild breed when Any type is selected as option
             if (type == "Any"){
                 for (var i = 0; i<allBreeds.length; i++){
