@@ -64,7 +64,8 @@
             
             <div class="row justify-content-center">
                 {% for post in status %}
-                <div class="col-md-5 feature-box"><i class="icon-star icon"></i>
+                <div class="col-md-5 feature-box"><figure class="figure"><img class="img-fluid d-block mx-auto" align="left" style="width: 50%; padding-right:10px;" 
+                    src= "{{ public_url ~ post.profile_image_name }}" >
                     <h4 ><a href="pet_page/{{ post.key.id }}">{{post.name}}</a></h4>
                     <p>{{post.status}}</p>
                 </div>

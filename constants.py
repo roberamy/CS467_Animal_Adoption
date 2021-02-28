@@ -2,6 +2,7 @@ users = "users"
 pets = "pets"
 breeds = "breeds"
 
+BUCKET = "https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/"
 CLIENT_ID = r'939115278036-he2m51te7ohrp1m9r457nos1dbnh5u2o.apps.googleusercontent.com'
 CLIENT_SECRET = r'LQQ_RyrsV-eA1uiuux0RrI7J'
 SCOPES = ['openid', 'https://www.googleapis.com/auth/userinfo.email',
