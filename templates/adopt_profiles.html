@@ -28,72 +28,47 @@
     <!-- J add -->
     <section class="clean-block clean-catalog dark">
         <div class="container">
-            <!-- <div class="block-heading">
-                <h2 class="text-info">Dogs Available for Adoption</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p>
-            </div> -->
             <div class="content">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="d-none d-md-block">
                             <div class="filters">
 
-                                <!-- Keep for reference to add additional search to route 02/23/21 -->
-                                <!-- <div class="filter-item">
-                                    <h3>Breed</h3>
-                                    <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
-                                        <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Affenpinscher<br></a><a class="dropdown-item" href="#">Alaskan Malamute</a><a class="dropdown-item" href="#">American Bulldog</a></div>
-                                    </div>
-                                </div>
-                                <div class="filter-item">
-                                    <h3>Good With</h3>
-                                    <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
-                                        <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Kids<br></a><a class="dropdown-item" href="#">Other Dogs</a><a class="dropdown-item" href="#">Cats</a></div>
-                                    </div>
-                                </div>
-                                <div class="filter-item">
-                                    <h3><strong>Date Available for Adoption</strong></h3>
-                                    <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
-                                        <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Affenpinscher<br></a><a class="dropdown-item" href="#">Alaskan Malamute</a><a class="dropdown-item" href="#">American Bulldog</a></div>
-                                    </div>
-                                </div> -->
+                                <!-- Filter title: Qualities, Availability, Location, Gender, Age -->
+                                <!-- Entity names: properties, availability, location, gender, age -->
+                                <h2>Search</h2>
+                                <br>
 
-                                <H2>New</H2>
                                 <div class="filter-item">
-                                    <H1>Search</H1><br>
                                     <h3>Type</h3>
-                                    <select class="form-select btn btn-primary dropdown-toggle" id='species' aria-label="Default select example" >
+                                    <!-- <select required class="form-control" name="type" id="species" onchange="updateBreeds()" onreset="updateBreeds()"> -->
+                                    <select required class="form-control" name="type" id="species" onchange="updateBreeds()">
                                         <option value="Any">Any</option>
-                                        <option value="Dog">Dog</option>
+                                        <!-- <option value="Cat" {% if pet and pet.type=='Cat' %} selected="selected" {% endif %}>Cat</option>
+                                        <option value="Dog" {% if pet and pet.type=='Dog' %} selected="selected" {% endif %}>Dog</option>
+                                        <option value="Other" {% if pet and pet.type=='Other' %} selected="selected" {% endif %}>Other</option> -->
                                         <option value="Cat">Cat</option>
+                                        <option value="Dog">Dog</option>
                                         <option value="Other">Other</option>
-                                      </select>
-                                    </div>
+                                    </select>
+                                </div>
 
                                 <div class="filter-item">
                                     <h3>Breed</h3>
-                                    <select class="form-select btn btn-primary dropdown-toggle" id='breed' aria-label="Default select example" >
+                                    <select class="form-control" id='breed' >
                                         <option value="Any">Any</option>
-                                        <option value="Golden Retriever">Golden Retriever</option>
-                                        <option value="German Shepherd">German Shepherd</option>
-                                        <option value="American Shorthair">American Shorthair</option>
-                                    </select><br><br>
-                                    <button id="filter_button" class = 'btn btn-primary'>Search</button>
+                                            {% for breed in breeds%}
+                                                <option value='{{breed.name}}'>{{breed.name}}</option>
+                                            {% endfor %}
+                                    </select>
                                 </div>
 
+                                <br>
+                                <button id="filter_button" class = 'btn btn-primary'>Search</button>
+
                             </div>
-                        </div>
-                        <div class="d-md-none"><a class="btn btn-link d-md-none filter-collapse" data-toggle="collapse" aria-expanded="false" aria-controls="filters" href="#filters" role="button">Filters<i class="icon-arrow-down filter-caret"></i></a>
-                            <div class="collapse" id="filters">
-                                <div class="filters">
-                                    <div class="filter-item">
-                                        <h3>Breed</h3>
-                                        <div class="dropdown"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Any</button>
-                                            <div class="dropdown-menu"><a class="dropdown-item" href="#" target="_blank">Affenpinscher<br></a><a class="dropdown-item" href="#">Alaskan Malamute</a><a class="dropdown-item" href="#">American Bulldog</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <br>
+
                         </div>
                     </div>
 
@@ -107,10 +82,9 @@
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
                                             <!-- How to view image stored in Google Cloud Storage bucket https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME -->
-                                            <div class="image" >
+                                            <div class="image">
                                                 <a href="pet_page/{{ profile.key.id }}"><img class="img-fluid d-block mx-auto" style="width: 100%;" 
-                                                    src="{% if profile.profile_image_name %} https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/{{profile.profile_image_name}} {% endif %}">
-                                                </a>
+                                                    src= "{{ public_url ~ profile.profile_image_name }}" ></a>
                                             </div>
                                             <div class="product-name"><a href="pet_page/{{ profile.key.id }}">{{profile.name}}</a></div>
                                             <div class="about">
@@ -143,7 +117,33 @@
     <!-- Add Javascript custom to this tempate here... -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <!-- for filter -->
     <script>
+        // $(document).ready(function() {
+        //     $("#filter_button").click(function () {
+        //         sessionStorage.setItem('species', $('#species').val()) 
+        //         sessionStorage.setItem('breed', $('#breed').val()) 
+        //         species_val = $('#species').val()
+        //         breed_val = $('#breed').val()
+        //         the_message =JSON.stringify({breed: breed_val, species: species_val})
+        //         $.ajax({
+        //             type: "POST",
+        //             contentType: "application/json",
+        //             url: "/adopt_profiles",
+        //             data: the_message}).done(function (data) {
+        //                 window.location = '/adopt_profiles'
+        //                 // console.log(data)  // display the returned data in the console.
+        //                 $('#species').val(sessionStorage.getItem('species'))
+        //                 $('#breed').val(sessionStorage.getItem('breed'))
+        //         })
+        //     });
+        //     window.onload = function() {
+        //         $('#species').val(sessionStorage.getItem('species'))
+        //         $('#breed').val(sessionStorage.getItem('breed'))
+        //     }
+        // });  
+
+        // testing to rebuild list when page loaded
         $(document).ready(function() {
             $("#filter_button").click(function () {
                 sessionStorage.setItem('species', $('#species').val()) 
@@ -157,16 +157,59 @@
                     url: "/adopt_profiles",
                     data: the_message}).done(function (data) {
                         window.location = '/adopt_profiles'
-                        console.log(data)  // display the returned data in the console.
+                        // console.log(data)  // display the returned data in the console.
                         $('#species').val(sessionStorage.getItem('species'))
                         $('#breed').val(sessionStorage.getItem('breed'))
                 })
             });
+            // load values stored in session
             window.onload = function() {
                 $('#species').val(sessionStorage.getItem('species'))
+                // call this function to update breeds on page reload
+                updateBreeds()
+
+                // breed listed after breed has been updated on page so
+                // it is not listed as "any"
                 $('#breed').val(sessionStorage.getItem('breed'))
             }
         });  
+    </script>
+
+    <!-- script to change breed based on type when a change event occurs --> 
+    <!-- Is the script application-form.js necessary for updateBreeds -->
+    <!-- <script src="../static/js/Application-Form.js?v=1"></script> -->
+    <script>
+        var allBreeds = {{ breeds|tojson }}
+        function updateBreeds() {
+            // type gets elementbyid for species to have it work with filter js
+            var type = document.getElementById("species").value;
+            var breed = document.getElementById("breed");
+            breed.options.length = 1;
+
+            // Add if else to update to rebuild breed when Any type is selected as option
+            if (type == "Any"){
+                for (var i = 0; i<allBreeds.length; i++){
+                        var option = document.createElement("option");
+                        option.value = allBreeds[i].name;
+                        option.name = allBreeds[i].name;
+                        option.id = allBreeds[i].name;
+                        option.innerHTML = allBreeds[i].name;
+                        breed.appendChild(option);
+                }
+            }
+            else {
+                for (var i = 0; i<allBreeds.length; i++){
+                    if (allBreeds[i].type == type){
+                        var option = document.createElement("option");
+                        option.value = allBreeds[i].name;
+                        option.name = allBreeds[i].name;
+                        option.id = allBreeds[i].name;
+                        option.innerHTML = allBreeds[i].name;
+                        breed.appendChild(option);
+                    }
+                }
+            }
+        }
     </script>
 {% endblock %}
 

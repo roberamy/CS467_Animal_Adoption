@@ -48,9 +48,19 @@ class PetDsRepository(Singleton):
     def filter(species, breed):
         db = datastore.Client()
         query = db.query(kind='pets')
-        query.add_filter("type", "=", species)
-        query.add_filter("breed", "=", breed)
+        if species != "Any" and breed == "Any":
+            query.add_filter("type", "=", species)
+            # print("I'm in repository species != any if statement")
+        elif species == "Any" and breed != "Any":
+            query.add_filter("breed", "=", breed)
+        else:
+            query.add_filter("type", "=", species)
+            query.add_filter("breed", "=", breed)
+            # print("I'm in repository species != any else statement")
+
         pets = list(query.fetch())
+        # print("Printing pets: ")
+        # print(pets)
         return pets
 
     # Create new pet entity in datastore

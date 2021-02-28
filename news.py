@@ -178,5 +178,3 @@ def delete_post():
     NewsRepository.delete_news(key=key)
     responseBody = {"success": True, "message": "Deleted"}
     return (json.dumps(responseBody), 200)
-
-###############################################################################
