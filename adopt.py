@@ -55,6 +55,8 @@ def view_pet_page(pet_id):
     if request.method == 'GET':
         # get specific pet data from pet key
         pet_data = PetDsRepository.get(pet_id)
+        # For improved display, add space after comma
+        pet_data['properties'] = ", ".join(pet_data['properties'].split(','))
         # API Link accessing public data format https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME
         return render_template('pet_page.html',
                                pet_data=pet_data,

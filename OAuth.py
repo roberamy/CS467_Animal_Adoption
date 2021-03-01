@@ -105,7 +105,7 @@ def callback():
             length = len(results)
             now = datetime.now()
             dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
-            # print(length)
+            # First user login, add user
             if length > 0:
                 exists = False
                 for e in results:
@@ -127,7 +127,7 @@ def callback():
                     print("NEW USER ID:")
                     print(new_user.key.id)
                     flask.session['isAdmin'] = False
-            # First user login, add user entity
+            # User's first login, add user entity
             else:
                 new_user = datastore.entity.Entity(
                     key=client.key(constants.users))
