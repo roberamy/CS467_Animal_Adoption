@@ -234,7 +234,7 @@ https://www.w3schools.com/jsref/event_onchange.asp
                                 </div>
                                 <!-- Uploaded image area-->
                                 <div class="image-area mt-4 text-dark">
-                                    <img id="imageResult" src="{% if pet and pet.profile_image_name %} https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/{{pet.profile_image_name}} {% endif %}" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"  width=200>
+                                    <img id="imageResult" src="{% if pet and pet.profile_image_name %} {{public_url}}{{pet.profile_image_name}} {% endif %}" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"  width=200>
                                 </div>
                                 <div class="col d-none">
                                     <input id="urllink" name="url" type="url" class="form-control" readonly/>

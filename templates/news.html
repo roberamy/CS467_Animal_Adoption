@@ -32,25 +32,19 @@
             </div>
         </header>
     </div>
-{% endblock %}      <!-- Endblock for header -->
+{% endblock %}      
+<!-- Endblock for header -->
 
 {% block content %}
     <!-- Add page content here... -->
-    <!-- <div>
-        <p>Content TBD...</p>
-    </div> -->
     <section class="clean-block clean-blog-list dark">
         <div class="container">
-            <!-- <div class="block-heading">
-                <h2 class="text-info">What We've Been Up To</h2>
-                <p>Latest news about us and fur kids</p>
-            </div> -->
             <div class="block-content">
                 {% for post in news %}
                 <div class="clean-blog-post">
                     <div class="row">
                         <div class="col-lg-5"><img class="rounded img-fluid" 
-                            src="{% if post.news_image_name %} https://storage.googleapis.com/datingappforanimaladoption.appspot.com/uploads/{{post.news_image_name}} {% endif %}">
+                            src="{% if post.news_image_name %} {{public_url}}{{post.news_image_name}} {% endif %}">
                         </div>
                         <div class="col-lg-7">
                             <h3>{{post.title}}</h3>
@@ -58,9 +52,6 @@
                                 <span class="text-muted">{{post.created}} by&nbsp; {{post.author}}</span>
                             </div>
                             <p class="showNewline">{{post.content}}</p>
-                            <!--
-                            <a class="btn btn-outline-primary btn-sm" role="button" href="/news_post">Read More</a>
-                            -->
                         </div>
                     </div>
                 </div>
@@ -69,13 +60,6 @@
                     <div>
                         {{ pagination.links }}
                     </div>
-                    <!--
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                    </ul>
-                    -->
-
                 </nav>
             </div>
         </div>

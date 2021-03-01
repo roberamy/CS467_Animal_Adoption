@@ -31,7 +31,7 @@
             <div class="text">
                 <h2>Hi. Please adopt me.</h2>
                 <a class="btn btn-outline-light btn-lg text-left" role="button"
-                    {% if session.id_token %}href="/adopt_profiles"{% else %}href="/index"{% endif %}><i class="fas fa-dog"></i>Find a pet</a>
+                    {% if session.credentials %}href="/adopt_profiles"{% else %}href="/authorization"{% endif %}><i class="fas fa-dog"></i>Find a pet</a>
             </div>
         </section>
     </div>
@@ -48,7 +48,7 @@
                         </br>
                         <p>Are you looking for a furry, fluffy or feathered companion?</p>
                         <a class="btn btn-outline-primary btn-lg" role="button"
-                            {% if session.id_token %}href="/adopt_profiles"{% else %}href="/index"{% endif %}><i class="fas fa-dog"></i>Search Now
+                            {% if session.credentials %}href="/adopt_profiles"{% else %}href="/authorization"{% endif %}><i class="fas fa-dog"></i>Search Now
                         </a>
                     </div>
                 </div>

@@ -91,6 +91,7 @@ def view_profile():
     global species, breed, pdata
     if 'sub' not in session:
         return "sub not in session."
+        # return redirect('/')
     else:
         if request.method == 'POST':
             content = request.get_json()
