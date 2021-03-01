@@ -11,26 +11,18 @@
 #
 ###############################################################################
 
-from flask import Blueprint, request, Response, redirect
+from flask import Blueprint, request, redirect
 from flask import render_template, session
 import json
 import requests
+import flask
 from requests_oauthlib import OAuth2Session
-from google.oauth2 import id_token
-from google.auth import crypt
-from google.auth import jwt
-from google.auth.transport import requests
 from google.cloud import datastore
-import constants
 from datetime import datetime
+import constants
 
 bp = Blueprint('OAuth', __name__)
 client = datastore.Client()
-
-OAUTH = OAuth2Session(
-    constants.CLIENT_ID,
-    redirect_uri=constants.REDIRECT_URI,
-    scope=constants.SCOPES)
 
 
 ###############################################################################
@@ -39,7 +31,7 @@ OAUTH = OAuth2Session(
 def printSession(header):
     print(header)
     # Check JWT in session
-    if 'id_token' in session:
+    if 'credentials' in session:
         print('JWT: jwt exists')
     else:
         print('JWT: jwt not in session')
@@ -49,8 +41,8 @@ def printSession(header):
     else:
         print('SUB: sub not in session')
     # Check usr_email in session
-    if 'usr_email' in session:
-        print('EMAIL: ' + session['usr_email'])
+    if 'user_email' in session:
+        print('EMAIL: ' + session['user_email'])
     else:
         print('EMAIL: usr_email not in session')
     # Check isAdmin in session
@@ -63,92 +55,119 @@ def printSession(header):
 ###############################################################################
 
 
-@bp.route('/index', methods=['GET'])
-def index():
-
-    # This url renders a diaglog box to authenticate using google account
-    authorization_url, state = OAUTH.authorization_url(
-        'https://accounts.google.com/o/oauth2/auth',
-        # access_type and prompt are Google specific extra
-        # parameters.
-        access_type="offline", prompt="select_account")
-
-    return redirect(authorization_url)
-
-###############################################################################
-
-
 @bp.route('/authorization', methods=['GET'])
 def callback():
-
-    # After redirect from authentication, returns the authorization token
-    token = OAUTH.fetch_token(
-        # Token endpoint
-        'https://accounts.google.com/o/oauth2/token',
-        authorization_response=request.url,
-        client_secret=constants.CLIENT_SECRET)
-
-    req = requests.Request()
-
-    # Get email of authenticated user
-    id_info = id_token.verify_oauth2_token(
-        token['id_token'], req, constants.CLIENT_ID)
-
-    # Store token, sub, and email in session
-    session['id_token'] = token['id_token']
-    session['usr_email'] = id_info['email']
-    session['sub'] = id_info['sub']
-    session.modified = True
-
-    email = session['usr_email']
-    # myjwt = session['id_token']
-    sub = session['sub']
-
-    # query all users in database
-    query = client.query(kind=constants.users)
-    users = list(query.fetch())
-
-    # Check if user has account
-    for user in users:
-        try:
-            # User already exists
-            if user['uniqueID'] == sub:
-                session['isAdmin'] = user['isAdmin']
-                session.modified = True
-                # return render_template('index.html')
-                printSession('***** RESULTS EXISTING USER *****')
-                return redirect('/')
-                # return render_template('results.html', sub=sub, email=email,
-                #                       jwt=myjwt, isAdmin=session['isAdmin'])
-        except:
-            pass
-
-    # User doesn't exist, store user and record account creation date
-    now = datetime.now()
-    dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
-    new_user = datastore.entity.Entity(key=client.key(constants.users))
-    new_user.update({"uniqueID": sub, "email": email, "isAdmin": False,
-                     "creation_date": dt_string, "last_modified": None})
-    session['isAdmin'] = False
-    session.modified = True
-    client.put(new_user)
-    printSession('***** RESULTS NEW USER *****')
-    return redirect('/')
+    # Authorization 'code' not stored, send request to get code
+    if 'code' not in flask.request.args:
+        auth_uri = ('https://accounts.google.com/o/oauth2/v2/auth?response_type=code'
+                    '&client_id={}&redirect_uri={}&scope={}&state={}').format(
+                        constants.CLIENT_ID,
+                        constants.REDIRECT_URI,
+                        constants.SCOPE,
+                        constants.SECRET_KEY)
+        return flask.redirect(auth_uri)
+    else:
+        # Get authorization code & state sent from server
+        # auth_code = flask.request.args.get('code')
+        auth_state = flask.request.args.get('state')
+        # Compare 'state' returned by server to 'state' created by app
+        # If the same, complete oauth requests & redirect to user info
+        if auth_state == constants.SECRET_KEY:
+            myOauth = OAuth2Session(
+                constants.CLIENT_ID,
+                redirect_uri=constants.REDIRECT_URI,
+                scope=constants.SCOPE)
+            token = myOauth.fetch_token('https://accounts.google.com/o/oauth2/token',
+                                        authorization_response=request.url,
+                                        client_secret=constants.CLIENT_SECRET)
+            flask.session['credentials'] = token
+            # print('TOKEN:')
+            # print(token['access_token'])
+            # print('JWT:')
+            # print(token['id_token'])
+            # Send token to get user info
+            request_uri = (
+                'https://www.googleapis.com/oauth2/v3/userinfo?access_token={}').format(token['access_token'])
+            myInfo = requests.get(request_uri)
+            flask.session['user'] = myInfo.text
+            user = json.loads(flask.session['user'])
+            # print('USER')
+            # print(user)
+            userID = user['sub']
+            flask.session['sub'] = user['sub']
+            flask.session['user_email'] = user['email']
+            # print('USER ID:')
+            # print(flask.session['sub'])
+            # print('USER EMAIL:')
+            # print(flask.session['user_email'])
+            query = client.query(kind=constants.users)
+            results = list(query.fetch())
+            length = len(results)
+            now = datetime.now()
+            dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
+            # First user login, add user
+            if length > 0:
+                exists = False
+                for e in results:
+                    if e['uniqueID'] == str(userID):
+                        exists = True
+                        if e['isAdmin'] is True:
+                            flask.session['isAdmin'] = True
+                        else:
+                            flask.session['isAdmin'] = False
+                if exists is False:
+                    new_user = datastore.entity.Entity(
+                        key=client.key(constants.users))
+                    new_user.update({"uniqueID": user['sub'],
+                                     "email": user['email'],
+                                     "isAdmin": False,
+                                     "creation_date": dt_string,
+                                     "last_modified": None})
+                    client.put(new_user)
+                    print("NEW USER ID:")
+                    print(new_user.key.id)
+                    flask.session['isAdmin'] = False
+            # User's first login, add user entity
+            else:
+                new_user = datastore.entity.Entity(
+                    key=client.key(constants.users))
+                new_user.update({"uniqueID": user['sub'],
+                                 "email": user['email'],
+                                 "isAdmin": False,
+                                 "creation_date": dt_string,
+                                 "last_modified": None})
+                client.put(new_user)
+                print("NEW USER ID:")
+                print(new_user.key.id)
+                flask.session['isAdmin'] = False
+            return redirect('/')
+        # 'state' values not the same, redirect back to home
+        else:
+            return redirect('/')
 
 ###############################################################################
 
 
 @bp.route('/results', methods=['GET'])
 def results():
-    if 'sub' not in session:
-        return "sub not in session."
+    # No user info available, render empty user info page
+    if 'credentials' not in flask.session:
+        return redirect('/')
+    # User info stored in session, render completed page
     else:
-        # return render_template('index.html')
-        printSession('***** RESULTS *****')
+        user = json.loads(flask.session['user'])
+        print('*** USER ***')
+        # print(user)
+        userjwt = flask.session['credentials']['id_token']
+        # print('*** USER JWT ***')
+        # print(userjwt)
+        userID = flask.session['sub']
+        userEmail = user['email']
+        isAdmin = flask.session['isAdmin']
         return render_template('results.html',
-                               sub=session['sub'],
-                               email=session['usr_email'],
-                               jwt=session['id_token'],
-                               isAdmin=session['isAdmin'])
+                               sub=userID,
+                               email=userEmail,
+                               jwt=userjwt,
+                               isAdmin=isAdmin)
 
 ###############################################################################

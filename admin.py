@@ -15,19 +15,14 @@
 ###############################################################################
 
 # Library modules
-from flask import Blueprint, request, Response, redirect, render_template
+from flask import Blueprint, request, redirect, render_template
 from flask import session, send_from_directory
 from google.cloud import datastore
-from requests_oauthlib import OAuth2Session
 import json
 import constants
-from google.oauth2 import id_token
-from google.auth import crypt
-from google.auth import jwt
-from google.auth.transport import requests
+import logging
 from datetime import datetime
 from werkzeug.utils import secure_filename
-import os
 from os.path import join, dirname, realpath
 import random
 import string
@@ -54,13 +49,13 @@ pdata = PetDsRepository.all()
 
 @bp.route('/admin_profiles', methods=['GET'])
 def adminPage():
-    printSession('***** PROFILE ADMIN *****')
+    logging.debug(printSession('***** PROFILE ADMIN *****'))
     if 'isAdmin' not in session:
         return "isAdmin not in session."
-        #return redirect('/')
+        # return redirect('/')
     elif session['isAdmin'] is False:
         return "Not an admin account."
-        #return redirect('/')
+        # return redirect('/')
     else:
         # Return all pet entities to populate 'admin_profiles.html'
         # Instantiate singleton PetDsRepository class with member functions
@@ -78,13 +73,13 @@ def adminPage():
 
 @bp.route('/add_profile', methods=["GET"])
 def add_profile():
-    printSession('***** ADD PROFILE *****')
+    logging.debug(printSession('***** ADD PROFILE *****'))
     if 'isAdmin' not in session:
         return "isAdmin not in session."
-        #return redirect('/')
+        # return redirect('/')
     elif session['isAdmin'] is False:
         return "Not an admin account."
-        #return redirect('/')
+        # return redirect('/')
     else:
         # Get all breeds from database & sort alphabetically
         query = client.query(kind=constants.breeds)
@@ -93,29 +88,34 @@ def add_profile():
         # print("LENGTH:" + str(length))
         form = AdminProfileForm()
         return render_template('add_edit_profile.html',
-                               breeds=breeds, form=form)
+                               breeds=breeds,
+                               form=form,
+                               public_url=constants.BUCKET)
 
 ###############################################################################
 
 
 @bp.route('/update_profile/<key>', methods=["GET"])
 def update_profile(key):
-    printSession('***** UPDATE PROFILE *****')
+    logging.debug(printSession('***** UPDATE ADMIN *****'))
     pet = PetDsRepository.get(key)
     # print(pet)
     # print(pet['type'])
     if 'isAdmin' not in session:
-        # return "isAdmin not in session."
-        return redirect('/')
+        return "isAdmin not in session."
+        # return redirect('/')
     elif session['isAdmin'] is False:
-        # return "Not an admin account."
-        return redirect('/')
+        return "Not an admin account."
+        # return redirect('/')
     else:
         # Get all breeds from database & sort alphabetically
         query = client.query(kind=constants.breeds)
         query.order = ["name"]
         breeds = list(query.fetch())
-        return render_template('add_edit_profile.html', pet=pet, breeds=breeds)
+        return render_template('add_edit_profile.html',
+                               pet=pet,
+                               breeds=breeds,
+                               public_url=constants.BUCKET)
 
 ###############################################################################
 
@@ -124,7 +124,7 @@ def update_profile(key):
 def store_profile():
     if 'sub' not in session:
         return ("sub not in session.", 403)
-        #return redirect('/')
+        # return redirect('/')
     else:
         # Instantiate AdminProfileForm class used for input validation
         form = AdminProfileForm(request.form)
@@ -136,7 +136,8 @@ def store_profile():
             else:
                 PetDsRepository.update(
                     form=request.form, key=request.form['pet_key'])
-            responseBody = {"success": True, "message": "Data Successfully saved"}
+            responseBody = {"success": True,
+                            "message": "Data Successfully saved"}
         else:
             # errors = []
             for fieldName, errorMessages in form.errors.items():

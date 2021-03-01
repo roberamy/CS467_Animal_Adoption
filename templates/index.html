@@ -31,7 +31,7 @@
             <div class="text">
                 <h2>Hi. Please adopt me.</h2>
                 <a class="btn btn-outline-light btn-lg text-left" role="button"
-                    {% if session.id_token %}href="/adopt_profiles"{% else %}href="/index"{% endif %}><i class="fas fa-dog"></i>Find a pet</a>
+                    {% if session.credentials %}href="/adopt_profiles"{% else %}href="/authorization"{% endif %}><i class="fas fa-dog"></i>Find a pet</a>
             </div>
         </section>
     </div>
@@ -48,7 +48,7 @@
                         </br>
                         <p>Are you looking for a furry, fluffy or feathered companion?</p>
                         <a class="btn btn-outline-primary btn-lg" role="button"
-                            {% if session.id_token %}href="/adopt_profiles"{% else %}href="/index"{% endif %}><i class="fas fa-dog"></i>Search Now
+                            {% if session.credentials %}href="/adopt_profiles"{% else %}href="/authorization"{% endif %}><i class="fas fa-dog"></i>Search Now
                         </a>
                     </div>
                 </div>
@@ -64,7 +64,8 @@
             
             <div class="row justify-content-center">
                 {% for post in status %}
-                <div class="col-md-5 feature-box"><i class="icon-star icon"></i>
+                <div class="col-md-5 feature-box"><figure class="figure"><img class="img-fluid d-block mx-auto" align="left" style="width: 50%; padding-right:10px;" 
+                    src= "{{ public_url ~ post.profile_image_name }}" >
                     <h4 ><a href="pet_page/{{ post.key.id }}">{{post.name}}</a></h4>
                     <p>{{post.status}}</p>
                 </div>

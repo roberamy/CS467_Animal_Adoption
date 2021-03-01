@@ -19,26 +19,15 @@ from flask import Blueprint, request, redirect, render_template
 from flask import session
 from flask_paginate import Pagination, get_page_args
 from google.cloud import datastore
-# from requests_oauthlib import OAuth2Session
 import json
-# import constants
-# from google.oauth2 import id_token
-# from google.auth import crypt
-# from google.auth import jwt
-# from google.auth.transport import requests
 from datetime import datetime
-# from werkzeug.utils import secure_filename
-# import os
 from os.path import join, dirname, realpath
-# import random
-# import string
-# from google.cloud import storage
 # User modules
 from repository import NewsRepository
 from forms.news_form import NewsForm
 from OAuth import printSession
 import news
-
+import constants
 
 UPLOADS_PATH = join(dirname(realpath(__file__)), 'uploads/')
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -77,7 +66,8 @@ def get_news():
                                news=pagination_news,
                                page=page,
                                per_page=per_page,
-                               pagination=pagination,)
+                               pagination=pagination,
+                               public_url=constants.BUCKET)
 
 ###############################################################################
 
@@ -88,13 +78,15 @@ def add_news():
     printSession('***** ADD NEWS *****')
     if 'isAdmin' not in session:
         return "isAdmin not in session."
-        #return redirect('/')
+        # return redirect('/')
     elif session['isAdmin'] is False:
         # return "Not an admin account."
         return redirect('/')
     else:
         form = NewsForm()
-        return render_template('news_add_edit.html', form=form)
+        return render_template('news_add_edit.html',
+                               form=form,
+                               public_url=constants.BUCKET)
 
 ###############################################################################
 
@@ -113,7 +105,9 @@ def update_news(key):
         # return "Not an admin account."
         return redirect('/')
     else:
-        return render_template('news_add_edit.html', pet=petNews)
+        return render_template('news_add_edit.html',
+                               pet=petNews,
+                               public_url=constants.BUCKET)
 
 ###############################################################################
 
@@ -152,10 +146,10 @@ def news_admin():
     printSession('***** NEWS ADMIN *****')
     if 'isAdmin' not in session:
         return "isAdmin not in session."
-        #return redirect('/')
+        # return redirect('/')
     elif session['isAdmin'] is False:
         return "Not an admin account."
-        #return redirect('/')
+        # return redirect('/')
     else:
         # Return all 'news' entities to populate 'admin_news.html'
         # Instantiate singleton NewsRepository class with member functions

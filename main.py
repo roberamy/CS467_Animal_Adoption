@@ -4,14 +4,20 @@
 # Email: bauergr@oregonstate.edu
 # Course: CS467_400_W2021
 #
-# Description: Launches web application by serving up landing page
+# Description:
+# Launches web application by serving up landing page
 #
-# Note: Main should be clear of excessive routes. All other routes have been
+# Note:
+# Main should be clear of excessive routes. All other routes have been
 # modularized and placed in separate python modules.
 #
+# References:
+# https://stackoverflow.com/questions/53176162/google-oauth-scope-changed-during-authentication-but-scope-is-same
+# https://stackoverflow.com/questions/22669528/securely-storing-environment-variables-in-gae-with-app-yaml?rq=1
+# https://stackoverflow.com/questions/18709213/flask-session-not-persisting
 ###############################################################################
 
-from flask import Flask, Blueprint, render_template, session, redirect
+from flask import Flask, render_template, session, redirect
 import OAuth
 import pets
 import users
@@ -19,11 +25,15 @@ import admin
 import news
 import adopt
 import applications
+import constants
 from repository import PetDsRepository
 
+
+import os
 # This disables the requirement to use HTTPS so that you can test locally.
-import os 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+# Disables scope change warning
+os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 
 app = Flask(__name__)
 
@@ -35,7 +45,8 @@ app.register_blueprint(news.bp)
 app.register_blueprint(adopt.bp)
 app.register_blueprint(applications.bp)
 
-app.secret_key = os.urandom(24)
+# app.secret_key = os.urandom(24)
+app.secret_key = constants.SECRET_KEY
 
 ###############################################################################
 
@@ -44,7 +55,9 @@ app.secret_key = os.urandom(24)
 @app.route('/')
 def index():
     status = PetDsRepository.getLatestStatus()
-    return render_template('index.html', status=status)
+    return render_template('index.html',
+                           status=status,
+                           public_url=constants.BUCKET)
 
 ###############################################################################
 
@@ -52,8 +65,7 @@ def index():
 @app.route('/logout', methods=['GET'])
 def logout():
     session.clear()
-    status = PetDsRepository.getLatestStatus()
-    return render_template('index.html', status=status)
+    return redirect('/')
 
 ###############################################################################
 
