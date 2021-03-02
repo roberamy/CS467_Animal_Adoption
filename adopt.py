@@ -52,7 +52,9 @@ client = datastore.Client()
 # temperary route to figure pet pages out
 @bp.route('/pet_page/<pet_id>', methods=["GET"])
 def view_pet_page(pet_id):
-    if request.method == 'GET':
+    if 'sub' not in session:
+        return redirect('/authorization')
+    elif request.method == 'GET':
         # get specific pet data from pet key
         pet_data = PetDsRepository.get(pet_id)
         # For improved display, add space after comma
