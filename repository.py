@@ -58,8 +58,8 @@ class PetDsRepository(Singleton):
             # print("I'm in repository species != any else statement")
 
         pets = list(query.fetch())
-        # print("Printing pets: ")
-        # print(pets)
+        print("Printing pets: ")
+        print(pets)
         return pets
 
     # Create new pet entity in datastore
