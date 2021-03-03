@@ -43,6 +43,9 @@ species = "Any"
 breed = "Any"
 pdata = PetDsRepository.all()
 
+# set disposition intial
+disposition = "Any"
+
 # Import requests
 bp = Blueprint('adopt', __name__)
 client = datastore.Client()
@@ -91,6 +94,7 @@ def filter_out_adopt(pet_data_datastore):
 @bp.route('/adopt_profiles', methods=["GET", "POST"])
 def view_profile():
     global species, breed, pdata
+    global disposition # test disposition global value for filtering
     if 'sub' not in session:
         return "sub not in session."
         # return redirect('/')
