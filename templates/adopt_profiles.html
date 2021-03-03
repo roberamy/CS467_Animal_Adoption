@@ -147,9 +147,13 @@
             $("#filter_button").click(function () {
                 sessionStorage.setItem('species', $('#species').val()) 
                 sessionStorage.setItem('breed', $('#breed').val()) 
+                sessionStorage.setItem('disposition', $('#disposition').val())
+
                 species_val = $('#species').val()
                 breed_val = $('#breed').val()
-                the_message =JSON.stringify({breed: breed_val, species: species_val})
+                disposition_val = $('#disposition').val()
+
+                the_message =JSON.stringify({breed: breed_val, species: species_val, disposition: disposition_val})
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
@@ -159,6 +163,7 @@
                         // console.log(data)  // display the returned data in the console.
                         $('#species').val(sessionStorage.getItem('species'))
                         $('#breed').val(sessionStorage.getItem('breed'))
+                        $('#disposition').val(sessionStorage.getItem('disposition'))
                 })
             });
             // load values stored in session
@@ -170,6 +175,8 @@
                 // breed listed after breed has been updated on page so
                 // it is not listed as "any"
                 $('#breed').val(sessionStorage.getItem('breed'))
+
+                $('#disposition').val(sessionStorage.getItem('disposition'))
             }
         });  
     </script>
