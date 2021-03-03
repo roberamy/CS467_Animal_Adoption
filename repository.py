@@ -50,6 +50,7 @@ class PetDsRepository(Singleton):
         query = db.query(kind='pets')
         if species != "Any" and breed == "Any":
             query.add_filter("type", "=", species)
+            query.add_filter("created_at", "=", "2021-03-02")
             # print("I'm in repository species != any if statement")
         elif species == "Any" and breed != "Any":
             query.add_filter("breed", "=", breed)
