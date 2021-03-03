@@ -59,6 +59,28 @@
                                     </select>
                                 </div>
 
+                                <!-- disposition and date available -->
+
+                                <div class="filter-item">
+                                    <h3>Disposition</h3>
+                                    <select class="form-control" id='disposition' >
+                                        <option value="Any">Any</option>
+                                            {% for breed in breeds%}
+                                                <option value='{{breed.name}}'>{{breed.name}}</option>
+                                            {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="filter-item">
+                                    <h3>Date Available</h3>
+                                    <select class="form-control" id='date_available' >
+                                        <option value="Any">Any</option>
+                                            {% for breed in breeds%}
+                                                <option value='{{breed.name}}'>{{breed.name}}</option>
+                                            {% endfor %}
+                                    </select>
+                                </div>
+
                                 <br>
                                 <button id="filter_button" class = 'btn btn-primary'>Search</button>
 
