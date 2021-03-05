@@ -90,6 +90,20 @@ def filter_out_adopt(pet_data_datastore):
 
     return pet_data_filtered
 
+def filter_disposition(pet_data_datastore, disposition):
+    pet_data_filtered = []
+    # print("I'm filter_disposition function")
+    for pet in pet_data_datastore:
+        pet_disposition_split = pet['properties'].split(",")
+        # check if list is empty
+        if not pet_disposition_split:
+            # print("The pet properties if pet_disposition_split is empty " +str(pet['properties']))
+            if pet['properties'] == disposition:
+                pet_data_filtered.append(pet)
+        if disposition in pet_disposition_split:
+            pet_data_filtered.append(pet)
+    # print("Pet_data_filtered: "+str(pet_data_filtered))
+    return pet_data_filtered
 
 @bp.route('/adopt_profiles', methods=["GET", "POST"])
 def view_profile():
@@ -104,14 +118,60 @@ def view_profile():
             species = content['species']
             breed = content['breed']
 
-            if species == 'Any' and breed == "Any":
+            disposition = content['disposition']
+
+            if species == 'Any' and breed == "Any" and disposition == "Any":
+                print("I'm in POST")
                 pdata = PetDsRepository.all()
+            elif species == 'Any' and breed == "Any" and disposition != "Any":
+                print("I'm in POST again")
+                pdata_pre = PetDsRepository.all()
+                pdata = filter_disposition(pdata_pre, disposition)
+            elif species == 'Any' and breed != "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.filter(species,breed)
+                pdata = filter_disposition(pdata_pre, disposition)
+            elif species != 'Any' and breed != "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.filter(species,breed)
+                pdata = filter_disposition(pdata_pre, disposition)
+                print("In POST of last elif statement")
+                print(species)
+                print(breed)
+                print(disposition)
 
         else:  # psuedo GET
-            if species == 'Any' and breed == "Any":
+            if species == 'Any' and breed == "Any" and disposition == "Any":
                 pdata = PetDsRepository.all()
+                print("I'm in GET")
+                print("I'm in if 1. statement")
+                print(species)
+                print(breed)
+                print(disposition)
+            elif species == 'Any' and breed == "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.all()
+                pdata = filter_disposition(pdata_pre, disposition)
+                print("These are accounts that are filtered by disposition only")
+                print("I'm in GET elif")
+                print(species)
+                print(breed)
+                print(disposition)
+            elif species == 'Any' and breed != "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.filter(species,breed)
+                pdata = filter_disposition(pdata_pre, disposition)
+                print(species)
+                print(breed)
+                print(disposition)
+            elif species != 'Any' and breed != "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.filter(species,breed)
+                pdata = filter_disposition(pdata_pre, disposition)
+                print(species)
+                print(breed)
+                print(disposition)
             else:
                 pdata = PetDsRepository.filter(species, breed)
+                print("Else statement if dispostion not Any")
+                print(species)
+                print(breed)
+                print(disposition)
 
         # print("****************"*10)
         # print(species)
