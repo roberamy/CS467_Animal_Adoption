@@ -76,15 +76,15 @@
                                     </select>
                                 </div>
 
-                                <div class="filter-item">
+                                <!-- <div class="filter-item">
                                     <h3>Date Available</h3>
                                     <select class="form-control" id='date_available' >
                                         <option value="Any">Any</option>
                                             {% for breed in breeds%}
-                                                <option value='{{breed.name}}'>{{breed.name}}</option>
+                                                <option value=''></option>
                                             {% endfor %}
                                     </select>
-                                </div>
+                                </div> -->
 
                                 <br>
                                 <button id="filter_button" class = 'btn btn-primary'>Search</button>
@@ -100,7 +100,6 @@
                         <div class="products">
                             <div class="row no-gutters">
                                 <!-- Start of card -->
-                                <!-- fix css class names from template, specifically price and product-name -->
                                 {% for profile in pets %}
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
