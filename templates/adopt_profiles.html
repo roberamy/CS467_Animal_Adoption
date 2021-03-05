@@ -41,12 +41,8 @@
 
                                 <div class="filter-item">
                                     <h3>Type</h3>
-                                    <!-- <select required class="form-control" name="type" id="species" onchange="updateBreeds()" onreset="updateBreeds()"> -->
                                     <select required class="form-control" name="type" id="species" onchange="updateBreeds()">
                                         <option value="Any">Any</option>
-                                        <!-- <option value="Cat" {% if pet and pet.type=='Cat' %} selected="selected" {% endif %}>Cat</option>
-                                        <option value="Dog" {% if pet and pet.type=='Dog' %} selected="selected" {% endif %}>Dog</option>
-                                        <option value="Other" {% if pet and pet.type=='Other' %} selected="selected" {% endif %}>Other</option> -->
                                         <option value="Cat">Cat</option>
                                         <option value="Dog">Dog</option>
                                         <option value="Other">Other</option>
@@ -63,6 +59,33 @@
                                     </select>
                                 </div>
 
+                                <!-- disposition and date available -->
+
+                                <div class="filter-item">
+                                    <h3>Disposition</h3>
+                                    <select class="form-control" id='disposition' >
+                                        <option value="Any">Any</option>
+                                        <option value="Good with other animals">Good with other animals</option>
+                                        <option value="Good with children">Good with children</option>
+                                        <option value="Single pet household only">Single pet household only</option>
+                                        <option value="Must be leashed at all times">Must be leashed at all times</option>
+                                        <option value="Suitable for apartments">Suitable for apartments</option>
+                                        <option value="Spay/Neutered">Spay/Neutered</option>
+                                        <option value="Vaccinations up to date">Vaccinations up to date</option>
+                                        <option value="Special needs">Special Needs</option>
+                                    </select>
+                                </div>
+
+                                <!-- <div class="filter-item">
+                                    <h3>Date Available</h3>
+                                    <select class="form-control" id='date_available' >
+                                        <option value="Any">Any</option>
+                                            {% for breed in breeds%}
+                                                <option value=''></option>
+                                            {% endfor %}
+                                    </select>
+                                </div> -->
+
                                 <br>
                                 <button id="filter_button" class = 'btn btn-primary'>Search</button>
 
@@ -77,7 +100,6 @@
                         <div class="products">
                             <div class="row no-gutters">
                                 <!-- Start of card -->
-                                <!-- fix css class names from template, specifically price and product-name -->
                                 {% for profile in pets %}
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
@@ -119,38 +141,18 @@
 
     <!-- for filter -->
     <script>
-        // $(document).ready(function() {
-        //     $("#filter_button").click(function () {
-        //         sessionStorage.setItem('species', $('#species').val()) 
-        //         sessionStorage.setItem('breed', $('#breed').val()) 
-        //         species_val = $('#species').val()
-        //         breed_val = $('#breed').val()
-        //         the_message =JSON.stringify({breed: breed_val, species: species_val})
-        //         $.ajax({
-        //             type: "POST",
-        //             contentType: "application/json",
-        //             url: "/adopt_profiles",
-        //             data: the_message}).done(function (data) {
-        //                 window.location = '/adopt_profiles'
-        //                 // console.log(data)  // display the returned data in the console.
-        //                 $('#species').val(sessionStorage.getItem('species'))
-        //                 $('#breed').val(sessionStorage.getItem('breed'))
-        //         })
-        //     });
-        //     window.onload = function() {
-        //         $('#species').val(sessionStorage.getItem('species'))
-        //         $('#breed').val(sessionStorage.getItem('breed'))
-        //     }
-        // });  
-
-        // testing to rebuild list when page loaded
+        // persist breed and species in filter
         $(document).ready(function() {
             $("#filter_button").click(function () {
                 sessionStorage.setItem('species', $('#species').val()) 
                 sessionStorage.setItem('breed', $('#breed').val()) 
+                sessionStorage.setItem('disposition', $('#disposition').val())
+
                 species_val = $('#species').val()
                 breed_val = $('#breed').val()
-                the_message =JSON.stringify({breed: breed_val, species: species_val})
+                disposition_val = $('#disposition').val()
+
+                the_message =JSON.stringify({breed: breed_val, species: species_val, disposition: disposition_val})
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
@@ -160,6 +162,7 @@
                         // console.log(data)  // display the returned data in the console.
                         $('#species').val(sessionStorage.getItem('species'))
                         $('#breed').val(sessionStorage.getItem('breed'))
+                        $('#disposition').val(sessionStorage.getItem('disposition'))
                 })
             });
             // load values stored in session
@@ -171,6 +174,8 @@
                 // breed listed after breed has been updated on page so
                 // it is not listed as "any"
                 $('#breed').val(sessionStorage.getItem('breed'))
+
+                $('#disposition').val(sessionStorage.getItem('disposition'))
             }
         });  
     </script>

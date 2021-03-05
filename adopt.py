@@ -22,7 +22,6 @@
 # Library modules
 from OAuth import printSession
 from flask import Blueprint, request, Response, redirect, render_template, session, make_response
-# from flask import Blueprint, request, Response, redirect, render_template, session, send_from_directory, jsonify, make_response, url_for
 from google.cloud import datastore
 from requests_oauthlib import OAuth2Session
 import json
@@ -42,6 +41,9 @@ from repository import PetDsRepository
 species = "Any"
 breed = "Any"
 pdata = PetDsRepository.all()
+
+# set disposition intial
+disposition = "Any"
 
 # Import requests
 bp = Blueprint('adopt', __name__)
@@ -67,15 +69,8 @@ def view_pet_page(pet_id):
 
 ###############################################################################
 # helper pagination function, per_page modified in __init__py
-
-
 def get_pet_page(data, offset=0, per_page=10):
     return data[offset: offset + per_page]
-
-# Discovered datastore doesn't allow combining filters on one property
-# and order on another property for query. So filtering out adopted in
-# pets for adopt cards after query of pet entities
-
 
 def filter_out_adopt(pet_data_datastore):
     adopted = "Adopted"
@@ -87,31 +82,89 @@ def filter_out_adopt(pet_data_datastore):
 
     return pet_data_filtered
 
+def filter_disposition(pet_data_datastore, disposition):
+    pet_data_filtered = []
+
+    # splits property string for filter comparison
+    for pet in pet_data_datastore:
+        pet_disposition_split = pet['properties'].split(",")
+
+        # check if list is empty
+        if not pet_disposition_split:
+             # append pet profile to list if filter matches single item list
+            if pet['properties'] == disposition:
+                pet_data_filtered.append(pet)
+
+        # append pet profile to list if filter matches multi-item list
+        if disposition in pet_disposition_split:
+            pet_data_filtered.append(pet)
+
+    return pet_data_filtered
 
 @bp.route('/adopt_profiles', methods=["GET", "POST"])
 def view_profile():
-    global species, breed, pdata
+    global species, breed, pdata, disposition
+
     if 'sub' not in session:
         return "sub not in session."
-        # return redirect('/')
+
     else:
         if request.method == 'POST':
             content = request.get_json()
             species = content['species']
             breed = content['breed']
+            disposition = content['disposition']
 
-            if species == 'Any' and breed == "Any":
+            # no filtering just all 
+            if species == 'Any' and breed == "Any" and disposition == "Any":
                 pdata = PetDsRepository.all()
+
+            # filter for all animals by disposition
+            elif species == 'Any' and breed == "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.all()
+                pdata = filter_disposition(pdata_pre, disposition)
+
+            # filter by breed and disposition
+            elif species == 'Any' and breed != "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.filter(species,breed)
+                pdata = filter_disposition(pdata_pre, disposition)
+
+            # filter by all criteria
+            elif species != 'Any' and breed != "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.filter(species,breed)
+                pdata = filter_disposition(pdata_pre, disposition)
 
         else:  # psuedo GET
-            if species == 'Any' and breed == "Any":
+            # no filtering just all 
+            if species == 'Any' and breed == "Any" and disposition == "Any":
                 pdata = PetDsRepository.all()
+
+            # filter for all animals by disposition
+            elif species == 'Any' and breed == "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.all()
+                pdata = filter_disposition(pdata_pre, disposition)
+
+            # filter by species and disposition
+            elif species != 'Any' and breed == "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.filter(species,breed)
+                pdata = filter_disposition(pdata_pre, disposition)
+
+            # filter by breed and disposition
+            elif species == 'Any' and breed != "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.filter(species,breed)
+                pdata = filter_disposition(pdata_pre, disposition)
+
+            # filter by all criteria
+            elif species != 'Any' and breed != "Any" and disposition != "Any":
+                pdata_pre = PetDsRepository.filter(species,breed)
+                pdata = filter_disposition(pdata_pre, disposition)
+
+            # filters by species and breed with any disposition
             else:
                 pdata = PetDsRepository.filter(species, breed)
-
-        # print("****************"*10)
-        # print(species)
-        # print(breed)
+                # print(species)
+                # print(breed)
+                # print(disposition)
 
         # new filtered pet data to not listed adopted in card profiles
         pdata_filtered = filter_out_adopt(pdata)
