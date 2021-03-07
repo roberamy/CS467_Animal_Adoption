@@ -144,10 +144,18 @@
     <script>
         // persist breed, species, disposition, and days on in filter
         $(document).ready(function() {
-            sessionStorage.setItem('species', '{{species}}') 
-            sessionStorage.setItem('breed', '{{breed}}') 
-            sessionStorage.setItem('disposition', '{{disposition}}') 
-            sessionStorage.setItem('days_on', '{{days_on}}') 
+            if(sessionStorage.getItem['species']=== undefined) {
+                sessionStorage.setItem('species', '{{species}}') 
+            }
+            if(sessionStorage.getItem['breed']=== undefined) {
+                sessionStorage.setItem('breed', '{{breed}}') 
+            }
+            if(sessionStorage.getItem['disposition']=== undefined) {
+                sessionStorage.setItem('disposition', '{{disposition}}') 
+            }
+            if(sessionStorage.getItem['days_on']=== undefined) {
+                sessionStorage.setItem('days_on', '{{days_on}}') 
+            }
 
             $("#filter_button").click(function () {
                 sessionStorage.setItem('species', $('#species').val()) 
