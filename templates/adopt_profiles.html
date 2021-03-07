@@ -76,15 +76,16 @@
                                     </select>
                                 </div>
 
-                                <!-- <div class="filter-item">
-                                    <h3>Date Available</h3>
-                                    <select class="form-control" id='date_available' >
+                                <div class="filter-item">
+                                    <h3>Days on Rescue Paws</h3>
+                                    <select class="form-control" id='days_on' >
                                         <option value="Any">Any</option>
-                                            {% for breed in breeds%}
-                                                <option value=''></option>
-                                            {% endfor %}
+                                        <option value=1>1</option>
+                                        <option value=7>7</option>
+                                        <option value=14>14</option>
+                                        <option value="Over 30">30+</option>
                                     </select>
-                                </div> -->
+                                </div>
 
                                 <br>
                                 <button id="filter_button" class = 'btn btn-primary'>Search</button>
@@ -141,28 +142,34 @@
 
     <!-- for filter -->
     <script>
-        // persist breed and species in filter
+        // persist breed, species, disposition, and days on in filter
         $(document).ready(function() {
             $("#filter_button").click(function () {
                 sessionStorage.setItem('species', $('#species').val()) 
                 sessionStorage.setItem('breed', $('#breed').val()) 
                 sessionStorage.setItem('disposition', $('#disposition').val())
+                sessionStorage.setItem('days_on', $('#days_on').val())
 
                 species_val = $('#species').val()
                 breed_val = $('#breed').val()
                 disposition_val = $('#disposition').val()
+                days_on_val = $('#days_on').val()
 
-                the_message =JSON.stringify({breed: breed_val, species: species_val, disposition: disposition_val})
+                the_message =JSON.stringify({breed: breed_val,
+                                             species: species_val, 
+                                             disposition: disposition_val, 
+                                             days_on: days_on_val
+                                            })
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
                     url: "/adopt_profiles",
                     data: the_message}).done(function (data) {
                         window.location = '/adopt_profiles'
-                        // console.log(data)  // display the returned data in the console.
                         $('#species').val(sessionStorage.getItem('species'))
                         $('#breed').val(sessionStorage.getItem('breed'))
                         $('#disposition').val(sessionStorage.getItem('disposition'))
+                        $('#days_on').val(sesstionStorage.getItem('days_on'))
                 })
             });
             // load values stored in session
@@ -176,6 +183,7 @@
                 $('#breed').val(sessionStorage.getItem('breed'))
 
                 $('#disposition').val(sessionStorage.getItem('disposition'))
+                $('#days_on').val(sessionStorage.getItem('days_on'))
             }
         });  
     </script>
