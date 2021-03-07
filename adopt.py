@@ -164,385 +164,55 @@ def view_profile():
             # no filtering just all 
             if species == 'Any' and breed == "Any" and disposition == "Any" and days_on == "Any": #1
                 pdata = PetDsRepository.all()
-                # print(species)
-                # print(breed)
-                # print(disposition)
-                # print(days_on)
 
-            # # filter for all animals by days on app
-            # elif species == 'Any' and breed == "Any" and disposition == "Any" and days_on != "Any": # 2
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata = filter_days_on(pdata_pre, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species == 'Any' and breed == "Any" and disposition != "Any" and days_on == "Any": # 3
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata = filter_disposition(pet_data_all, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species == 'Any' and breed == "Any" and disposition != "Any" and days_on != "Any": # 4
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_disposition(pet_data_all, disposition)
-            #     pdata = filter_days_on(pdata_pre, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species == 'Any' and breed != "Any" and disposition == "Any" and days_on == "Any": # 5
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata = filter_species_breed(pet_data_all, species, breed)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species == 'Any' and breed != "Any" and disposition == "Any" and days_on != "Any": # 6
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_days_on(pdata_pre, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species == 'Any' and breed != "Any" and disposition != "Any" and days_on == "Any": # 7
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_disposition(pdata_pre, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species == 'Any' and breed != "Any" and disposition != "Any" and days_on != "Any": # 8
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata_pre_2 = filter_disposition(pdata_pre, disposition)
-            #     pdata = filter_days_on(pdata_pre_2, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species != 'Any' and breed == "Any" and disposition == "Any" and days_on == "Any": # 9
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata = filter_species_breed(pet_data_all, species, breed)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species != 'Any' and breed == "Any" and disposition == "Any" and days_on != "Any": # 10
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_days_on(pdata_pre, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species != 'Any' and breed == "Any" and disposition != "Any" and days_on == "Any": # 11
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_disposition(pdata_pre, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species != 'Any' and breed == "Any" and disposition != "Any" and days_on !="Any": # 12
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata_pre_2 = filter_disposition(pdata_pre, disposition)
-            #     pdata = filter_days_on(pdata_pre_2, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species != 'Any' and breed != "Any" and disposition == "Any" and days_on =="Any": # 13
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata = filter_species_breed(pet_data_all, species, breed)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species != 'Any' and breed != "Any" and disposition == "Any" and days_on !="Any": # 14
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_days_on(pdata_pre, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species != 'Any' and breed != "Any" and disposition != "Any" and days_on =="Any": # 15
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_disposition(pdata_pre, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # elif species != 'Any' and breed != "Any" and disposition != "Any" and days_on !="Any": # 16
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata_pre_2 = filter_disposition(pdata_pre, disposition)
-            #     pdata = filter_days_on(pdata_pre_2, days_on)
-
-
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # # filter for all animals by disposition
-            # elif species == 'Any' and breed == "Any" and disposition != "Any" and days_on == "Any":
-            #     # pdata_pre = PetDsRepository.all()
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata = filter_disposition(pet_data_all, disposition)
-            #     # pdata = filter_disposition(pdata_pre, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # # filter for all animals by disposition and days
-            # elif species == 'Any' and breed == "Any" and disposition != "Any" and days_on != "Any":
-            #     pet_data_all = PetDsRepository.all()
-            #     # pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata_pre = filter_disposition(pet_data_all, disposition)
-            #     pdata = filter_days_on(pdata_pre, days_on)
-            # # filter by breed and disposition
-            # elif species == 'Any' and breed != "Any" and disposition != "Any" and days_on == "Any":
-            #     # pdata_pre = PetDsRepository.filter(species,breed)
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_disposition(pdata_pre, disposition)
-            # # filter by breed, disposition, and days
-            # elif species == 'Any' and breed != "Any" and disposition != "Any" and days_on != "Any":
-            #     # pdata_pre = PetDsRepository.filter(species,breed)
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata_pre_dis = filter_disposition(pdata_pre, disposition)
-            #     pdata = filter_days_on(pdata_pre_dis, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # # filter by all criteria
-            # elif species != 'Any' and breed != "Any" and disposition != "Any":
-            #     pdata_pre = PetDsRepository.filter(species,breed)
-            #     pdata = filter_disposition(pdata_pre, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            #     # print("Date time now: " +  str(days_on) + " " + str(datetime.now()))
         else:  # psuedo GET
-
             # no filtering just all 
             if species == 'Any' and breed == "Any" and disposition == "Any" and days_on == "Any": #1
                 pdata = PetDsRepository.all()
-                # print(species)
-                # print(breed)
-                # print(disposition)
-                # print(days_on)
+
             # filter for all animals by days on app
             elif species == 'Any' and breed == "Any" and disposition == "Any" and days_on != "Any": # 2
                 pet_data_all = PetDsRepository.all()
                 pdata = filter_days_on(pet_data_all, days_on)
-                # print(species)
-                # print(breed)
-                # print(disposition)
-                # print(days_on)
+
             # filter for all animal by disposition
             elif species == 'Any' and breed == "Any" and disposition != "Any" and days_on == "Any": # 3
                 pet_data_all = PetDsRepository.all()
                 pdata = filter_disposition(pet_data_all, disposition)
-                # print(species)
-                # print(breed)
-                # print(disposition)
-                # print(days_on)
+
             #filter all by disposition and days on app
             elif species == 'Any' and breed == "Any" and disposition != "Any" and days_on != "Any": # 4
                 pet_data_all = PetDsRepository.all()
                 pdata_pre = filter_disposition(pet_data_all, disposition)
                 pdata = filter_days_on(pdata_pre, days_on)
-                # print(species)
-                # print(breed)
-                # print(disposition)
-                # print(days_on)
+
             # filter by breed, species, or both
-            # elif species == 'Any' and breed != "Any" and disposition == "Any" and days_on == "Any": # 5
             elif (((species == 'Any' and breed != "Any") or (species != 'Any' and breed == "Any") 
                     or (species != 'Any' and breed != "Any")) and disposition == "Any" and days_on == "Any"): # 5
                 pet_data_all = PetDsRepository.all()
                 pdata = filter_species_breed(pet_data_all, species, breed)
-                # print(species)
-                # print(breed)
-                # print(disposition)
-                # print(days_on)
+
             # filter by breed, species, or both by days on the app
-            # elif species == 'Any' and breed != "Any" and disposition == "Any" and days_on != "Any": # 6
             elif (((species == 'Any' and breed != "Any") or (species != 'Any' and breed == "Any") 
                     or (species != 'Any' and breed != "Any")) and disposition == "Any" and days_on != "Any"): # 6
                 pet_data_all = PetDsRepository.all()
                 pdata_pre = filter_species_breed(pet_data_all, species, breed)
                 pdata = filter_days_on(pdata_pre, days_on)
-                # print(species)
-                # print(breed)
-                # print(disposition)
-                # print(days_on)
+
             # filter by breed, species, or both for disposition
-            # elif species == 'Any' and breed != "Any" and disposition != "Any" and days_on == "Any": # 7
             elif (((species == 'Any' and breed != "Any") or (species != 'Any' and breed == "Any") 
                     or (species != 'Any' and breed != "Any")) and disposition != "Any" and days_on == "Any"): # 7
                 pet_data_all = PetDsRepository.all()
                 pdata_pre = filter_species_breed(pet_data_all, species, breed)
                 pdata = filter_disposition(pdata_pre, disposition)
-                # print(species)
-                # print(breed)
-                # print(disposition)
-                # print(days_on)
+
             # filter by breed, species, or both for disposition and days on app
-            # elif species == 'Any' and breed != "Any" and disposition != "Any" and days_on != "Any": # 8
             elif (((species == 'Any' and breed != "Any") or (species != 'Any' and breed == "Any") 
                     or (species != 'Any' and breed != "Any")) and disposition != "Any" and days_on != "Any"): # 8
                 pet_data_all = PetDsRepository.all()
                 pdata_pre = filter_species_breed(pet_data_all, species, breed)
                 pdata_pre_2 = filter_disposition(pdata_pre, disposition)
                 pdata = filter_days_on(pdata_pre_2, days_on)
-                # print(species)
-                # print(breed)
-                # print(disposition)
-                # print(days_on)
-
-            # # filter by species 
-            # elif species != 'Any' and breed == "Any" and disposition == "Any" and days_on == "Any": # 9
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata = filter_species_breed(pet_data_all, species, breed)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # filter by species and days on app
-            # elif species != 'Any' and breed == "Any" and disposition == "Any" and days_on != "Any": # 10
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_days_on(pdata_pre, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # filter by species and disposition
-            # elif species != 'Any' and breed == "Any" and disposition != "Any" and days_on == "Any": # 11
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_disposition(pdata_pre, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # filter by species, disposition, and days on app
-            # elif species != 'Any' and breed == "Any" and disposition != "Any" and days_on != "Any": # 12
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata_pre_2 = filter_disposition(pdata_pre, disposition)
-            #     pdata = filter_days_on(pdata_pre_2, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # # filter by specieies and breed
-            # elif species != 'Any' and breed != "Any" and disposition == "Any" and days_on =="Any": # 13
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata = filter_species_breed(pet_data_all, species, breed)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # filter by species and breed for specific days on app
-            # elif species != 'Any' and breed != "Any" and disposition == "Any" and days_on !="Any": # 14
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_days_on(pdata_pre, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # filter by species and breed by disposition
-            # elif species != 'Any' and breed != "Any" and disposition != "Any" and days_on =="Any": # 15
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_disposition(pdata_pre, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # filter by all criterias
-            # else: # elif species != 'Any' and breed != "Any" and disposition != "Any" and days_on !="Any": # 16
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata_pre_2 = filter_disposition(pdata_pre, disposition)
-            #     pdata = filter_days_on(pdata_pre_2, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-
-            # # no filtering just all 
-            # if species == 'Any' and breed == "Any" and disposition == "Any"and days_on == "Any":
-            #     pdata = PetDsRepository.all()
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            # # filter for all animals by disposition
-            # elif species == 'Any' and breed == "Any" and disposition == "Any" and days_on !="Any":
-            #     pdata_pre = PetDsRepository.all()
-            #     pdata = filter_days_on(pdata_pre, days_on)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            # # filter for all animals by disposition
-            # elif species == 'Any' and breed == "Any" and disposition != "Any":
-            #     pdata_pre = PetDsRepository.all()
-            #     pdata = filter_disposition(pdata_pre, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print("Date time now: " +  str(days_on) + " " + str(datetime.now()))
-            # # filter by species and disposition
-            # elif species != 'Any' and breed == "Any" and disposition != "Any":
-            #     pdata_pre = PetDsRepository.filter(species,breed)
-            #     pdata = filter_disposition(pdata_pre, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     # print("Date time now: " +  str(days_on) + " " + str(datetime.now()))
-            # # filter by breed and disposition
-            # elif species == 'Any' and breed != "Any" and disposition != "Any":
-            #     # pdata_pre = PetDsRepository.filter(species,breed)
-            #     pet_data_all = PetDsRepository.all()
-            #     pdata_pre = filter_species_breed(pet_data_all, species, breed)
-            #     pdata = filter_disposition(pdata_filtered, disposition)
-            #     # pdata = filter_disposition(pdata_pre, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            #     # print("Date time now: " +  str(days_on) + " " + str(datetime.now()))
-            # # filter by all criteria
-            # elif species != 'Any' and breed != "Any" and disposition != "Any":
-            #     pdata_pre = PetDsRepository.filter(species,breed)
-            #     pdata = filter_disposition(pdata_pre, disposition)
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     # print("Date time now: " +  str(days_on) + " " + str(datetime.now()))
-            # # filters by species and breed with any disposition
-            # else:
-            #     pdata = PetDsRepository.filter(species, breed)
-            #     print("I'm in else")
-            #     print(species)
-            #     print(breed)
-            #     print(disposition)
-            #     print(days_on)
-            #     # print("Date time now: " +  str(days_on) + " " + str(datetime.now()))
 
         # new filtered pet data to not listed adopted in card profiles
         pdata_filtered = filter_out_adopt(pdata)
