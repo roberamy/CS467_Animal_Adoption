@@ -25,13 +25,14 @@ from flask import Blueprint, request, Response, redirect, render_template, sessi
 from google.cloud import datastore
 from requests_oauthlib import OAuth2Session
 import json
+import flask
 import constants
 from google.oauth2 import id_token
 from google.auth import crypt
 from google.auth import jwt
 from google.auth.transport import requests
 from datetime import datetime, timedelta, timezone
-# import pytz
+import pytz
 from flask_paginate import Pagination, get_page_args
 
 # User modules
@@ -238,7 +239,6 @@ def view_profile():
         query = client.query(kind=constants.breeds)
         query.order = ["name"]
         breeds = list(query.fetch())
-
         return render_template('adopt_profiles.html',
                                pets=pagination_adopt_profile,
                                page=page,
@@ -246,6 +246,8 @@ def view_profile():
                                pagination=pagination,
                                breed=breed,
                                species=species,
+                               disposition=disposition,
+                               days_on=days_on,
                                public_url=constants.BUCKET,
                                breeds=breeds
                                )
