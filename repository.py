@@ -55,11 +55,8 @@ class PetDsRepository(Singleton):
         else:
             query.add_filter("type", "=", species)
             query.add_filter("breed", "=", breed)
-            # print("I'm in repository species != any else statement")
-
+        query.order = ["-created_at"]
         pets = list(query.fetch())
-        # print("Printing pets: ")
-        # print(pets)
         return pets
 
     # Create new pet entity in datastore
