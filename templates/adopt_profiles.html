@@ -41,7 +41,7 @@
 
                                 <div class="filter-item">
                                     <h3>Type</h3>
-                                    <select required class="form-control" name="type" id="species" onchange="updateBreeds()">
+                                    <select class="form-control" name="type" id="species" onchange="updateBreeds()">
                                         <option value="Any">Any</option>
                                         <option value="Cat">Cat</option>
                                         <option value="Dog">Dog</option>
@@ -144,6 +144,11 @@
     <script>
         // persist breed, species, disposition, and days on in filter
         $(document).ready(function() {
+            sessionStorage.setItem('species', '{{species}}') 
+            sessionStorage.setItem('breed', '{{breed}}') 
+            sessionStorage.setItem('disposition', '{{disposition}}') 
+            sessionStorage.setItem('days_on', '{{days_on}}') 
+
             $("#filter_button").click(function () {
                 sessionStorage.setItem('species', $('#species').val()) 
                 sessionStorage.setItem('breed', $('#breed').val()) 
