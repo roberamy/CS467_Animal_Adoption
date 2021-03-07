@@ -37,9 +37,6 @@ from flask_paginate import Pagination, get_page_args
 # User modules
 from repository import PetDsRepository
 
-# use for datetime compare naive vs aware
-
-
 # Used for /profiles route
 species = "Any"
 breed = "Any"
@@ -128,7 +125,7 @@ def filter_days_on(pet_data, days_on):
 
     return pet_data_filtered
 
-# sort orders are ignored on properties with quality filters
+# sort orders are ignored on properties with equality filters
 def filter_species_breed(pet_data, species, breed):
     pet_data_filtered = []
     if species != "Any" and breed == "Any":
